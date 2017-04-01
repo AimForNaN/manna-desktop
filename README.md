@@ -1,2 +1,2 @@
-# manna-desktop
+# Manna (desktop)
 Desktop application designed for the Manna server.
