@@ -1,0 +1,70 @@
+<link rel="import" href="./bower_components/paper-drawer-panel/paper-drawer-panel.html">
+<link rel="import" href="./bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="./bower_components/paper-toolbar/paper-toolbar.html">
+
+<link rel="import" href="common.html">
+<link rel="import" href="manna-desktop-dialer.html">
+
+<dom-module id="manna-desktop-workspace">
+    <template>
+        <style class="iron-flex iron-positioning">
+            :host {
+                @apply(--layout-start);
+                @apply(--layout-vertical);
+            }
+
+			:host > *, :host ::content > * {
+				@apply(--layout-self-stretch);
+				@apply(--layout-flex-auto);
+			}
+
+            :host .dialer {
+				--manna-desktop-dialer: {
+					max-height: 70px;
+					min-height: 70px;
+				};
+
+                --manna-desktop-dialer-dialpad: {
+                    max-width: 125px;
+                    order: 2;
+                };
+
+                --manna-desktop-dialer-dialpad-heading: {
+                    font-size: 16pt;
+                };
+
+                --manna-desktop-dialer-dialpad-selected: {
+                    /*background-color: transparent;*/
+                    max-width: none;
+                    order: 1;
+					pointer-events: none;
+                };
+            }
+
+			/*
+			:host .content .dialer[selected="The Word"] {
+				background-image: url(../resources/images/the-first-heaven.jpg);
+				background-position: center bottom;
+				background-repeat: no-repeat;
+				background-size: 100% 500%;
+			}
+			*/
+        </style>
+		<manna-desktop-dialer class="dialer" no-sub-heading selected$="{{selected}}"></manna-desktop-dialer>
+		<content></content>
+    </template>
+    <script>
+        Polymer({
+            is: 'manna-desktop-workspace'
+        ,   properties: {
+                'heading': {
+                    type: String
+                }
+            ,   'selected': {
+                    type: String
+				,	value: "Manna"
+                }
+            }
+        });
+    </script>
+</dom-module>

@@ -1,0 +1,95 @@
+<link rel="import" href="./bower_components/iron-resizable-behavior/iron-resizable-behavior.html">
+
+<link rel="import" href="common.html">
+
+<dom-module id="manna-desktop-index">
+    <template>
+        <style>
+            :host {
+                background-image: url(../resources/images/the-first-heaven.jpg);
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+
+                @apply(--layout-vertical);
+            }
+
+            :host .heading {
+                @apply(--layout-center-center);
+                @apply(--layout-flex-3);
+                @apply(--layout-vertical);
+            }
+
+            :host .heading > * {
+                font-weight: normal;
+                margin: 0;
+            }
+
+            :host .heading .title {
+                font-family: "Expletus Sans";
+                font-size: var(--manna-desktop-title-font-size);
+            }
+
+            :host .heading .sub-title {
+                font-family: "Pinyon Script";
+                font-size: var(--manna-desktop-sub-title-font-size);
+            }
+
+            :host .dials {
+                max-height: 250px;
+
+                @apply(--layout-flex-2);
+            }
+
+            :host .scroller {
+                @apply(--layout-flex-auto);
+            }
+        </style>
+        <div class="heading">
+            <h1 class="title">The Bread of Heaven</h1>
+            <h2 class="sub-title">Let It Rain</h2>
+        </div>
+        <manna-desktop-verse-scroller class="scroller"></manna-desktop-verse-scroller>
+        <manna-desktop-dialer class="dials" on-dial="_onDial"></manna-desktop-dialer>
+    </template>
+    <script>
+        Polymer({
+            is: 'manna-desktop-index'
+        ,   behaviors: [Polymer.IronResizableBehavior]
+        ,   listeners: {
+                'iron-resize': '_resize'
+            }
+        ,   _onDial: function (e, details) {
+                switch (details) {
+                    case 'manna': {
+                        this.fire('dial', 'library', {
+                            bubbles: false
+                        });
+                        break;
+                    }
+                    case 'word': {
+                        this.fire('dial', 'bibles', {
+                            bubbles: false
+                        });
+                        break;
+                    }
+                    case 'saints': {
+                        this.fire('dial', 'generic', {
+                            bubbles: false
+                        });
+                        break;
+                    }
+                }
+            }
+        ,   _resize: function () {
+                this.customStyle['--manna-desktop-title-font-size'] = Math.min(Math.max(12, this.offsetWidth / 20), 72) + 'pt';
+                this.customStyle['--manna-desktop-sub-title-font-size'] = Math.min(Math.max(12, this.offsetWidth / 10), 200) + 'pt';
+                this.updateStyles();
+            }
+        ,   ready: function () {
+				this.async(() => {
+					this._resize();
+				});
+            }
+        });
+    </script>
+</dom-module>

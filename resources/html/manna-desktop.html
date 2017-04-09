@@ -1,0 +1,58 @@
+<link rel="import" href="./bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="./bower_components/iron-pages/iron-pages.html">
+
+<link rel="import" href="common.html">
+<link rel="import" href="manna-fonts.html">
+<link rel="import" href="manna-desktop-dialer.html">
+<link rel="import" href="manna-desktop-dialpad.html">
+<link rel="import" href="manna-desktop-index.html">
+<link rel="import" href="manna-desktop-library.html">
+<link rel="import" href="manna-desktop-modules-view.html">
+<link rel="import" href="manna-desktop-verse-scroller.html">
+<link rel="import" href="manna-desktop-workspace.html">
+
+<dom-module id="manna-desktop">
+    <template>
+        <style include="iron-flex iron-flex-factors iron-positioning">
+            :host {
+                @apply(--layout-fit);
+            }
+
+            :host .pages {
+                @apply(--layout-fit);
+            }
+
+            :host .pages .page {
+                @apply(--layout-fit);
+            }
+        </style>
+		<iron-ajax
+			auto
+			handle-as="json"
+			last-response="{{modules}}"
+			url="http://localhost:7777/v1/modules"
+		></iron-ajax>
+        <iron-pages class="pages" id="pages" attr-for-selected="name" selected="home">
+            <manna-desktop-index class="page" name="home" on-dial="_onDial"></manna-desktop-index>
+            <manna-desktop-workspace class="page" heading="Manna" name="library" selected="Manna">
+                <manna-desktop-library></manna-desktop-library>
+            </manna-desktop-workspace>
+            <manna-desktop-workspace class="page" name="bibles" selected="The Word">
+                <manna-desktop-modules-view filter-type="Biblical Texts" modules="[[modules]]"></manna-desktop-modules-view>
+            </manna-desktop-workspace>
+            <manna-desktop-workspace class="page" name="generic" selected="The Saints">
+                <manna-desktop-modules-view filter-type="Generic Books" modules="[[modules]]"></manna-desktop-modules-view>
+            </manna-desktop-workspace>
+        </iron-pages>
+    </template>
+    <script>
+        Polymer({
+            is: 'manna-desktop'
+		,	properties: {
+			}
+        ,   _onDial: function (e, details) {
+                this.$.pages.select(details);
+            }
+        });
+    </script>
+</dom-module>

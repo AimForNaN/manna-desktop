@@ -1,0 +1,108 @@
+<link rel="import" href="./bower_components/iron-selector/iron-selector.html">
+
+<link rel="import" href="common.html">
+
+<dom-module id="manna-desktop-dialer">
+    <template>
+        <style include="iron-flex iron-flex-factors iron-positioning">
+            :host {
+                @apply(--layout-relative);
+
+				@apply(--manna-desktop-dialer);
+            }
+
+            :host #dials {
+                @apply(--layout-fit);
+                @apply(--layout-horizontal);
+            }
+
+            :host .dialpad {
+                cursor: pointer;
+                text-align: center;
+
+                --manna-desktop-dialpad-text-color: #FFF;
+
+                @apply(--layout-flex-auto);
+
+                --manna-desktop-dialpad: {
+                    @apply(--manna-desktop-dialer-dialpad);
+                };
+
+                --manna-desktop-dialpad-heading: {
+                    @apply(--manna-desktop-dialer-dialpad-heading);
+                };
+
+                --manna-desktop-dialpad-sub-heading: {
+                    @apply(--manna-desktop-dialer-dialpad-sub-heading);
+                };
+            }
+
+            :host .dialpad.manna {
+                --manna-desktop-dialpad-background-color: rgba(40,125,125, 0.5);
+                --manna-desktop-dialpad-background-color-hover: rgba(40,125,125, 0.9);
+                --manna-desktop-dialpad-shadow: 0 1px 2px rgb(21,67,67);
+            }
+
+            :host .dialpad.bibles {
+                --manna-desktop-dialpad-background-color: rgba(143,178,89, 0.5);
+                --manna-desktop-dialpad-background-color-hover: rgba(143,178,89, 0.9);
+                --manna-desktop-dialpad-shadow: 0 1px 2px rgb(103,130,60);
+            }
+
+            :host .dialpad.generic {
+                --manna-desktop-dialpad-background-color: rgba(204,204,82, 0.5);
+                --manna-desktop-dialpad-background-color-hover: rgba(204,204,82, 0.9);
+                --manna-desktop-dialpad-shadow: 0 1px 2px rgb(162,162,48);
+            }
+
+            :host .dialpad.selected {
+                @apply(--manna-desktop-dialer-dialpad-selected);
+            }
+        </style>
+        <iron-selector id="dials" attr-for-selected="heading" selected="{{selected}}" selected-class="selected">
+            <manna-desktop-dialpad class="dialpad manna" heading="Manna" no-sub-heading="[[noSubHeading]]" sub-heading="The Bread of Heaven" on-tap="_onDialPadTap"></manna-desktop-dialpad>
+            <manna-desktop-dialpad class="dialpad bibles" heading="The Word" no-sub-heading="[[noSubHeading]]" sub-heading="The Bread of Life" on-tap="_onDialPadTap"></manna-desktop-dialpad>
+            <manna-desktop-dialpad class="dialpad generic" heading="The Saints" no-sub-heading="[[noSubHeading]]" sub-heading="The Bread of the Spirit" on-tap="_onDialPadTap"></manna-desktop-dialpad>
+        </iron-selector>
+    </template>
+    <script>
+        Polymer({
+            is: 'manna-desktop-dialer'
+        ,   listeners: {
+                'dials:iron-activate': '_onDialPadTap'
+            }
+        ,   properties: {
+                'noSubHeading': {
+                    type: Boolean
+                ,   value: false
+                }
+            ,    'selected': {
+                    type: String
+                }
+            }
+        ,   _onDialPadTap: function (e) {
+                e.preventDefault();
+                switch (e.currentTarget.heading) {
+                    case 'Manna': {
+                        this.fire('dial', 'manna', {
+                            bubbles: false
+                        });
+                        break;
+                    }
+                    case 'The Word': {
+                        this.fire('dial', 'word', {
+                            bubbles: false
+                        });
+                        break;
+                    }
+                    case 'The Saints': {
+                        this.fire('dial', 'saints', {
+                            bubbles: false
+                        });
+                        break;
+                    }
+                }
+            }
+        });
+    </script>
+</dom-module>
