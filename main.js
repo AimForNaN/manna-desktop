@@ -10,10 +10,6 @@ const AppPath      = app.getAppPath();
 const AppResources = process.resourcesPath;
 const NodeModules  = escapePath(path.resolve(AppPath, 'node_modules'));
 
-require('electron-context-menu')({
-	showInspectElement: true
-});
-
 // Disable cache!
 app.commandLine.appendSwitch('disable-http-cache');
 
