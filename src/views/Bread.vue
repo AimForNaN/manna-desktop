@@ -18,6 +18,14 @@
             Modules,
         ],
         watch: {
+            Key: {
+                immediate: true,
+                handler(v) {
+                    if (v) {
+                        console.log(v);
+                    }
+                },
+            },
             module: {
                 immediate: true,
                 handler(v) {

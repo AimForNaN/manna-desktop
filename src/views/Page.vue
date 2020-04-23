@@ -13,15 +13,16 @@
         beforeRouteUpdate(to, from, next) {
             var {name, params} = to;
             var {key, mod} = params;
-            console.log(to);
             switch (name) {
                 case 'Bread': {
                     this.fetchModule({
                         Names: mod,
                         Key: key,
                     }).then(() => {
+                        console.log(to);
                         next();
                     });
+                    break;
                 }
                 default: next();
             }

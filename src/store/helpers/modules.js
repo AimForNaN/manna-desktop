@@ -1,3 +1,7 @@
+import Module from './module.js';
+const {computed} = Module;
+const {BiblicalBook, BiblicalChapter} = computed;
+
 export default {
     computed: {
         Bibles: {
@@ -12,6 +16,8 @@ export default {
                 }, []);
             },
         },
+        BiblicalBook,
+        BiblicalChapter,
         Modules: {
             cache: false,
             get() {
@@ -34,11 +40,15 @@ export default {
             return this.$store.dispatch('GetModules');
         },
         loadModule(mod) {
+            var {
+                BiblicalBook,
+                BiblicalChapter
+            } = this;
             this.$router.push({
                 name: 'Bread',
                 params: {
                     mod: mod.Name,
-                    key: 'Genesis.1',
+                    key: `${BiblicalBook}.${BiblicalChapter}`,
                 },
             });
         },

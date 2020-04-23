@@ -8,6 +8,28 @@ export default {
                 return About;
             },
         },
+        BiblicalBook: {
+            cache: false,
+            get() {
+                var {Bible} = this.$store.state;
+                var {Book} = Bible;
+                return Book;
+            },
+            set(v) {
+                this.$store.commit('SetBiblicalBook', v);
+            },
+        },
+        BiblicalChapter: {
+            cache: false,
+            get() {
+                var {Bible} = this.$store.state;
+                var {Chapter} = Bible;
+                return Chapter;
+            },
+            set(v) {
+                this.$store.commit('SetBiblicalChapter', v);
+            },
+        },
         Description: {
             cache: false,
             get() {

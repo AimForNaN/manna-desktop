@@ -9,9 +9,21 @@ const base = 'http://localhost:7777';
 export default new Vuex.Store({
     modules: {},
     state: {
+        Bible: {
+            Book: 'Genesis',
+            Chapter: 1,
+        },
         Modules: new Map(),
     },
     mutations: {
+        SetBiblicalBook(state, book) {
+            var {Bible} = state;
+            Bible.Book = String(book);
+        },
+        SetBiblicalChapter(state, chapter) {
+            var {Bible} = state;
+            Bible.Chapter = ~~parseInt(chapter);
+        },
         SetModules(state, mods) {
             mods = Array.from(mods);
             var {Modules} = state;
