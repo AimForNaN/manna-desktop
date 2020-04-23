@@ -1,27 +1,30 @@
 <template>
     <main id="app">
-		<b-navbar :is-active="true" :mobile-burger="false" :open="$route.path !== '/'" :transparent="true">
+		<b-navbar class="main" :is-active="true" :mobile-burger="false" :open="$route.path !== '/'" :transparent="true">
             <template slot="brand">
                 <b-navbar-item tag="router-link" to="/manna">&#127474;</b-navbar-item>
             </template>
             <template slot="start">
-                <b-navbar-item tag="router-link" to="/bread">B</b-navbar-item>
+                <b-navbar-item tag="router-link" :to="{ name: 'Breads' }">B</b-navbar-item>
                 <b-navbar-item tag="router-link" to="/crumbs">C</b-navbar-item>
                 <b-navbar-item tag="router-link" to="/bakery">K</b-navbar-item>
             </template>
 		</b-navbar>
 		<transition name="page">
-			<router-view/>
+			<router-view class="view" />
 		</transition>
 	</main>
 </template>
 
 <script>
+    import Helpers from './store/helpers';
+    const {Modules} = Helpers;
+
     export default {
+        mixins: [
+            Modules,
+        ],
         methods: {
-            fetchModules() {
-                this.$store.dispatch('GetModules');
-            },
         },
         mounted() {
             this.fetchModules();
@@ -120,28 +123,32 @@
 
         & {
             bottom: 0;
-            display: flex !important;
-            flex: 1;
             left: 0;
             position: fixed;
             right: 0;
             top: 0;
 
-            > nav {
+            nav.main {
                 background-color: @blue;
                 color: #FFF;
                 display: flex;
                 flex-direction: column;
+                height: 100vh;
+                left: 0;
+                max-width: 3rem;
                 opacity: 0;
                 overflow: hidden;
                 pointer-events: none;
+                position: fixed;
+                top: 0;
                 transition: all 0.7s;
                 width: 0.75rem;
                 z-index: 1000;
 
                 &[open] {
-                    pointer-events: all;
+                    max-width: 3rem;
                     opacity: 1;
+                    pointer-events: all;
                     width: 3rem;
                 }
 
@@ -150,6 +157,7 @@
                     color: #FFF;
                     display: flex;
                     justify-content: center;
+                    outline: none;
                     padding: 0.5rem;
 
                     &:hover {
@@ -178,14 +186,19 @@
                 }
             }
 
-
-            article {
+            .view {
                 background-color: #FFF;
-                flex: 1;
                 border-left: 4px solid @red;
+                bottom: 0;
+                left: 0;
                 overflow: hidden;
-                position: relative;
-                z-index: 1;
+                position: absolute;
+                right: 0;
+                top: 0;
+
+                &:not(.home) {
+                    left: 3rem;
+                }
             }
         }
 

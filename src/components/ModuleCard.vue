@@ -1,22 +1,33 @@
 <template>
-    <div class="card module">
-        <div class="card-header">
+    <div class="card module button">
+        <div class="card-header" @click="onClick">
             <div class="card-header-title">
                 {{Name}}
             </div>
         </div>
-        <div class="card-content">
+        <div class="card-content" @click="onClick">
             {{Description}}
         </div>
-        <!-- <footer class="card-footer">
-            <a href="#" class="card-footer-item">Open</a>
-            <a href="#" class="card-footer-item">Uninstall</a>
-        </footer> -->
+        <footer class="card-footer">
+            <b-collapse :open="false">
+                <a class="card-footer-item" slot="trigger" slot-scope="props">
+                    <!-- <b-icon :icon="!props.open ? 'menu-down' : 'menu-up'"></b-icon> -->
+                    About
+                </a>
+                <p class="about" v-html="About"></p>
+            </b-collapse>
+        </footer>
     </div>
 </template>
 
 <script>
+    import Helpers from '../store/helpers';
+    const {Module} = Helpers;
+
     export default {
+        mixins: [
+            Module,
+        ],
         props: {
             module: {
                 type: Object,
@@ -25,22 +36,9 @@
                 },
             },
         },
-        computed: {
-            Description: {
-                cache: false,
-                get() {
-                    var {module} = this;
-                    var {Description} = module;
-                    return Description;
-                },
-            },
-            Name: {
-                cache: false,
-                get() {
-                    var {module} = this;
-                    var {Name} = module;
-                    return Name;
-                },
+        methods: {
+            onClick() {
+                this.$emit('click', this.module);
             },
         },
     }
@@ -49,12 +47,43 @@
 <style lang="less">
     #app {
         .module.card {
+            align-items: unset;
             display: flex;
             flex-direction: column;
+            height: auto;
+            justify-content: unset;
+            padding: 0;
+            text-align: left;
             width: 250px;
+            white-space: normal;
+
+            .about {
+                word-break: break-word;
+            }
 
             .card-content {
                 flex: 1;
+            }
+
+            .collapse {
+                display: flex;
+                flex: 1;
+                flex-direction: column;
+                overflow: hidden;
+
+                .collapse-content {
+                    max-height: 200px;
+                    overflow-x: hidden;
+                    overflow-y: auto;
+                    padding: 1rem;
+                }
+
+                .collapse-trigger {
+                    align-items: center;
+                    display: flex;
+                    flex: 1;
+                    justify-content: center;
+                }
             }
         }
     }

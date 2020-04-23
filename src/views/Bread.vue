@@ -1,44 +1,48 @@
 <template lang="html">
-    <article class="bread">
-        <b-navbar :fixed-top="true" :shadow="true">
-            <template slot="brand">
-                <b-navbar-item>The Bread</b-navbar-item>
-            </template>
-            <template slot="start">
-                <!-- <b-navbar-item>The Bread</b-navbar-item> -->
-            </template>
-        </b-navbar>
-        <section class="modules">
-            <ModuleCard :key="mod.Name" :module="mod" v-for="mod in Bibles"></ModuleCard>
-        </section>
+    <article class="bible">
+        <nav class="navbar is-fixed-top has-shadow">
+            <div class="navbar-brand">
+                <b-navbar-item>{{Description}}: {{Key}}</b-navbar-item>
+            </div>
+        </nav>
     </article>
 </template>
 
 <script>
-    import ModuleCard from '../components/ModuleCard.vue';
+    import Helpers from '../store/helpers';
+    const {Module,Modules} = Helpers;
 
     export default {
-        components: {
-            ModuleCard,
-        },
-        computed: {
-            Bibles: {
-                cache: false,
-                get() {
-                    var {Modules} = this;
-                    console.log(Modules);
-                    return Modules.reduce((ret, mod) => {
-                        if (mod.Type == 'Biblical Texts') {
-                            ret.push(mod);
-                        }
-                        return ret;
-                    }, []);
+        mixins: [
+            Module,
+            Modules,
+        ],
+        watch: {
+            module: {
+                immediate: true,
+                handler(v) {
+                    console.log(v);
                 },
             },
-            Modules: {
+        },
+        computed: {
+            module: {
                 cache: false,
                 get() {
-                    return Array.from(this.$store.state.Modules);
+                    var {
+                        Modules,
+                        Params,
+                    } = this;
+                    var {mod} = Params;
+                    return Modules.get(mod);
+                },
+            },
+            Params: {
+                cache: false,
+                get() {
+                    var {$route} = this;
+                    var {params} = $route;
+                    return params;
                 },
             },
         },
@@ -49,7 +53,7 @@
     @import "../styles/base.less";
 
     #app {
-        .bread {
+        .bible {
             overflow: auto;
             padding-top: 3.25rem;
 
@@ -59,14 +63,9 @@
                 margin-left: calc(3rem + 4px);
             }
 
-            .modules {
+            .module {
                 display: flex;
-                flex-wrap: wrap;
                 padding: 0.5rem;
-
-                .module.card {
-                    margin: 0.5rem;
-                }
             }
         }
     }
