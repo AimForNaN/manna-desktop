@@ -5,7 +5,7 @@
                 <b-navbar-item tag="router-link" to="/manna">&#127474;</b-navbar-item>
             </template>
             <template slot="start">
-                <b-navbar-item tag="router-link" :to="{ name: 'Breads' }">B</b-navbar-item>
+                <b-navbar-item :active="isActive('/bread')" tag="router-link" :to="{ name: 'Breads' }">B</b-navbar-item>
                 <b-navbar-item tag="router-link" to="/crumbs">C</b-navbar-item>
                 <b-navbar-item tag="router-link" to="/bakery">K</b-navbar-item>
             </template>
@@ -25,6 +25,11 @@
             Modules,
         ],
         methods: {
+            isActive(page) {
+                var {$route} = this;
+                var {path} = $route;
+                return String(path).startsWith(page);
+            },
         },
         mounted() {
             this.fetchModules();
@@ -161,7 +166,11 @@
                     padding: 0.5rem;
 
                     &:hover {
-                        background-color: @blue;
+                        background-color: @blue !important
+                    }
+
+                    &.is-active {
+                        background-color: @red !important;
                     }
                 }
 
@@ -203,7 +212,12 @@
         }
 
         a {
+            color: @blue;
             text-decoration: none;
+
+            &:hover {
+                color: @red;
+            }
         }
     }
 

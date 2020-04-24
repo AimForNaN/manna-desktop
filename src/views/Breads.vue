@@ -45,10 +45,15 @@
                 color: @blue;
                 margin-left: calc(3rem + 4px);
 
+                .navbar-brand {
+                    flex: 1;
+                }
+
                 .navbar-burger {
                     align-items: center;
                     display: flex;
                     justify-content: center;
+                    margin-left: auto;
 
                     &:hover {
                         background-color: transparent
