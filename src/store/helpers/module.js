@@ -1,3 +1,5 @@
+import {firstBy} from 'thenby';
+
 export default {
     computed: {
         About: {
@@ -30,6 +32,18 @@ export default {
                 this.$store.commit('SetBiblicalChapter', v);
             },
         },
+        BiblicalStructure: {
+            cache: false,
+            get() {
+                var {Structure} = this;
+                Structure = Array.from(Object.entries(Structure)).sort(firstBy(([,a], [,b]) => {
+                    return a.Testament - b.Testament;
+                }).thenBy(([,a], [,b]) => {
+                    return a.Index - b.Index;
+                }));
+                return Structure;
+            },
+        },
         Description: {
             cache: false,
             get() {
@@ -52,6 +66,22 @@ export default {
                 var {module} = this;
                 var {Name} = module;
                 return Name;
+            },
+        },
+        Structure: {
+            cache: false,
+            get() {
+                var {module} = this;
+                var {Structure} = module;
+                return Structure;
+            },
+        },
+        Text: {
+            cache: false,
+            get() {
+                var {module} = this;
+                var {Text} = module;
+                return Text;
             },
         },
     },
