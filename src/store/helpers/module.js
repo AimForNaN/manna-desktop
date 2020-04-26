@@ -52,12 +52,74 @@ export default {
                 return Description;
             },
         },
+        Font: {
+            cache: false,
+            get() {
+                var {Settings} = this.$store.state;
+                var {Font} = Settings;
+                return Font;
+            },
+            set(v) {
+                this.$store.commit('SetFont', v);
+            },
+        },
+        Fonts: {
+            cache: false,
+            get() {
+                var {Fonts} = this.$store.state;
+                return Fonts;
+            },
+        },
+        FontSize: {
+            cache: false,
+            get() {
+                var {Settings} = this.$store.state;
+                var {FontSize} = Settings;
+                return FontSize;
+            },
+            set(v) {
+                this.$store.commit('SetFontSize', v);
+            },
+        },
         Key: {
             cache: false,
             get() {
                 var {module} = this;
                 var {Key} = module;
                 return Key;
+            },
+        },
+        LetterSpacing: {
+            cache: false,
+            get() {
+                var {Settings} = this.$store.state;
+                var {LetterSpacing} = Settings;
+                return LetterSpacing;
+            },
+            set(v) {
+                this.$store.commit('SetLetterSpacing', v);
+            },
+        },
+        LineByLine: {
+            cache: false,
+            get() {
+                var {Bible} = this.$store.state;
+                var {LineByLine} = Bible;
+                return LineByLine;
+            },
+            set(v) {
+                this.$store.commit('SetLineByLine', v);
+            },
+        },
+        LineHeight: {
+            cache: false,
+            get() {
+                var {Settings} = this.$store.state;
+                var {LineHeight} = Settings;
+                return LineHeight;
+            },
+            set(v) {
+                this.$store.commit('SetLineHeight', v);
             },
         },
         Name: {
@@ -82,6 +144,28 @@ export default {
                 var {module} = this;
                 var {Text} = module;
                 return Text;
+            },
+        },
+        WordSpacing: {
+            cache: false,
+            get() {
+                var {Settings} = this.$store.state;
+                var {WordSpacing} = Settings;
+                return WordSpacing;
+            },
+            set(v) {
+                this.$store.commit('SetWordSpacing', v);
+            },
+        },
+        VerseNumbers: {
+            cache: false,
+            get() {
+                var {Bible} = this.$store.state;
+                var {VerseNumbers} = Bible;
+                return VerseNumbers;
+            },
+            set(v) {
+                this.$store.commit('SetVerseNumbers', v);
             },
         },
     },

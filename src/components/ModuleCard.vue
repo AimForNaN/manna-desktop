@@ -9,13 +9,10 @@
             {{Description}}
         </div>
         <footer class="card-footer">
-            <b-collapse :open="false">
-                <a class="card-footer-item" slot="trigger" slot-scope="props">
-                    <!-- <b-icon :icon="!props.open ? 'menu-down' : 'menu-up'"></b-icon> -->
-                    About
-                </a>
-                <p class="about" v-html="About"></p>
-            </b-collapse>
+            <a class="card-footer-item" @click="onAbout">
+                <!-- <b-icon :icon="!props.open ? 'menu-down' : 'menu-up'"></b-icon> -->
+                About
+            </a>
         </footer>
     </div>
 </template>
@@ -37,6 +34,14 @@
             },
         },
         methods: {
+            onAbout() {
+                var {About, Description} = this;
+                this.$buefy.dialog.alert({
+                    title: Description,
+                    message: String(About).replace(/\\par/gm, '<br>'),
+                    confirmText: 'Close',
+                });
+            },
             onClick() {
                 this.$emit('click', this.module);
             },

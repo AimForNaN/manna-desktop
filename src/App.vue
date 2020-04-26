@@ -32,7 +32,9 @@
             },
         },
         mounted() {
-            this.fetchModules();
+            this.fetchModules().then(() => {
+                this.$forceUpdate();
+            });
         },
     }
 </script>
@@ -219,10 +221,36 @@
                 color: @red;
             }
         }
+
+        button.is-dark, button.is-primary {
+            background-color: @blue;
+            border-color: @blue;
+            color: #FFF;
+        }
+
+        input:focus, select:focus {
+            border-color: @blue;
+            box-shadow: none;
+        }
+
+        .switch {
+            .check {
+                box-shadow: none;
+            }
+
+            input[type="checkbox"]:checked + .check {
+                background-color: @blue;
+            }
+        }
     }
 
     body, html {
         overflow: hidden;
     }
 
+    .modal-card-foot {
+        button.is-primary {
+            background-color: @blue;
+        }
+    }
 </style>

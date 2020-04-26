@@ -52,5 +52,8 @@ export default {
                 },
             });
         },
+        reloadCache() {
+            return this.$store.dispatch('ReloadCache');
+        },
     },
 }

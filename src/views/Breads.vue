@@ -5,7 +5,7 @@
                 <b-navbar-item>The Bread</b-navbar-item>
                 <div class="navbar-burger">
                     <div class="buttons">
-                        <button class="button" @click="fetchModules">R</button>
+                        <b-button icon-right="sync" @click="reloadCache" />
                     </div>
                 </div>
             </div>
@@ -41,7 +41,7 @@
             padding-top: 3.25rem;
 
             nav {
-                border-bottom: 1px solid @hot-pink;
+                border-bottom: 1px solid @blue;
                 color: @blue;
                 margin-left: calc(3rem + 4px);
 
@@ -57,6 +57,35 @@
 
                     &:hover {
                         background-color: transparent
+                    }
+
+                    .buttons {
+                        align-items: center;
+                        display: flex;
+                        justify-content: center;
+                        margin: 0;
+
+                        .button {
+                            align-items: center;
+                            display: flex;
+                            height: auto;
+                            justify-content: center;
+                            line-height: normal;
+                            margin: 0;
+                            padding: 0.5rem;
+
+                            .icon {
+                                align-items: center;
+                                background-color: transparent;
+                                display: flex;
+                                height: auto;
+                                justify-content: center;
+                                margin: 0;
+                                position: relative;
+                                top: unset;
+                                width: auto;
+                            }
+                        }
                     }
                 }
             }
