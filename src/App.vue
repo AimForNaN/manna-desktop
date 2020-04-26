@@ -183,6 +183,12 @@
                     outline: none;
                 }
 
+                .navbar-item {
+                    align-items: center;
+                    display: flex;
+                    justify-content: center;
+                }
+
                 .navbar-menu {
                     background-color: @blue;
                     display: flex;
@@ -222,6 +228,18 @@
             }
         }
 
+        button {
+            align-items: center;
+            display: flex;
+            justify-content: center;
+
+            > * {
+                align-items: center;
+                display: flex;
+                justify-content: center;
+            }
+        }
+
         button.is-dark, button.is-primary {
             background-color: @blue;
             border-color: @blue;
@@ -245,7 +263,7 @@
     }
 
     body, html {
-        overflow: hidden;
+        overflow: hidden !important;
     }
 
     .modal-card-foot {

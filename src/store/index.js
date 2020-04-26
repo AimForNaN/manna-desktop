@@ -38,7 +38,7 @@ export default new Vuex.Store({
             Font: 'Suravaram',
 			FontSize: 1.35,
 			LetterSpacing: 0,
-			LineHeight: 2.4,
+			LineHeight: 2,
             WordSpacing: 3,
         },
     },

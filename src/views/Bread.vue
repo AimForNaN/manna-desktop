@@ -1,12 +1,21 @@
 <template lang="html">
-    <article class="bible">
-        <nav class="navbar is-fixed-top has-shadow">
+    <article class="bread">
+        <nav class="navbar has-shadow">
             <div class="navbar-brand">
-                <b-navbar-item class="brand">{{Description}}: {{Key}}</b-navbar-item>
+                <b-navbar-item class="brand">{{Description}}</b-navbar-item>
+                <BibleChapterSelector class="navbar-item" :book="BiblicalBook" :chapter="BiblicalChapter" :struct="BiblicalStructure" @selection="loadChapter($event.Book, $event.Chapter)"></BibleChapterSelector>
             </div>
         </nav>
         <section class="book">
             <div class="text">
+                <div class="actions field has-addons">
+                    <div class="control">
+                        <b-icon icon="chevron-left" @click.native="prev"></b-icon>
+                    </div>
+                    <div class="control">
+                        <b-icon icon="chevron-right" @click.native="next"></b-icon>
+                    </div>
+                </div>
                 <div class="title">Book of {{BiblicalBook}}</div>
                 <div class="heading">Chapter {{BiblicalChapter}}</div>
                 <Verses :text="Text"></Verses>
@@ -42,9 +51,9 @@
                             <b-switch v-model="VerseNumbers">Verse Numbers</b-switch>
                         </b-field>
                     </b-menu-item>
-                    <b-menu-item :active="name == BiblicalBook" :expanded="name == BiblicalBook" :key="name" :label="name" v-for="[name, struct] in BiblicalStructure">
+                    <!-- <b-menu-item :active="name == BiblicalBook" :expanded="name == BiblicalBook" :key="name" :label="name" v-for="[name, struct] in BiblicalStructure">
                         <b-button :active="name == BiblicalBook && chapter == BiblicalChapter" :key="name + chapter" v-for="chapter in lodash.range(1, struct.Chapters + 1)" @click="loadChapter(name, chapter)">{{chapter}}</b-button>
-                    </b-menu-item>
+                    </b-menu-item> -->
                 </b-menu-list>
             </b-menu>
         </section>
@@ -52,11 +61,10 @@
 </template>
 
 <script>
-    import _ from 'lodash';
-
     import Helpers from '../store/helpers';
     const {Module,Modules} = Helpers;
 
+    import BibleChapterSelector from '../components/BibleChapterSelector.vue';
     import Verses from '../components/Verses.vue';
 
     export default {
@@ -65,12 +73,8 @@
             Modules,
         ],
         components: {
+            BibleChapterSelector,
             Verses,
-        },
-        data() {
-            return {
-                'lodash': _,
-            };
         },
         watch: {
             Key: {
@@ -113,9 +117,36 @@
         },
         methods: {
             loadChapter(book, chapter) {
+                console.log(book, chapter);
                 this.BiblicalBook = book;
                 this.BiblicalChapter = chapter;
                 this.loadModule(this.module);
+            },
+            prev() {
+            },
+            next() {
+                var {BiblicalBook, BiblicalChapter, BiblicalStructure} = this;
+                var struct = BiblicalStructure.find(([b,s]) => {
+                    return b == BiblicalBook;
+                });
+                struct = struct[1];
+                var {Chapters} = struct;
+                if (BiblicalChapter < Chapters) {
+                    this.loadChapter(BiblicalBook, BiblicalChapter + 1);
+                } else {
+                    let keys = BiblicalStructure.map(([k,v]) => {
+                        return k;
+                    });
+                    let idx = keys.indexOf(BiblicalBook);
+                    if ((idx + 1) < keys.length) {
+                        BiblicalBook = keys[idx + 1];
+                        BiblicalChapter = 1;
+                    } else {
+                        BiblicalBook = 'Genesis';
+                        BiblicalChapter = 1;
+                    }
+                    this.loadChapter(BiblicalBook, BiblicalChapter);
+                }
             },
         },
     }
@@ -125,18 +156,56 @@
     @import "../styles/base.less";
 
     #app {
-        .bible {
+        .bread {
             display: flex;
             flex-direction: column;
-            padding-top: 3.25rem;
 
             nav {
+                align-items: center;
                 border-bottom: 1px solid @blue;
                 color: @blue;
-                margin-left: calc(3rem + 4px);
+                display: flex;
 
-                .brand {
-                    pointer-events: none;
+                .navbar-brand {
+                    align-items: center;
+                    display: flex;
+                    flex: 1;
+
+                    .brand {
+                        flex: 1;
+                        pointer-events: none;
+                    }
+                }
+
+                .navbar-burger {
+                    align-items: center;
+                    display: flex;
+                    justify-content: center;
+                    margin-left: auto;
+
+                    &:hover {
+                        background-color: transparent
+                    }
+                }
+            }
+
+            .actions {
+                position: absolute;
+                right: 0;
+
+                .control {
+                    &:last-child {
+                        border-left: 1px solid @grey;
+                    }
+                }
+
+                .icon {
+                    cursor: pointer;
+                    padding: 2.5rem 2rem;
+
+                    &:hover {
+                        background-color: @greyA200;
+                    }
                 }
             }
 
@@ -151,6 +220,7 @@
                     display: flex;
                     flex: 2;
                     flex-direction: column;
+                    position: relative;
 
                     .heading {
                         margin: 0;

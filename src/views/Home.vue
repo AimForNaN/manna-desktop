@@ -149,7 +149,7 @@
                     }
 
                     &:hover {
-                        color: white;
+                        color: white !important;
                     }
                 }
             }

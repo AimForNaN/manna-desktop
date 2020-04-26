@@ -1,8 +1,8 @@
 <template lang="html">
-    <article class="bread">
-        <nav class="navbar is-fixed-top has-shadow">
+    <article class="breads">
+        <nav class="navbar has-shadow">
             <div class="navbar-brand">
-                <b-navbar-item>The Bread</b-navbar-item>
+                <b-navbar-item class="brand">The Bread</b-navbar-item>
                 <div class="navbar-burger">
                     <div class="buttons">
                         <b-button icon-right="sync" @click="reloadCache" />
@@ -36,17 +36,20 @@
     @import "../styles/base.less";
 
     #app {
-        .bread {
-            overflow: auto;
-            padding-top: 3.25rem;
+        .breads {
+            display: flex;
+            flex-direction: column;
 
             nav {
                 border-bottom: 1px solid @blue;
                 color: @blue;
-                margin-left: calc(3rem + 4px);
 
                 .navbar-brand {
                     flex: 1;
+
+                    .brand {
+                        pointer-events: none;
+                    }
                 }
 
                 .navbar-burger {
@@ -93,6 +96,7 @@
             .modules {
                 display: flex;
                 flex-wrap: wrap;
+                overflow-y: auto;
                 padding: 0.5rem;
 
                 .module.card {
