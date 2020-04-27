@@ -43,7 +43,7 @@
                     var {Text} = struct;
                     var div = document.createElement('div');
                     div.innerHTML = Text;
-                    return div.innerText;
+                    return div.innerText + '&nbsp;';
                 },
             },
             Verse: {

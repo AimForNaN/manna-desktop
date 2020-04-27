@@ -81,7 +81,7 @@
                 immediate: true,
                 handler(v) {
                     if (v) {
-                        var [book, chapter] = String(v).split(/[\s\.\:]/);
+                        var [book, chapter] = String(v).split('.');
                         this.BiblicalBook = book;
                         this.BiblicalChapter = chapter;
                     }
@@ -117,7 +117,6 @@
         },
         methods: {
             loadChapter(book, chapter) {
-                console.log(book, chapter);
                 this.BiblicalBook = book;
                 this.BiblicalChapter = chapter;
                 this.loadModule(this.module);
@@ -211,6 +210,7 @@
 
             .book {
                 display: flex;
+                flex: 1;
                 flex-direction: row;
                 font-family: Amiri;
                 font-size: 14pt;

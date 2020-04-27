@@ -86,7 +86,7 @@ export default {
             get() {
                 var {module} = this;
                 var {Key} = module;
-                return Key;
+                return String(Key).replace(/(?:\+|\%20)+/gm, ' ');
             },
         },
         LetterSpacing: {

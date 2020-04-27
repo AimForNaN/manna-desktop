@@ -251,6 +251,17 @@
             box-shadow: none;
         }
 
+        .button {
+            &:focus, &.is-focused {
+                border-color: @blue !important;
+                box-shadow: 0 0 0 0.125em @grey !important;
+            }
+        }
+
+        .dropdown-content {
+            border: 1px solid @grey200;
+        }
+
         .switch {
             .check {
                 box-shadow: none;
