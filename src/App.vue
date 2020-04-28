@@ -1,15 +1,13 @@
 <template>
     <main id="app">
-		<b-navbar class="main" :is-active="true" :mobile-burger="false" :open="$route.path !== '/'" :transparent="true">
-            <template slot="brand">
-                <b-navbar-item tag="router-link" to="/manna">&#127474;</b-navbar-item>
-            </template>
-            <template slot="start">
+		<nav class="navbar main" :is-active="true" :mobile-burger="false" :open="$route.path !== '/'" :transparent="true">
+            <b-navbar-item class="navbar-brand" tag="router-link" to="/manna">&#127474;</b-navbar-item>
+            <div class="navbar-menu">
                 <b-navbar-item :active="isActive('/bread')" tag="router-link" :to="{ name: 'Breads' }">B</b-navbar-item>
                 <b-navbar-item tag="router-link" to="/crumbs">C</b-navbar-item>
                 <b-navbar-item tag="router-link" to="/bakery">K</b-navbar-item>
-            </template>
-		</b-navbar>
+            </div>
+		</nav>
 		<transition name="page">
 			<router-view class="view" />
 		</transition>
@@ -128,97 +126,6 @@
     #app {
         background-color: @blue;
 
-        & {
-            bottom: 0;
-            left: 0;
-            position: fixed;
-            right: 0;
-            top: 0;
-
-            nav.main {
-                background-color: @blue;
-                color: #FFF;
-                display: flex;
-                flex-direction: column;
-                height: 100vh;
-                left: 0;
-                max-width: 3rem;
-                opacity: 0;
-                overflow: hidden;
-                pointer-events: none;
-                position: fixed;
-                top: 0;
-                transition: all 0.7s;
-                width: 0.75rem;
-                z-index: 1000;
-
-                &[open] {
-                    max-width: 3rem;
-                    opacity: 1;
-                    pointer-events: all;
-                    width: 3rem;
-                }
-
-                a {
-                    align-items: center;
-                    color: #FFF;
-                    display: flex;
-                    justify-content: center;
-                    outline: none;
-                    padding: 0.5rem;
-
-                    &:hover {
-                        background-color: @blue !important
-                    }
-
-                    &.is-active {
-                        background-color: @red !important;
-                    }
-                }
-
-                .navbar-brand {
-                    align-items: stretch;
-                    flex-direction: column;
-                    min-height: 0;
-                    outline: none;
-                }
-
-                .navbar-item {
-                    align-items: center;
-                    display: flex;
-                    justify-content: center;
-                }
-
-                .navbar-menu {
-                    background-color: @blue;
-                    display: flex;
-                    flex-direction: column;
-
-                    .navbar-start {
-                        align-items: stretch;
-                        display: flex;
-                        flex-direction: column;
-                        margin-right: 0;
-                    }
-                }
-            }
-
-            .view {
-                background-color: #FFF;
-                border-left: 4px solid @red;
-                bottom: 0;
-                left: 0;
-                overflow: hidden;
-                position: absolute;
-                right: 0;
-                top: 0;
-
-                &:not(.home) {
-                    left: 3rem;
-                }
-            }
-        }
-
         a {
             color: @blue;
             text-decoration: none;
@@ -262,6 +169,18 @@
             border: 1px solid @grey200;
         }
 
+        .navbar {
+            align-items: center;
+            display: flex;
+
+            .navbar-brand {
+                align-items: center;
+                display: flex;
+                flex: 1;
+                pointer-events: none;
+            }
+        }
+
         .switch {
             .check {
                 box-shadow: none;
@@ -269,6 +188,93 @@
 
             input[type="checkbox"]:checked + .check {
                 background-color: @blue;
+            }
+        }
+
+        & {
+            bottom: 0;
+            left: 0;
+            position: fixed;
+            right: 0;
+            top: 0;
+
+            nav.main {
+                align-items: stretch;
+                background-color: @blue;
+                color: #FFF;
+                display: flex;
+                flex-direction: column;
+                height: 100vh;
+                left: 0;
+                max-width: 3rem;
+                opacity: 0;
+                overflow: hidden;
+                pointer-events: none;
+                position: fixed;
+                top: 0;
+                transition: all 0.7s;
+                width: 0.75rem;
+                z-index: 1000;
+
+                &[open] {
+                    max-width: 3rem;
+                    opacity: 1;
+                    pointer-events: all;
+                    width: 3rem;
+                }
+
+                a {
+                    align-items: center;
+                    color: #FFF;
+                    display: flex;
+                    justify-content: center;
+                    outline: none;
+                    padding: 0.5rem;
+
+                    &:hover {
+                        background-color: @blue !important
+                    }
+
+                    &.is-active {
+                        background-color: @red !important;
+                    }
+                }
+
+                .navbar-brand {
+                    flex: none;
+                    flex-direction: column;
+                    min-height: 0;
+                    outline: none;
+                }
+
+                .navbar-item {
+                    align-items: center;
+                    display: flex;
+                    justify-content: center;
+                }
+
+                .navbar-menu {
+                    align-items: stretch;
+                    background-color: @blue;
+                    display: flex;
+                    flex-direction: column;
+                    padding: 0.25rem 0;
+                }
+            }
+
+            .view {
+                background-color: #FFF;
+                border-left: 4px solid @red;
+                bottom: 0;
+                left: 0;
+                overflow: hidden;
+                position: absolute;
+                right: 0;
+                top: 0;
+
+                &:not(.home) {
+                    left: 3rem;
+                }
             }
         }
     }

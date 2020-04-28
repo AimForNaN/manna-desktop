@@ -130,6 +130,13 @@ export default {
                 return Name;
             },
         },
+        Settings: {
+            cache: false,
+            get() {
+                var {Settings} = this.$store.state;
+                return Settings;
+            },
+        },
         Structure: {
             cache: false,
             get() {

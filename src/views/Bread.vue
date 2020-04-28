@@ -1,10 +1,8 @@
 <template lang="html">
     <article class="bread">
         <nav class="navbar has-shadow">
-            <div class="navbar-brand">
-                <b-navbar-item class="brand">{{Description}}</b-navbar-item>
-                <BibleChapterSelector class="navbar-item" :book="BiblicalBook" :chapter="BiblicalChapter" :struct="BiblicalStructure" @selection="loadChapter($event.Book, $event.Chapter)"></BibleChapterSelector>
-            </div>
+            <b-navbar-item class="navbar-brand">{{Description}}</b-navbar-item>
+            <BibleChapterSelector class="navbar-item" :book="BiblicalBook" :chapter="BiblicalChapter" :struct="BiblicalStructure" @selection="loadChapter($event.Book, $event.Chapter)"></BibleChapterSelector>
         </nav>
         <section class="book">
             <div class="text">
@@ -122,6 +120,28 @@
                 this.loadModule(this.module);
             },
             prev() {
+                var {BiblicalBook, BiblicalChapter, BiblicalStructure, Structure} = this;
+                var struct = BiblicalStructure.find(([b,s]) => {
+                    return b == BiblicalBook;
+                });
+                struct = struct[1];
+                var {Chapters} = struct;
+                if (BiblicalChapter > 1) {
+                    this.loadChapter(BiblicalBook, BiblicalChapter - 1);
+                } else {
+                    let keys = BiblicalStructure.map(([k,v]) => {
+                        return k;
+                    });
+                    let idx = keys.indexOf(BiblicalBook);
+                    if ((idx - 1) > 0) {
+                        BiblicalBook = keys[idx - 1];
+                        BiblicalChapter = 1;
+                    } else {
+                        BiblicalBook = 'Revelation of John';
+                        BiblicalChapter = Structure[BiblicalBook].Chapters;
+                    }
+                    this.loadChapter(BiblicalBook, BiblicalChapter);
+                }
             },
             next() {
                 var {BiblicalBook, BiblicalChapter, BiblicalStructure} = this;
