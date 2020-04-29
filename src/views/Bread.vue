@@ -3,10 +3,11 @@
         <nav class="navbar has-shadow">
             <b-navbar-item class="navbar-brand">{{Description}}</b-navbar-item>
             <BibleChapterSelector class="navbar-item" :book="BiblicalBook" :chapter="BiblicalChapter" :struct="BiblicalStructure" @selection="loadChapter($event.Book, $event.Chapter)"></BibleChapterSelector>
+            <b-button icon-right="magnify" @click="onSearch" />
         </nav>
         <section class="book">
             <div class="text">
-                <div class="actions field has-addons">
+                <div class="bread-actions field has-addons">
                     <div class="control">
                         <b-icon icon="chevron-left" @click.native="prev"></b-icon>
                     </div>
@@ -16,7 +17,7 @@
                 </div>
                 <div class="title">Book of {{BiblicalBook}}</div>
                 <div class="heading">Chapter {{BiblicalChapter}}</div>
-                <Verses :text="Text"></Verses>
+                <Verses :direction="Direction" :text="Text" ref="viewport"></Verses>
             </div>
             <b-menu :accordion="false" class="structure">
                 <b-menu-list>
@@ -59,6 +60,8 @@
 </template>
 
 <script>
+    import ScrollBooster from 'scrollbooster';
+
     import Helpers from '../store/helpers';
     const {Module,Modules} = Helpers;
 
@@ -73,6 +76,11 @@
         components: {
             BibleChapterSelector,
             Verses,
+        },
+        data() {
+            return {
+                ScrollBooster: null,
+            };
         },
         watch: {
             Key: {
@@ -118,6 +126,8 @@
                 this.BiblicalBook = book;
                 this.BiblicalChapter = chapter;
                 this.loadModule(this.module);
+            },
+            onSearch() {
             },
             prev() {
                 var {BiblicalBook, BiblicalChapter, BiblicalStructure, Structure} = this;
@@ -168,6 +178,19 @@
                 }
             },
         },
+        mounted() {
+            var el = this.$refs.viewport.$el;
+            this.ScrollBooster = new ScrollBooster({
+                viewport: el,
+                content: el,
+                scrollMode: 'native',
+                direction: 'vertical',
+                // textSelection: true,
+            });
+        },
+        destroyed() {
+            this.ScrollBooster.destroy();
+        },
     }
 </script>
 
@@ -195,20 +218,9 @@
                         pointer-events: none;
                     }
                 }
-
-                .navbar-burger {
-                    align-items: center;
-                    display: flex;
-                    justify-content: center;
-                    margin-left: auto;
-
-                    &:hover {
-                        background-color: transparent
-                    }
-                }
             }
 
-            .actions {
+            .bread-actions {
                 position: absolute;
                 right: 0;
 
@@ -232,14 +244,13 @@
                 display: flex;
                 flex: 1;
                 flex-direction: row;
-                font-family: Amiri;
-                font-size: 14pt;
                 overflow: hidden;
 
                 .text {
                     display: flex;
                     flex: 2;
                     flex-direction: column;
+                    font-family: Amiri;
                     position: relative;
 
                     .heading {
@@ -256,6 +267,12 @@
                     .verses {
                         padding: 3rem 5rem;
                         padding-top: 1rem;
+
+                        .verse {
+                            .verse-text:hover, .v-context[aria-hidden="false"] + .verse-text {
+                                background-color: @greyA;
+                            }
+                        }
                     }
                 }
 

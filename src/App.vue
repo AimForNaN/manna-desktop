@@ -3,9 +3,9 @@
 		<nav class="navbar main" :is-active="true" :mobile-burger="false" :open="$route.path !== '/'" :transparent="true">
             <b-navbar-item class="navbar-brand" tag="router-link" to="/manna">&#127474;</b-navbar-item>
             <div class="navbar-menu">
-                <b-navbar-item :active="isActive('/bread')" tag="router-link" :to="{ name: 'Breads' }">B</b-navbar-item>
-                <b-navbar-item tag="router-link" to="/crumbs">C</b-navbar-item>
-                <b-navbar-item tag="router-link" to="/bakery">K</b-navbar-item>
+                <b-navbar-item :active="isActive('/bread')" tag="router-link" :to="toBreads">B</b-navbar-item>
+                <b-navbar-item :active="isActive('/crumbs')" tag="router-link" to="/crumbs">C</b-navbar-item>
+                <b-navbar-item :active="isActive('/bakery')" tag="router-link" to="/bakery">K</b-navbar-item>
             </div>
 		</nav>
 		<transition name="page">
@@ -22,6 +22,31 @@
         mixins: [
             Modules,
         ],
+        computed: {
+            toBreads: {
+                cache: false,
+                get() {
+                    var {$route} = this;
+                    var {path} = $route;
+                    if (!String(path).startsWith('/breads')) {
+                        var {Bible} = this.$store.state;
+                        var {Book, Chapter, Modules} = Bible;
+                        var {Text} = Modules;
+                        return {
+                            name: 'Bread',
+                            params: {
+                                mod: Text,
+                                key: `${Book}.${Chapter}`,
+                            },
+                        };
+                    }
+                    else if (String(path) == '/breads') {
+                        return null;
+                    }
+                    return { name: 'Breads' };
+                },
+            },
+        },
         methods: {
             isActive(page) {
                 var {$route} = this;
@@ -179,6 +204,18 @@
                 flex: 1;
                 pointer-events: none;
             }
+
+            > * {
+                margin-right: 0.5rem;
+
+                &.navbar-item {
+                    padding: 0;
+
+                    &.navbar-brand {
+                        padding: 0 0.5rem;
+                    }
+                }
+            }
         }
 
         .switch {
@@ -232,7 +269,7 @@
                     padding: 0.5rem;
 
                     &:hover {
-                        background-color: @blue !important
+                        background-color: darken(@red, 15%) !important
                     }
 
                     &.is-active {
@@ -251,6 +288,7 @@
                     align-items: center;
                     display: flex;
                     justify-content: center;
+                    padding: 0.5rem !important;
                 }
 
                 .navbar-menu {
@@ -259,6 +297,10 @@
                     display: flex;
                     flex-direction: column;
                     padding: 0.25rem 0;
+                }
+
+                > * {
+                    margin: 0;
                 }
             }
 
@@ -286,6 +328,32 @@
     .modal-card-foot {
         button.is-primary {
             background-color: @blue;
+        }
+    }
+
+    .v-context {
+        [role="menuitem"] {
+            align-items: center;
+            display: flex;
+            font-family: Jaldi;
+            font-size: 14pt;
+            padding: 0 0.5rem;
+
+            .icon {
+                margin-right: 0.5rem;
+
+                > * {
+                    align-items: center;
+                    display: flex;
+                    height: 24px;
+                    justify-content: center;
+                    width: 24px;
+
+                    &.mdi:before {
+                        font-size: 14pt;
+                    }
+                }
+            }
         }
     }
 </style>

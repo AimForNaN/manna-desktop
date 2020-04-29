@@ -15,7 +15,7 @@ export default new Vuex.Store({
             LineByLine: true,
 			Modules: {
 				Commentary: null,
-				Text: 'ESV',
+				Text: 'KJV', // ESV not allowed by publisher!
 			},
             VerseNumbers: true,
         },
@@ -34,6 +34,7 @@ export default new Vuex.Store({
             'Tajawal',
         ],
         Modules: new Map(),
+        Plugins: [],
         Settings: {
             Font: 'Suravaram',
 			FontSize: 1.35,
@@ -46,6 +47,11 @@ export default new Vuex.Store({
         SetBiblicalBook(state, book) {
             var {Bible} = state;
             Bible.Book = String(book);
+        },
+        SetBiblicalTextModule(state, mod) {
+            var {Bible} = state;
+            var {Modules} = Bible;
+            Modules.Text = String(mod);
         },
         SetBiblicalChapter(state, chapter) {
             var {Bible} = state;

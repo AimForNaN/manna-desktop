@@ -1,13 +1,30 @@
 <template lang="html">
-    <div class="verse">
+    <div class="verse" @contextmenu.prevent="$refs.menu.open">
         <span class="verse-number" v-if="!noNumber">{{Verse}}.</span>
-        <p class="verse-text" v-html="Text"></p>
+        <vue-context ref="menu">
+            <li v-for="action in Actions">
+                <a @click="action.Action">
+                    <b-icon :icon="action.Icon" />
+                    {{action.Label}}
+                </a>
+            </li>
+        </vue-context>
+        <p class="verse-text" :dir="direction" v-html="Text"></p>
     </div>
 </template>
 
 <script>
+    import {VueContext} from 'vue-context';
+
     export default {
+        components: {
+            VueContext,
+        },
         props: {
+            direction: {
+                type: String,
+                default: 'ltr',
+            },
             noNumber: {
                 type: Boolean,
                 default: false,
@@ -20,6 +37,28 @@
             },
         },
         computed: {
+            Actions: {
+                cache: false,
+                get() {
+                    return [
+                        {
+                            Action: this.onCopy,
+                            Label: 'Copy',
+                            Icon: 'clipboard-text',
+                        },
+                        {
+                            Action: this.onBookmark,
+                            Label: 'Bookmark',
+                            Icon: 'bookmark-plus',
+                        },
+                        {
+                            Action: this.onHighlight,
+                            Label: 'Highlight',
+                            Icon: 'marker',
+                        },
+                    ];
+                },
+            },
             Book: {
                 cache: false,
                 get() {
@@ -53,6 +92,14 @@
                     var {Verse} = struct;
                     return Verse;
                 },
+            },
+        },
+        methods: {
+            onCopy() {
+            },
+            onBookmark() {
+            },
+            onHighlight() {
             },
         },
     }

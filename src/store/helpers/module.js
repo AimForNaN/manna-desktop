@@ -52,6 +52,14 @@ export default {
                 return Description;
             },
         },
+        Direction: {
+            cache: false,
+            get() {
+                var {module} = this;
+                var {R2L} = module;
+                return R2L ? 'rtl' : 'ltr';
+            },
+        },
         Font: {
             cache: false,
             get() {
@@ -175,5 +183,8 @@ export default {
                 this.$store.commit('SetVerseNumbers', v);
             },
         },
+    },
+    methods: {
+        search() {},
     },
 }

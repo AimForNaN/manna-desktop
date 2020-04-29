@@ -18,6 +18,18 @@ export default {
         },
         BiblicalBook,
         BiblicalChapter,
+        BiblicalTextModule: {
+            cache: false,
+            get() {
+                var {Bible} = this.$store.state;
+                var {Modules} = Bible;
+                var {Text} = Modules;
+                return Text;
+            },
+            set(v) {
+                this.$store.commit('SetBiblicalTextModule', v);
+            },
+        },
         Modules: {
             cache: false,
             get() {

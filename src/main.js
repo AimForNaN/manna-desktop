@@ -7,6 +7,8 @@ import Buefy from 'buefy';
 import 'buefy/dist/buefy.css';
 import '@mdi/font/css/materialdesignicons.css';
 
+import 'vue-context/dist/css/vue-context.css';
+
 Vue.use(Buefy);
 
 Vue.config.productionTip = false;

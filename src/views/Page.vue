@@ -15,6 +15,7 @@
             var {key, mod} = params;
             switch (name) {
                 case 'Bread': {
+                    this.BiblicalTextModule = mod;
                     this.fetchModule({
                         Names: mod,
                         Key: key,

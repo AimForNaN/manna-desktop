@@ -30,6 +30,33 @@ const routes = [
             },
         ],
     },
+    {
+        path: '/crumbs',
+        component: Page,
+        children: [
+            {
+                path: '',
+                name: 'Crumbs',
+                // component: Breads,
+            },
+            {
+                path: ':mod/:key',
+                name: 'Crumb',
+                // component: Bread,
+            },
+        ],
+    },
+    {
+        path: '/bakery',
+        component: Page,
+        children: [
+            {
+                path: '',
+                name: 'Bakery',
+                // component: Breads,
+            },
+        ],
+    },
 ];
 
 const router = new VueRouter({

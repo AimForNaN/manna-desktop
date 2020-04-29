@@ -1,18 +1,16 @@
 <template>
     <div class="card module button">
-        <div class="card-header" @click="onClick">
+        <div class="card-header">
             <div class="card-header-title">
                 {{Name}}
             </div>
         </div>
-        <div class="card-content" @click="onClick">
+        <div class="card-content">
             {{Description}}
         </div>
         <footer class="card-footer">
-            <a class="card-footer-item" @click="onAbout">
-                <!-- <b-icon :icon="!props.open ? 'menu-down' : 'menu-up'"></b-icon> -->
-                About
-            </a>
+            <a class="card-footer-item" @click="onOpen">Open</a>
+            <a class="card-footer-item" @click="onRemove">Remove</a>
         </footer>
     </div>
 </template>
@@ -42,8 +40,11 @@
                     confirmText: 'Close',
                 });
             },
-            onClick() {
-                this.$emit('click', this.module);
+            onOpen() {
+                this.$emit('open', this.module);
+            },
+            onRemove() {
+                this.$emit('remove', this.module);
             },
         },
     }
@@ -53,6 +54,7 @@
     #app {
         .module.card {
             align-items: unset;
+            cursor: default;
             display: flex;
             flex-direction: column;
             height: auto;

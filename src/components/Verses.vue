@@ -1,6 +1,6 @@
 <template lang="html">
     <div class="verses" :class="{ 'line-by-line': LineByLine, 'verse-numbers': VerseNumbers, }" :style="TextStyle">
-        <Verse :no-number="!VerseNumbers" :key="t.Verse" :struct="t" v-for="t in text"></Verse>
+        <Verse :direction="direction" :no-number="!VerseNumbers" :key="t.Verse" :struct="t" v-for="t in text"></Verse>
     </div>
 </template>
 
@@ -18,6 +18,10 @@
             Verse,
         },
         props: {
+            direction: {
+                type: String,
+                default: 'ltr',
+            },
             text: {
                 type: Array,
                 default() {
