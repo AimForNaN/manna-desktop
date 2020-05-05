@@ -1,19 +1,14 @@
 <template lang="html">
-    <div class="verses" :class="{ 'line-by-line': LineByLine, 'verse-numbers': VerseNumbers, }" :style="TextStyle">
-        <Verse :direction="direction" :no-number="!VerseNumbers" :key="t.Verse" :struct="t" v-for="t in text"></Verse>
+    <div class="verses" :class="{ 'line-by-line': !noLineByLine, 'verse-numbers': !noVerseNumbers, }" :style="TextStyle">
+        <Verse :direction="direction" :no-headings="noHeadings" :no-notes="noNotes" :no-verse-numbers="noVerseNumbers" :no-strongs="noStrongs" :no-white-space="noWhiteSpace" :key="t.Verse" :struct="t" v-for="t in text"></Verse>
     </div>
 </template>
 
 <script>
     import Helpers from '../store/helpers';
-    const {Module} = Helpers;
-
     import Verse from './Verse.vue';
 
     export default {
-        mixins: [
-            Module,
-        ],
         components: {
             Verse,
         },
@@ -22,12 +17,44 @@
                 type: String,
                 default: 'ltr',
             },
+            noHeadings: {
+                type: Boolean,
+                default: false,
+            },
+            noLineByLine: {
+                type: Boolean,
+                default: false,
+            },
+            noNotes: {
+                type: Boolean,
+                default: false,
+            },
+            noStrongs: {
+                type: Boolean,
+                default: false,
+            },
+            noVerseNumbers: {
+                type: Boolean,
+                default: false,
+            },
+            noWhiteSpace: {
+                type: Boolean,
+                default: false,
+            },
             text: {
                 type: Array,
                 default() {
                     return [];
                 },
             },
+        },
+        watch: {
+            text() {
+                this.$el.scrollTo({
+                    top: 0,
+                    behavior: 'smooth',
+                });
+            }
         },
         computed: {
             TextStyle: {
@@ -64,8 +91,13 @@
 
             &.line-by-line {
                 .verse {
+                    align-items: baseline;
                     display: flex;
                     margin-left: -3rem;
+
+                    .new-line, .paragraph {
+                        display: none;
+                    }
                 }
             }
 
@@ -89,6 +121,14 @@
 
                 .verse {
                     margin-left: 0;
+                }
+            }
+
+            .verse-wrapper {
+                &:first-child {
+                    .verse-heading {
+                        padding: 0 !important;
+                    }
                 }
             }
 

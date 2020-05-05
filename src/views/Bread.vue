@@ -17,7 +17,7 @@
                 </div>
                 <div class="title">Book of {{BiblicalBook}}</div>
                 <div class="heading">Chapter {{BiblicalChapter}}</div>
-                <Verses :direction="Direction" :text="Text" ref="viewport"></Verses>
+                <Verses :direction="Direction" :no-headings="!Headings" :no-line-by-line="!LineByLine" :no-notes="!ShowNotes" :no-strongs="!ShowStrongs" :no-verse-numbers="!VerseNumbers" :no-white-space="!WhiteSpace" :text="Text" ref="viewport"></Verses>
             </div>
             <b-menu :accordion="false" class="structure">
                 <b-menu-list>
@@ -44,10 +44,22 @@
                             <b-numberinput controls-position="compact" step="0.05" type="is-dark" v-model="WordSpacing"></b-numberinput>
                         </b-field>
                         <b-field>
+                            <b-switch v-model="Headings">Headings</b-switch>
+                        </b-field>
+                        <b-field>
                             <b-switch v-model="LineByLine">Line by Line</b-switch>
                         </b-field>
                         <b-field>
+                            <b-switch v-model="ShowNotes">Notes</b-switch>
+                        </b-field>
+                        <b-field>
+                            <b-switch v-model="ShowStrongs">Strongs Numbers</b-switch>
+                        </b-field>
+                        <b-field>
                             <b-switch v-model="VerseNumbers">Verse Numbers</b-switch>
+                        </b-field>
+                        <b-field>
+                            <b-switch :disabled="LineByLine" v-model="WhiteSpace">WhiteSpace</b-switch>
                         </b-field>
                     </b-menu-item>
                     <!-- <b-menu-item :active="name == BiblicalBook" :expanded="name == BiblicalBook" :key="name" :label="name" v-for="[name, struct] in BiblicalStructure">
@@ -251,6 +263,7 @@
                     flex: 2;
                     flex-direction: column;
                     font-family: Amiri;
+                    max-width: calc(70vw - 3rem);
                     position: relative;
 
                     .heading {
@@ -279,7 +292,6 @@
                 .structure {
                     border-left: 1px solid @pale-blueA200;
                     flex: 1;
-                    max-width: 295px;
                     overflow: auto;
 
                     * > a {

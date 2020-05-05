@@ -89,6 +89,17 @@ export default {
                 this.$store.commit('SetFontSize', v);
             },
         },
+        Headings: {
+            cache: false,
+            get() {
+                var {Settings} = this.$store.state;
+                var {Headings} = Settings;
+                return Headings;
+            },
+            set(v) {
+                this.$store.commit('SetHeadings', v);
+            },
+        },
         Key: {
             cache: false,
             get() {
@@ -145,6 +156,28 @@ export default {
                 return Settings;
             },
         },
+        ShowNotes: {
+            cache: false,
+            get() {
+                var {Bible} = this.$store.state;
+                var {Notes} = Bible;
+                return Notes;
+            },
+            set(v) {
+                this.$store.commit('SetShowNotes', v);
+            },
+        },
+        ShowStrongs: {
+            cache: false,
+            get() {
+                var {Bible} = this.$store.state;
+                var {Strongs} = Bible;
+                return Strongs;
+            },
+            set(v) {
+                this.$store.commit('SetShowStrongs', v);
+            },
+        },
         Structure: {
             cache: false,
             get() {
@@ -159,6 +192,17 @@ export default {
                 var {module} = this;
                 var {Text} = module;
                 return Text;
+            },
+        },
+        WhiteSpace: {
+            cache: false,
+            get() {
+                var {Settings} = this.$store.state;
+                var {WhiteSpace} = Settings;
+                return WhiteSpace;
+            },
+            set(v) {
+                this.$store.commit('SetWhiteSpace', v);
             },
         },
         WordSpacing: {

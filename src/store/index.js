@@ -17,6 +17,8 @@ export default new Vuex.Store({
 				Commentary: null,
 				Text: 'KJV', // ESV not allowed by publisher!
 			},
+            Notes: true,
+            Strongs: true,
             VerseNumbers: true,
         },
         Fonts: [
@@ -38,8 +40,10 @@ export default new Vuex.Store({
         Settings: {
             Font: 'Suravaram',
 			FontSize: 1.35,
+            Headings: true,
 			LetterSpacing: 0,
 			LineHeight: 2,
+            WhiteSpace: true,
             WordSpacing: 3,
         },
     },
@@ -57,14 +61,6 @@ export default new Vuex.Store({
             var {Bible} = state;
             Bible.Chapter = ~~parseInt(chapter);
         },
-        SetModules(state, mods) {
-            mods = Array.from(mods);
-            var {Modules} = state;
-            state.Modules = mods.reduce((ret, mod) => {
-                ret.set(mod.Name, mod);
-                return ret;
-            }, Modules);
-        },
         SetFont(state, f) {
             var {Settings} = state;
             Settings.Font = String(f);
@@ -72,6 +68,10 @@ export default new Vuex.Store({
         SetFontSize(state, fs) {
             var {Settings} = state;
             Settings.FontSize = parseFloat(fs);
+        },
+        SetHeadings(state, h) {
+            var {Settings} = state;
+            Settings.Headings = Boolean(h);
         },
         SetLetterSpacing(state, ls) {
             var {Settings} = state;
@@ -84,6 +84,26 @@ export default new Vuex.Store({
         SetLineHeight(state, lh) {
             var {Settings} = state;
             Settings.LineHeight = parseFloat(lh);
+        },
+        SetModules(state, mods) {
+            mods = Array.from(mods);
+            var {Modules} = state;
+            state.Modules = mods.reduce((ret, mod) => {
+                ret.set(mod.Name, mod);
+                return ret;
+            }, Modules);
+        },
+        SetShowNotes(state, n) {
+            var {Bible} = state;
+            Bible.Notes = Boolean(n);
+        },
+        SetShowStrongs(state, s) {
+            var {Bible} = state;
+            Bible.Strongs = Boolean(s);
+        },
+        SetWhiteSpace(state, ws) {
+            var {Settings} = state;
+            Settings.WhiteSpace = Boolean(ws);
         },
         SetWordSpacing(state, ws) {
             var {Settings} = state;
