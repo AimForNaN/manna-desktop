@@ -49,8 +49,11 @@ const PluginModule = {
         VerseMenu(state) {
             var {Plugins} = state;
             return Plugins.reduce((ret, plugin) => {
-                var {VerseMenu} = plugin;
-                ret.push(VerseMenu);
+                var {Type} = plugin;
+                if (Type.includes('Verse')) {
+                    let {VerseMenu} = plugin;
+                    ret.push(VerseMenu);
+                }
                 return ret;
             }, []);
         },

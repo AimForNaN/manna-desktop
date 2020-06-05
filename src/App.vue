@@ -69,23 +69,14 @@
         0% {
             clip-path: circle(0% at 50% 50%);
             opacity: 0.25;
-            z-index: 999;
-        }
-        35% {
-            opacity: 1;
-        }
-        80% {
-            clip-path: circle(100% at 50% 50%);
-            opacity: 1;
         }
         100% {
             clip-path: circle(100% at 50% 50%);
-            opacity: 0;
-            z-index: 0;
+            opacity: 1;
         }
     }
 
-    @keyframes page-transition-fade-in {
+    @keyframes page-transition-scale-in {
         from {
             opacity: 0;
             transform: scale(1.1);
@@ -96,7 +87,7 @@
         }
     }
 
-    @keyframes page-transition-fade-out {
+    @keyframes page-transition-scale-out {
         from {
             opacity: 1;
             transform: scale(1);
@@ -107,18 +98,40 @@
         }
     }
 
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: opacity 2s;
+    }
+    .fade-enter,
+    .fade-leave-active {
+        opacity: 0;
+    }
+
     .page-enter-active {
         animation-duration: 0.7s;
         animation-fill-mode: forwards;
-        animation-name: page-transition-fade-in;
+        animation-name: page-transition-scale-in;
         animation-play-state: running;
     }
 
     .page-leave-active {
         animation-duration: 0.7s;
         animation-fill-mode: forwards;
-        animation-name: page-transition-fade-out;
+        animation-name: page-transition-scale-out;
         animation-play-state: running;
+    }
+
+    .slide-left-enter,
+    .slide-right-leave-active {
+        opacity: 0;
+        -webkit-transform: translate(30px, 0);
+        transform: translate(30px, 0);
+    }
+    .slide-left-leave-active,
+    .slide-right-enter {
+        opacity: 0;
+        -webkit-transform: translate(-30px, 0);
+        transform: translate(-30px, 0);
     }
 
     * {
@@ -254,6 +267,7 @@
                 z-index: 1000;
 
                 &[open] {
+                    border-right: 4px solid @red;
                     max-width: 3rem;
                     opacity: 1;
                     pointer-events: all;
@@ -282,6 +296,10 @@
                     flex-direction: column;
                     min-height: 0;
                     outline: none;
+
+                    &:focus, &:focus-within, &:hover {
+                        background-color: transparent !important;
+                    }
                 }
 
                 .navbar-item {
@@ -306,13 +324,22 @@
 
             .view {
                 background-color: #FFF;
-                border-left: 4px solid @red;
                 bottom: 0;
                 left: 0;
                 overflow: hidden;
                 position: absolute;
                 right: 0;
                 top: 0;
+
+                .child-view {
+                    bottom: 0;
+                    left: 0;
+                    overflow: hidden;
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+
+                }
 
                 &:not(.home) {
                     left: 3rem;

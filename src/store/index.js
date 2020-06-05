@@ -6,8 +6,7 @@ Vue.use(Vuex);
 const http2 = window.require('http2');
 const base = 'http://localhost:7777';
 
-import Libs from './libs/';
-var {Plugins} = Libs;
+import {Plugins} from './libs/';
 
 export default new Vuex.Store({
     modules: {

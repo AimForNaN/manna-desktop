@@ -1,12 +1,20 @@
 export default class Highlighter {
-    constructor({ Vue, Paths, }) {
-    }
+    constructor({
+        Vue,
+        Paths,
+    }) {}
 
     get is() {
         return 'Highlighter';
     }
 
     onHighlight() {}
+
+    get Type() {
+        return [
+            'Verse',
+        ];
+    }
 
     get VerseMenu() {
         return {

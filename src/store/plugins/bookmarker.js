@@ -21,6 +21,12 @@ export default class Bookmarker {
         console.log(bookmark);
     }
 
+    get Type() {
+        return [
+            'Verse',
+        ];
+    }
+
     get VerseMenu() {
         return {
             Action: this.onBookmark,

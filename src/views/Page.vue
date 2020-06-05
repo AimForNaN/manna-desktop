@@ -1,5 +1,9 @@
 <template lang="html">
-    <router-view />
+    <div>
+        <transition name="page">
+            <router-view class="child-view" />
+        </transition>
+    </div>
 </template>
 
 <script>

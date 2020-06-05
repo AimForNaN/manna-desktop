@@ -1,9 +1,12 @@
 import Bookmarker from './bookmarker.js'
 import Highlighter from './highlighter.js'
 
-const Plugins = {
+export default {
     Bookmarker,
     Highlighter,
 };
 
-export default Plugins;
+export {
+    Bookmarker,
+    Highlighter,
+};

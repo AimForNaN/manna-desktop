@@ -30,6 +30,18 @@ export default {
                 this.$store.commit('SetBiblicalTextModule', v);
             },
         },
+        Commentaries: {
+            cache: false,
+            get() {
+                var {ModulesArray} = this;
+                return ModulesArray.reduce((ret, mod) => {
+                    if (mod.Type == 'Commentaries') {
+                        ret.push(mod);
+                    }
+                    return ret;
+                }, []);
+            },
+        },
         GenericTexts: {
             cache: false,
             get() {

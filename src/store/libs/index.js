@@ -1,7 +1,9 @@
 import Plugins from './plugins.js';
 
-var Libs = {
+export default {
     Plugins,
 };
 
-export default Libs;
+export {
+    Plugins,
+};
