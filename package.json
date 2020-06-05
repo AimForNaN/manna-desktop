@@ -8,6 +8,7 @@
     "test:e2e": "vue-cli-service test:e2e"
   },
   "dependencies": {
+    "@folder/xdg": "^2.1.1",
     "@mdi/font": "^5.1.45",
     "buefy": "^0.8.15",
     "iso-639-1": "^2.1.1",

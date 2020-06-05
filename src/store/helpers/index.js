@@ -9,5 +9,3 @@ const helpers = {
 };
 
 export default helpers;
-
-// export helpers;

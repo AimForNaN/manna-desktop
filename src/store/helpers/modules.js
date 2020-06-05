@@ -30,6 +30,18 @@ export default {
                 this.$store.commit('SetBiblicalTextModule', v);
             },
         },
+        GenericTexts: {
+            cache: false,
+            get() {
+                var {ModulesArray} = this;
+                return ModulesArray.reduce((ret, mod) => {
+                    if (mod.Type == 'Generic Books') {
+                        ret.push(mod);
+                    }
+                    return ret;
+                }, []);
+            },
+        },
         Modules: {
             cache: false,
             get() {
@@ -52,17 +64,26 @@ export default {
             return this.$store.dispatch('GetModules');
         },
         loadModule(mod) {
-            var {
-                BiblicalBook,
-                BiblicalChapter
-            } = this;
-            this.$router.push({
-                name: 'Bread',
-                params: {
-                    mod: mod.Name,
-                    key: `${BiblicalBook}.${BiblicalChapter}`,
-                },
-            });
+            var {Type} = mod;
+            switch (Type) {
+                case 'Biblical Texts': {
+                    var {
+                        BiblicalBook,
+                        BiblicalChapter
+                    } = this;
+                    this.$router.push({
+                        name: 'Bread',
+                        params: {
+                            mod: mod.Name,
+                            key: `${BiblicalBook}.${BiblicalChapter}`,
+                        },
+                    });
+                    break;
+                }
+                case 'Generic Books': {
+                    break;
+                }
+            }
         },
         reloadCache() {
             return this.$store.dispatch('ReloadCache');

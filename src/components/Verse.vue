@@ -7,7 +7,7 @@
             <span class="verse-number" v-if="!noVerseNumbers">{{Verse}}.</span>
             <vue-context ref="menu">
                 <li v-for="action in Actions">
-                    <a @click="action.Action">
+                    <a @click="action.Action(self)">
                         <b-icon :icon="action.Icon" />
                         {{action.Label}}
                     </a>
@@ -36,6 +36,8 @@
 <script>
     import {VueContext} from 'vue-context';
 
+    import Self from '../store/helpers/self.js';
+
     const puncuation = '[\\:\\;\\,\\.\\—\\!\\"\'\\”\\[\\]\\s\\`\\’\\?]';
     const punc_end   = new RegExp('[\\“\\‘\\—]$');
     const punc_start = new RegExp('^' + puncuation);
@@ -44,6 +46,9 @@
         components: {
             VueContext,
         },
+        mixins: [
+            Self,
+        ],
         props: {
             direction: {
                 type: String,
@@ -80,22 +85,14 @@
             Actions: {
                 cache: false,
                 get() {
+                    var actions = this.$store.getters['Plugins/VerseMenu'];
                     return [
                         {
                             Action: this.onCopy,
-                            Label: 'Copy',
+                            Label: 'Copy Verse',
                             Icon: 'clipboard-text',
                         },
-                        {
-                            Action: this.onBookmark,
-                            Label: 'Bookmark',
-                            Icon: 'bookmark-plus',
-                        },
-                        {
-                            Action: this.onHighlight,
-                            Label: 'Highlight',
-                            Icon: 'marker',
-                        },
+                        ...actions,
                     ];
                 },
             },
@@ -113,6 +110,17 @@
                     var {struct} = this;
                     var {Chapter} = struct;
                     return Chapter;
+                },
+            },
+            PlainText: {
+                cache: false,
+                get() {
+                    return this.Text.reduce((ret, t) => {
+                        if (!['heading', 'note'].includes(t.Type)) {
+                            ret += t.Text;
+                        }
+                        return ret;
+                    }, '');
                 },
             },
             Text: {
@@ -141,6 +149,7 @@
                                             case 'x-p': {
                                                 if (idx && eID) {
                                                     ret.push({
+                                                        Text: '\n\n',
                                                         Type: 'paragraph',
                                                     });
                                                 }
@@ -150,6 +159,7 @@
                                             case 'x-milestone': {
                                                 if (idx && sID) {
                                                     ret.push({
+                                                        Text: '\n\n',
                                                         Type: 'paragraph',
                                                     });
                                                 }
@@ -280,7 +290,7 @@
                             }
                         }
                     });
-                    console.log(struct.Verse, ret);
+                    // console.log(struct.Verse, ret);
                     // Remove redundant paragraphs!
                     ret = ret.reduce((ret, item, idx, arr) => {
                         if (item.Type == 'paragraph') {
@@ -362,10 +372,8 @@
                 });
             },
             onCopy() {
-            },
-            onBookmark() {
-            },
-            onHighlight() {
+                var {clipboard} = window.require('electron');
+                clipboard.writeText(this.PlainText);
             },
             parseLemma(lemma) {
                 return '[' + String(lemma).replace(/strong:H/gi, '').replace(/\s+/g, ',') + ']';

@@ -1,10 +1,11 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-import Bread from '../views/Bread.vue';
+import Bread  from '../views/Bread.vue';
 import Breads from '../views/Breads.vue';
-import Home from '../views/Home.vue';
-import Page from '../views/Page.vue';
+import Crumbs from '../views/Crumbs.vue';
+import Home   from '../views/Home.vue';
+import Page   from '../views/Page.vue';
 
 Vue.use(VueRouter);
 
@@ -37,7 +38,7 @@ const routes = [
             {
                 path: '',
                 name: 'Crumbs',
-                // component: Breads,
+                component: Crumbs,
             },
             {
                 path: ':mod/:key',

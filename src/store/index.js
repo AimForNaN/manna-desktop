@@ -1,13 +1,18 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 const http2 = window.require('http2');
 const base = 'http://localhost:7777';
 
+import Libs from './libs/';
+var {Plugins} = Libs;
+
 export default new Vuex.Store({
-    modules: {},
+    modules: {
+        Plugins,
+    },
     state: {
         Bible: {
             Book: 'Genesis',
