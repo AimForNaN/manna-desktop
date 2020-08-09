@@ -1,98 +1,14 @@
-<template lang="html">
-    <article class="bread">
-        <nav class="navbar has-shadow">
-            <b-navbar-item class="navbar-brand">{{Description}}</b-navbar-item>
-            <BibleChapterSelector class="navbar-item" :book="BiblicalBook" :chapter="BiblicalChapter" :struct="BiblicalStructure" @selection="loadChapter($event.Book, $event.Chapter)"></BibleChapterSelector>
-            <b-button icon-right="magnify" @click="onSearch" />
-        </nav>
-        <section class="book">
-            <div class="text">
-                <div class="bread-actions field has-addons">
-                    <div class="control">
-                        <b-icon icon="chevron-left" @click.native="prev"></b-icon>
-                    </div>
-                    <div class="control">
-                        <b-icon icon="chevron-right" @click.native="next"></b-icon>
-                    </div>
-                </div>
-                <div class="title">Book of {{BiblicalBook}}</div>
-                <div class="heading">Chapter {{BiblicalChapter}}</div>
-                <Verses :direction="Direction" :no-headings="!Headings" :no-line-by-line="!LineByLine" :no-notes="!ShowNotes" :no-strongs="!ShowStrongs" :no-verse-numbers="!VerseNumbers" :no-white-space="!WhiteSpace" :text="Text" ref="viewport"></Verses>
-            </div>
-            <b-menu :accordion="false" class="structure">
-                <b-menu-list>
-                    <b-menu-item class="settings" expanded>
-                        <template slot="label" slot-scope="props">
-                            Settings
-                            <b-icon icon="settings" size="is-small"></b-icon>
-                        </template>
-                        <b-field label="Font">
-                            <b-select expanded placeholder="Font" v-model="Font">
-                                <option :style="{ 'font-family': font, 'font-size': '2rem', 'line-height': '2rem', }" v-for="font in Fonts">{{font}}</option>
-                            </b-select>
-                        </b-field>
-                        <b-field label="Font Size">
-                            <b-numberinput controls-position="compact" step="0.05" type="is-dark" v-model="FontSize"></b-numberinput>
-                        </b-field>
-                        <b-field label="Letter Spacing">
-                            <b-numberinput controls-position="compact" step="0.05" type="is-dark" v-model="LetterSpacing"></b-numberinput>
-                        </b-field>
-                        <b-field label="Line Height">
-                            <b-numberinput controls-position="compact" step="0.05" type="is-dark" v-model="LineHeight"></b-numberinput>
-                        </b-field>
-                        <b-field label="Word Spacing">
-                            <b-numberinput controls-position="compact" step="0.05" type="is-dark" v-model="WordSpacing"></b-numberinput>
-                        </b-field>
-                        <b-field>
-                            <b-switch v-model="Headings">Headings</b-switch>
-                        </b-field>
-                        <b-field>
-                            <b-switch v-model="LineByLine">Line by Line</b-switch>
-                        </b-field>
-                        <b-field>
-                            <b-switch v-model="ShowNotes">Notes</b-switch>
-                        </b-field>
-                        <b-field>
-                            <b-switch v-model="ShowStrongs">Strongs Numbers</b-switch>
-                        </b-field>
-                        <b-field>
-                            <b-switch v-model="VerseNumbers">Verse Numbers</b-switch>
-                        </b-field>
-                        <b-field>
-                            <b-switch :disabled="LineByLine" v-model="WhiteSpace">WhiteSpace</b-switch>
-                        </b-field>
-                    </b-menu-item>
-                    <!-- <b-menu-item :active="name == BiblicalBook" :expanded="name == BiblicalBook" :key="name" :label="name" v-for="[name, struct] in BiblicalStructure">
-                        <b-button :active="name == BiblicalBook && chapter == BiblicalChapter" :key="name + chapter" v-for="chapter in lodash.range(1, struct.Chapters + 1)" @click="loadChapter(name, chapter)">{{chapter}}</b-button>
-                    </b-menu-item> -->
-                </b-menu-list>
-            </b-menu>
-        </section>
-    </article>
-</template>
-
 <script>
-    import ScrollBooster from 'scrollbooster';
+    import {firstBy} from 'thenby';
 
-    import Helpers from '../store/helpers';
-    const {Module,Modules} = Helpers;
+    import ModuleView from './Module.vue';
 
-    import BibleChapterSelector from '../components/BibleChapterSelector.vue';
-    import Verses from '../components/Verses.vue';
+    import ChapterSelector from '../components/BibleChapterSelector.vue';
 
     export default {
-        mixins: [
-            Module,
-            Modules,
-        ],
+        extends: ModuleView,
         components: {
-            BibleChapterSelector,
-            Verses,
-        },
-        data() {
-            return {
-                ScrollBooster: null,
-            };
+            ChapterSelector,
         },
         watch: {
             Key: {
@@ -105,40 +21,79 @@
                     }
                 },
             },
-            module: {
-                immediate: true,
-                handler(v) {
-                    console.log(v);
-                },
-            },
         },
         computed: {
-            module: {
+            BiblicalBook: {
                 cache: false,
                 get() {
-                    var {
-                        Modules,
-                        Params,
-                    } = this;
-                    var {mod} = Params;
-                    return Modules.get(mod);
+                    var {Bible} = this.$store.state;
+                    var {Book} = Bible;
+                    return Book;
+                },
+                set(v) {
+                    this.$store.commit('SetBiblicalBook', v);
                 },
             },
-            Params: {
+            BiblicalChapter: {
                 cache: false,
                 get() {
-                    var {$route} = this;
-                    var {params} = $route;
-                    return params;
+                    var {Bible} = this.$store.state;
+                    var {Chapter} = Bible;
+                    return Chapter;
+                },
+                set(v) {
+                    this.$store.commit('SetBiblicalChapter', v);
+                },
+            },
+            BiblicalStructure: {
+                cache: false,
+                get() {
+                    var {Structure} = this;
+                    Structure = Array.from(Object.entries(Structure)).sort(firstBy(([,a], [,b]) => {
+                        return a.Testament - b.Testament;
+                    }).thenBy(([,a], [,b]) => {
+                        return a.Index - b.Index;
+                    }));
+                    return Structure;
+                },
+            },
+            ModuleBook: {
+                cache: false,
+                get() {
+                    var {BiblicalBook} = this;
+                    return BiblicalBook;
+                },
+            },
+            ModuleChapter: {
+                cache: false,
+                get() {
+                    var {BiblicalChapter} = this;
+                    return BiblicalChapter;
+                },
+            },
+            ModuleStructure: {
+                cache: false,
+                get() {
+                    var {BiblicalStructure} = this;
+                    return BiblicalStructure;
+                },
+            },
+            SubTitle: {
+                cache: false,
+                get() {
+                    var {BiblicalChapter} = this;
+                    return `Chapter ${BiblicalChapter}`;
+                },
+            },
+            Title: {
+                cache: false,
+                get() {
+                    var {BiblicalBook} = this;
+                    return `Book of ${BiblicalBook}`;
                 },
             },
         },
         methods: {
-            loadChapter(book, chapter) {
-                this.BiblicalBook = book;
-                this.BiblicalChapter = chapter;
-                this.loadModule(this.module);
-            },
             onSearch() {
             },
             prev() {
@@ -149,7 +104,10 @@
                 struct = struct[1];
                 var {Chapters} = struct;
                 if (BiblicalChapter > 1) {
-                    this.loadChapter(BiblicalBook, BiblicalChapter - 1);
+                    this.loadChapter({
+                        Book: BiblicalBook,
+                        Chapter: BiblicalChapter - 1,
+                    });
                 } else {
                     let keys = BiblicalStructure.map(([k,v]) => {
                         return k;
@@ -162,7 +120,10 @@
                         BiblicalBook = 'Revelation of John';
                         BiblicalChapter = Structure[BiblicalBook].Chapters;
                     }
-                    this.loadChapter(BiblicalBook, BiblicalChapter);
+                    this.loadChapter({
+                        Book: BiblicalBook,
+                        Chapter: BiblicalChapter,
+                    });
                 }
             },
             next() {
@@ -173,7 +134,10 @@
                 struct = struct[1];
                 var {Chapters} = struct;
                 if (BiblicalChapter < Chapters) {
-                    this.loadChapter(BiblicalBook, BiblicalChapter + 1);
+                    this.loadChapter({
+                        Book: BiblicalBook,
+                        Chapter: BiblicalChapter + 1,
+                    });
                 } else {
                     let keys = BiblicalStructure.map(([k,v]) => {
                         return k;
@@ -186,169 +150,17 @@
                         BiblicalBook = 'Genesis';
                         BiblicalChapter = 1;
                     }
-                    this.loadChapter(BiblicalBook, BiblicalChapter);
+                    this.loadChapter({
+                        Book: BiblicalBook,
+                        Chapter: BiblicalChapter,
+                    });
                 }
             },
-        },
-        mounted() {
-            var el = this.$refs.viewport.$el;
-            this.ScrollBooster = new ScrollBooster({
-                viewport: el,
-                content: el,
-                scrollMode: 'native',
-                direction: 'vertical',
-                // textSelection: true,
-            });
-        },
-        destroyed() {
-            this.ScrollBooster.destroy();
+            setKey({Book, Chapter}) {
+                this.BiblicalBook = Book;
+                this.BiblicalChapter = Chapter;
+                this.loadModule(this.module);
+            },
         },
     }
 </script>
-
-<style lang="less">
-    @import "../styles/base.less";
-
-    #app {
-        .bread {
-            display: flex;
-            flex-direction: column;
-
-            nav {
-                align-items: center;
-                border-bottom: 1px solid @blue;
-                color: @blue;
-                display: flex;
-
-                .navbar-brand {
-                    align-items: center;
-                    display: flex;
-                    flex: 1;
-
-                    .brand {
-                        flex: 1;
-                        pointer-events: none;
-                    }
-                }
-            }
-
-            .bread-actions {
-                position: absolute;
-                right: 0;
-
-                .control {
-                    &:last-child {
-                        border-left: 1px solid @grey;
-                    }
-                }
-
-                .icon {
-                    cursor: pointer;
-                    padding: 2.5rem 2rem;
-
-                    &:hover {
-                        background-color: @greyA200;
-                    }
-                }
-            }
-
-            .book {
-                display: flex;
-                flex: 1;
-                flex-direction: row;
-                overflow: hidden;
-
-                .text {
-                    display: flex;
-                    flex: 2;
-                    flex-direction: column;
-                    font-family: Amiri;
-                    max-width: calc(70vw - 3rem);
-                    position: relative;
-
-                    .heading {
-                        margin: 0;
-                        padding: 0 5rem;
-                    }
-
-                    .title {
-                        margin: 0;
-                        padding: 0 5rem;
-                        padding-top: 2rem;
-                    }
-
-                    .verses {
-                        padding: 3rem 5rem;
-                        padding-top: 1rem;
-
-                        .verse {
-                            .verse-text:hover, .v-context[aria-hidden="false"] + .verse-text {
-                                background-color: @greyA;
-                            }
-                        }
-                    }
-                }
-
-                .structure {
-                    border-left: 1px solid @pale-blueA200;
-                    flex: 1;
-                    overflow: auto;
-
-                    * > a {
-                        align-items: center;
-                        border-top: 1px solid @grey;
-                        display: flex;
-                        justify-content: space-between;
-                        padding: 0.5rem 1rem;
-
-                        .mdi {
-                            color: @pale-blueA100;
-                        }
-
-                        &:hover {
-                            background-color: @pale-blueA300;
-                            color: @black;
-                        }
-
-                        &.is-active {
-                            background-color: transparent;
-                            color: #000;
-
-                            &:hover {
-                                background-color: @pale-blueA300;
-                                color: @black;
-                            }
-                        }
-                    }
-
-                    .menu-list {
-                        ul {
-                            border: 0;
-                            border-bottom: 1px solid @pale-blueA200;
-                            display: grid;
-                            grid-template-columns: auto auto auto auto;
-                            margin: 0;
-                            padding: 0.5rem;
-
-                            > * {
-                                margin: 0.25rem;
-                            }
-                        }
-                    }
-
-                    .settings {
-                        ul {
-                            display: flex;
-                            flex-direction: column;
-                        }
-                    }
-                }
-            }
-
-            .module {
-                display: flex;
-                padding: 0.5rem;
-            }
-        }
-    }
-</style>

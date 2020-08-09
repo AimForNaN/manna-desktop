@@ -1,6 +1,6 @@
 import Module from './module.js';
 const {computed} = Module;
-const {BiblicalBook, BiblicalChapter} = computed;
+const {ModuleBook, ModuleChapter} = computed;
 
 export default {
     computed: {
@@ -16,8 +16,6 @@ export default {
                 }, []);
             },
         },
-        BiblicalBook,
-        BiblicalChapter,
         BiblicalTextModule: {
             cache: false,
             get() {
@@ -54,6 +52,8 @@ export default {
                 }, []);
             },
         },
+        ModuleBook,
+        ModuleChapter,
         Modules: {
             cache: false,
             get() {
@@ -75,24 +75,31 @@ export default {
         fetchModules() {
             return this.$store.dispatch('GetModules');
         },
-        loadModule(mod) {
+        loadModule(mod, key) {
             var {Type} = mod;
             switch (Type) {
                 case 'Biblical Texts': {
-                    var {
-                        BiblicalBook,
-                        BiblicalChapter
+                    let {
+                        ModuleBook,
+                        ModuleChapter,
                     } = this;
                     this.$router.push({
                         name: 'Bread',
                         params: {
                             mod: mod.Name,
-                            key: `${BiblicalBook}.${BiblicalChapter}`,
+                            key: `${ModuleBook}.${ModuleChapter}`,
                         },
                     });
                     break;
                 }
                 case 'Generic Books': {
+                    this.$router.push({
+                        name: 'Crumb',
+                        params: {
+                            mod: mod.Name,
+                            key,
+                        },
+                    });
                     break;
                 }
             }

@@ -181,6 +181,22 @@
                                         }
                                         break;
                                     }
+                                    case 'h1':
+                                    case 'h2':
+                                    case 'h3':
+                                    case 'h4':
+                                    case 'h5':
+                                    case 'h6':
+                                    case 'title': {
+                                        let childNode = this.findText(node);
+                                        if (childNode) {
+                                            ret.push({
+                                                Text: childNode.Text,
+                                                Type: 'heading',
+                                            });
+                                        }
+                                        break;
+                                    }
                                     case 'hi': {
                                         let childNode = this.findText(node)
                                         ret.push({
@@ -236,12 +252,16 @@
                                         });
                                         break;
                                     }
-                                    case 'title': {
+                                    case 'p': {
+                                        ret.push({
+                                            Text: '\n\n',
+                                            Type: 'paragraph',
+                                        });
                                         let childNode = this.findText(node);
                                         if (childNode) {
                                             ret.push({
                                                 Text: childNode.Text,
-                                                Type: 'heading',
+                                                Type: 'text',
                                             });
                                         }
                                         break;
@@ -355,7 +375,7 @@
                 if (node.Type == 'text') {
                     ret.push(node);
                 } else {
-                    var {Children} = node;
+                    let {Children} = node;
                     if (Array.isArray(Children)) {
                         Children.forEach((child) => {
                             ret = ret.concat(this.findText(child));

@@ -17,8 +17,7 @@
 <script>
     import ScrollBooster from 'scrollbooster';
 
-    import Helpers from '../store/helpers';
-    const {Languages, Modules} = Helpers;
+    import {Languages, Modules, Nav} from '../store/helpers';
 
     import ModuleCard from '../components/ModuleCard.vue';
 
@@ -26,6 +25,7 @@
         mixins: [
             Languages,
             Modules,
+            Nav,
         ],
         components: {
             ModuleCard,

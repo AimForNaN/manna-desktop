@@ -15,12 +15,12 @@
 </template>
 
 <script>
-    import Helpers from './store/helpers';
-    const {Modules} = Helpers;
+    import {Modules, Nav} from './store/helpers';
 
     export default {
         mixins: [
             Modules,
+            Nav,
         ],
         computed: {
             toBreads: {

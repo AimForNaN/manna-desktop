@@ -7,7 +7,7 @@
             <b-navbar id="nav" :is-active="true" :mobile-burger="false" :shadow="false" :transparent="true">
                 <template slot="start">
                     <b-navbar-item tag="router-link" :to="{ name: 'Breads' }">The Bread</b-navbar-item>
-                    <b-navbar-item tag="router-link" to="/crumbs">The Crumbs</b-navbar-item>
+                    <b-navbar-item tag="router-link" :to="{ name: 'Crumbs' }">The Crumbs</b-navbar-item>
                     <b-navbar-item tag="router-link" to="/bakery">The Bakery</b-navbar-item>
                 </template>
             </b-navbar>
@@ -19,7 +19,6 @@
     import flowtype from '../../../flowtypejs';
 
     export default {
-        name: 'Home',
         data() {
             return {
                 flowtype: null,

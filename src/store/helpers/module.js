@@ -1,5 +1,3 @@
-import {firstBy} from 'thenby';
-
 export default {
     computed: {
         About: {
@@ -8,40 +6,6 @@ export default {
                 var {module} = this;
                 var {About} = module;
                 return About;
-            },
-        },
-        BiblicalBook: {
-            cache: false,
-            get() {
-                var {Bible} = this.$store.state;
-                var {Book} = Bible;
-                return Book;
-            },
-            set(v) {
-                this.$store.commit('SetBiblicalBook', v);
-            },
-        },
-        BiblicalChapter: {
-            cache: false,
-            get() {
-                var {Bible} = this.$store.state;
-                var {Chapter} = Bible;
-                return Chapter;
-            },
-            set(v) {
-                this.$store.commit('SetBiblicalChapter', v);
-            },
-        },
-        BiblicalStructure: {
-            cache: false,
-            get() {
-                var {Structure} = this;
-                Structure = Array.from(Object.entries(Structure)).sort(firstBy(([,a], [,b]) => {
-                    return a.Testament - b.Testament;
-                }).thenBy(([,a], [,b]) => {
-                    return a.Index - b.Index;
-                }));
-                return Structure;
             },
         },
         Description: {
@@ -139,6 +103,24 @@ export default {
             },
             set(v) {
                 this.$store.commit('SetLineHeight', v);
+            },
+        },
+        ModuleBook: {
+            cache: false,
+            get() {
+                return null;
+            },
+        },
+        ModuleChapter: {
+            cache: false,
+            get() {
+                return null;
+            },
+        },
+        ModuleStructure: {
+            cache: false,
+            get() {
+                return [];
             },
         },
         Name: {

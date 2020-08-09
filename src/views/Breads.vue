@@ -37,6 +37,36 @@
             };
         },
         computed: {
+            BiblicalBook: {
+                cache: false,
+                get() {
+                    var {Bible} = this.$store.state;
+                    var {Book} = Bible;
+                    return Book;
+                },
+            },
+            BiblicalChapter: {
+                cache: false,
+                get() {
+                    var {Bible} = this.$store.state;
+                    var {Chapter} = Bible;
+                    return Chapter;
+                },
+            },
+            ModuleBook: {
+                cache: false,
+                get() {
+                    var {BiblicalBook} = this;
+                    return BiblicalBook;
+                },
+            },
+            ModuleChapter: {
+                cache: false,
+                get() {
+                    var {BiblicalChapter} = this;
+                    return BiblicalChapter;
+                },
+            },
             ModuleListing: {
                 cache: false,
                 get() {

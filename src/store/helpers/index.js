@@ -1,11 +1,18 @@
 import Languages from './languages.js';
 import Module from './module.js';
 import Modules from './modules.js';
+import Nav from './nav.js';
 
-const helpers = {
+export default {
     Languages,
     Module,
     Modules,
+    Nav,
 };
 
-export default helpers;
+export {
+    Languages,
+    Module,
+    Modules,
+    Nav,
+};
