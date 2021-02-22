@@ -3,15 +3,12 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex);
 
-const http2 = window.require('http2');
-const base = 'http://localhost:7777';
+const base = 'https://localhost:7777';
 
-import {Plugins} from './libs/';
+import modules from './libs/';
 
 export default new Vuex.Store({
-    modules: {
-        Plugins,
-    },
+    modules,
     state: {
         Bible: {
             Book: 'Genesis',
@@ -128,42 +125,30 @@ export default new Vuex.Store({
                     searchParams.set(key, val);
                 });
 
-                var data = '';
-                var client = http2.connect(base);
-                var req = client.request({
-                    ':path': url.pathname + url.search,
+                fetch(url).then((rsp) => {
+                    if (rsp.ok) {
+                        rsp.json().then((data) => {
+                            commit('SetModules', data);
+                            resolve(data);
+                        });
+                    }
                 });
-                req.setEncoding('utf8');
-                req.on('data', (chunk) => {
-                    data += chunk;
-                });
-                req.on('end', () => {
-                    client.close();
-                    commit('SetModules', JSON.parse(data));
-                    resolve();
-                });
-                req.end();
             });
         },
         ReloadCache({ commit }) {
             return new Promise((resolve, reject) => {
                 var url = new URL('/v1/library/refresh', base);
 
-                var data = '';
-                var client = http2.connect(base);
-                var req = client.request({
-                    ':path': url.pathname,
+                fetch(url, {
+                    method: 'POST',
+                }).then((rsp) => {
+                    if (rsp.ok) {
+                        rsp.json().then((data) => {
+                            commit('SetModules', data);
+                            resolve(data);
+                        });
+                    }
                 });
-                req.setEncoding('utf8');
-                req.on('data', (chunk) => {
-                    data += chunk;
-                });
-                req.on('end', () => {
-                    client.close();
-                    commit('SetModules', JSON.parse(data));
-                    resolve();
-                });
-                req.end();
             });
         },
     },

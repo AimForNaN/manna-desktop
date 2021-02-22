@@ -1,6 +1,6 @@
 <template lang="html">
-    <div class="verses" :class="{ 'line-by-line': !noLineByLine, 'verse-numbers': !noVerseNumbers, }" :style="TextStyle">
-        <Verse :direction="direction" :no-headings="noHeadings" :no-notes="noNotes" :no-verse-numbers="noVerseNumbers" :no-strongs="noStrongs" :no-white-space="noWhiteSpace" :key="t.Verse" :struct="t" v-for="t in text"></Verse>
+    <div class="verses" :class="{ 'line-by-line': LineByLine, 'verse-numbers': VerseNumbers, }" :style="TextStyle">
+        <Verse :key="t.Verse" :struct="t" v-for="t in Text" v-model="VerseData.Value"></Verse>
     </div>
 </template>
 
@@ -13,38 +13,10 @@
             Verse,
         },
         props: {
-            direction: {
-                type: String,
-                default: 'ltr',
-            },
-            noHeadings: {
-                type: Boolean,
-                default: false,
-            },
-            noLineByLine: {
-                type: Boolean,
-                default: false,
-            },
-            noNotes: {
-                type: Boolean,
-                default: false,
-            },
-            noStrongs: {
-                type: Boolean,
-                default: false,
-            },
-            noVerseNumbers: {
-                type: Boolean,
-                default: false,
-            },
-            noWhiteSpace: {
-                type: Boolean,
-                default: false,
-            },
-            text: {
-                type: Array,
+            value: {
+                type: Object,
                 default() {
-                    return [];
+                    return {};
                 },
             },
         },
@@ -57,6 +29,54 @@
             }
         },
         computed: {
+            Direction: {
+                cache: false,
+                get() {
+                    var {value} = this;
+                    var {Direction} = value;
+                    return Direction;
+                },
+            },
+            Font: {
+                cache: false,
+                get() {
+                    var {value} = this;
+                    var {Font} = value;
+                    return Font;
+                },
+            },
+            Headings: {
+                cache: false,
+                get() {
+                    var {value} = this;
+                    var {Headings} = value;
+                    return Headings;
+                },
+            },
+            LineByLine: {
+                cache: false,
+                get() {
+                    var {value} = this;
+                    var {LineByLine} = value;
+                    return LineByLine;
+                },
+            },
+            ShowNotes: {
+                cache: false,
+                get() {
+                    var {value} = this;
+                    var {ShowNotes} = value;
+                    return ShowNotes;
+                },
+            },
+            ShowStrongs: {
+                cache: false,
+                get() {
+                    var {value} = this;
+                    var {ShowStrongs} = value;
+                    return ShowStrongs;
+                },
+            },
             TextStyle: {
                 cache:false,
                 get() {
@@ -76,6 +96,40 @@
                         'word-spacing': WordSpacing + 'px',
                     };
                 }
+            },
+            VerseNumbers: {
+                cache: false,
+                get() {
+                    var {value} = this;
+                    var {VerseNumbers} = value;
+                    return VerseNumbers;
+                },
+            },
+            WhiteSpace: {
+                cache: false,
+                get() {
+                    var {value} = this;
+                    var {WhiteSpace} = value;
+                    return WhiteSpace;
+                },
+            },
+            Text: {
+                cache: false,
+                get() {
+                    var {value} = this;
+                    var {Text} = value;
+                    return Text;
+                },
+            },
+            VerseData: {
+                cache: false,
+                get() {
+                    var {value} = this;
+                    var VerseData = {
+                        Value: value,
+                    };
+                    return VerseData;
+                },
             },
         },
     }

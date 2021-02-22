@@ -1,8 +1,6 @@
 export default class Highlighter {
-    constructor({
-        Vue,
-        Paths,
-    }) {}
+    constructor({Vue, Paths}) {
+    }
 
     get is() {
         return 'Highlighter';

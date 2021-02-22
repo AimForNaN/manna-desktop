@@ -1,5 +1,5 @@
 export default class Bookmarker {
-    constructor({ Vue, Paths, }) {
+    constructor({ Vue, Paths }) {
         this.Bookmarks = new Set();
     }
 

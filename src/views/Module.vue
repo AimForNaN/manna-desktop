@@ -17,7 +17,7 @@
                 </div>
                 <div class="title">{{Title}}</div>
                 <div class="heading" v-if="SubTitle">{{SubTitle}}</div>
-                <Verses :direction="Direction" :no-headings="!Headings" :no-line-by-line="!LineByLine" :no-notes="!ShowNotes" :no-strongs="!ShowStrongs" :no-verse-numbers="!VerseNumbers" :no-white-space="!WhiteSpace" :text="Text" ref="viewport"></Verses>
+                <Verses ref="viewport" v-model="VersesData.Value"></Verses>
             </div>
             <b-menu :accordion="false" class="side-panel">
                 <b-menu-list>
@@ -127,6 +127,14 @@
                 cache: false,
                 get() {
                     return '';
+                },
+            },
+            VersesData: {
+                cache: false,
+                get() {
+                    return {
+                        Value: this,
+                    };
                 },
             },
         },

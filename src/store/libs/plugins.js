@@ -3,33 +3,38 @@ import xdg from '@folder/xdg';
 
 import Plugins from '../plugins';
 
-const {
-    env,
-    platform,
-} = window.process;
+if (window.process) {
+    const {
+        env,
+        platform,
+    } = window.process;
 
-const { HOME } = env;
+    const { HOME } = env;
 
-const xdgPaths = xdg({ platform });
-var {
-    config,
-    data,
-} = xdgPaths;
+    const xdgPaths = xdg({ platform });
+    var {
+        config,
+        data,
+    } = xdgPaths;
 
-switch (platform) {
-    case 'linux': {
-        config = HOME + config + '/manna-desktop';
-        data   = HOME + data + '/manna-desktop';
-        break;
+    switch (platform) {
+        case 'linux': {
+            config = HOME + config + '/manna-desktop';
+            data   = HOME + data + '/manna-desktop';
+            break;
+        }
     }
+
+    var Paths = {
+        config,
+        data,
+    };
+
+    const PluginsPath = Paths.data + '/Plugins';
+} else {
+    var Paths = {};
 }
 
-const Paths = {
-    config,
-    data,
-};
-
-const PluginsPath = Paths.data + '/Plugins';
 
 const PluginModule = {
     namespaced: true,

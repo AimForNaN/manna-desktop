@@ -1,10 +1,10 @@
 <template lang="html">
     <div class="verse-wrapper">
-        <div class="verse-heading" v-if="!noHeadings && TextHeading">
+        <div class="verse-heading" v-if="Headings && TextHeading">
             {{TextHeading.Text}}
         </div>
         <div class="verse" @contextmenu.prevent="$refs.menu.open">
-            <span class="verse-number" v-if="!noVerseNumbers">{{Verse}}.</span>
+            <span class="verse-number" v-if="VerseNumbers">{{Verse}}.</span>
             <vue-context ref="menu">
                 <li v-for="action in Actions">
                     <a @click="action.Action(self)">
@@ -13,20 +13,20 @@
                     </a>
                 </li>
             </vue-context>
-            <div class="verse-text" :dir="direction">
+            <div class="verse-text" :dir="Direction">
                 <template v-for="t in Text">
                     <span v-if="t.Type == 'text'">{{t.Text}}</span>
                     <i :class="t.Type" v-if="t.Type == 'added-text'">{{t.Text}}</i>
                     <template v-if="t.Type == 'morph'">
-                        <span :class="{ 'verse-morph': !noStrongs }" :data-lemma="t.Lemma" :data-morph="t.Morph">
+                        <span :class="{ 'verse-morph': ShowStrongs }" :data-lemma="t.Lemma" :data-morph="t.Morph">
                             <span>{{t.Text}}</span>
-                            <sup v-if="!noStrongs">{{parseLemma(t.Lemma)}}</sup>
+                            <sup v-if="ShowStrongs">{{parseLemma(t.Lemma)}}</sup>
                         </span>
                     </template>
                     <span :class="t.Type" v-else-if="t.Type == 'divine-name'">{{t.Text}}</span>
-                    <sup class="verse-note" @click="triggerNote(t)" v-else-if="!noNotes && t.Type == 'note'">*</sup>
-                    <br :class="t.Type" v-else-if="t.Type == 'new-line' && !noWhiteSpace">
-                    <p :class="t.Type" v-else-if="t.Type == 'paragraph' && !noWhiteSpace"><br></p>
+                    <sup class="verse-note" @click="triggerNote(t)" v-else-if="ShowNotes && t.Type == 'note'">*</sup>
+                    <br :class="t.Type" v-else-if="t.Type == 'new-line' && WhiteSpace">
+                    <p :class="t.Type" v-else-if="t.Type == 'paragraph' && WhiteSpace"><br></p>
                 </template>
             </div>
         </div>
@@ -50,31 +50,13 @@
             Self,
         ],
         props: {
-            direction: {
-                type: String,
-                default: 'ltr',
-            },
-            noHeadings: {
-                type: Boolean,
-                default: false,
-            },
-            noNotes: {
-                type: Boolean,
-                default: false,
-            },
-            noStrongs: {
-                type: Boolean,
-                default: false,
-            },
-            noVerseNumbers: {
-                type: Boolean,
-                default: false,
-            },
-            noWhiteSpace: {
-                type: Boolean,
-                default: false,
-            },
             struct: {
+                type: Object,
+                default() {
+                    return {};
+                },
+            },
+            value: {
                 type: Object,
                 default() {
                     return {};
@@ -112,6 +94,22 @@
                     return Chapter;
                 },
             },
+            Direction: {
+                cache: false,
+                get() {
+                    var {value} = this;
+                    var {Direction} = value;
+                    return Direction;
+                },
+            },
+            Headings: {
+                cache: false,
+                get() {
+                    var {value} = this;
+                    var {Headings} = value;
+                    return Headings;
+                },
+            },
             PlainText: {
                 cache: false,
                 get() {
@@ -121,6 +119,22 @@
                         }
                         return ret;
                     }, '');
+                },
+            },
+            ShowNotes: {
+                cache: false,
+                get() {
+                    var {value} = this;
+                    var {ShowNotes} = value;
+                    return ShowNotes;
+                },
+            },
+            ShowStrongs: {
+                cache: false,
+                get() {
+                    var {value} = this;
+                    var {ShowStrongs} = value;
+                    return ShowStrongs;
                 },
             },
             Text: {
@@ -366,6 +380,22 @@
                     var {struct} = this;
                     var {Verse} = struct;
                     return Verse;
+                },
+            },
+            VerseNumbers: {
+                cache: false,
+                get() {
+                    var {value} = this;
+                    var {VerseNumbers} = value;
+                    return VerseNumbers;
+                },
+            },
+            WhiteSpace: {
+                cache: false,
+                get() {
+                    var {value} = this;
+                    var {WhiteSpace} = value;
+                    return WhiteSpace;
                 },
             },
         },
