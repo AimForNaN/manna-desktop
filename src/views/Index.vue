@@ -35,10 +35,10 @@
             @apply flex flex-col justify-center p-6 self-stretch text-2xl md:flex-row md:h-80 md:items-start md:p-0;
 
             a {
-                @apply duration-300 px-6 py-3 relative text-center;
+                @apply px-6 py-3 relative text-center;
 
                 &::after {
-                    @apply absolute bottom-0 bg-pink-500 h-1 left-0 rounded scale-x-0 transition w-full;
+                    @apply absolute bottom-0 bg-pink-500 duration-300 h-1 left-0 rounded scale-x-0 transition w-full;
                     content: '';
                 }
 
