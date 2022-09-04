@@ -1,0 +1,52 @@
+<script setup>
+    import { RouterLink } from 'vue-router';
+</script>
+
+<template>
+    <main id="index">
+        <article>
+            <div class="wrapper-logo">
+                <div class="logo"></div>
+            </div>
+            <nav>
+                <router-link :to="{ name: 'home' }">The Bread</router-link>
+                <router-link :to="{ name: 'home' }">The Crumbs</router-link>
+                <router-link :to="{ name: 'home' }">The Bakery</router-link>
+            </nav>
+        </article>
+    </main>
+</template>
+
+<style lang="less">
+    #index {
+        @apply bg-top bg-cover bg-no-repeat flex flex-col md:bg-center md:items-center md:justify-center;
+        background-image: url(/images/bg.avif);
+
+        &::before {
+            @apply absolute bg-white bg-opacity-50 inset-0;
+            content: '';
+        }
+
+        article {
+            @apply flex flex-1 flex-col items-center z-10 md:flex-none;
+        }
+
+        nav {
+            @apply flex flex-col justify-center p-6 self-stretch text-2xl md:flex-row md:h-80 md:items-start md:p-0;
+
+            a {
+                @apply duration-300 px-6 py-3 text-center transition hover:bg-pink-500 hover:text-white;
+            }
+        }
+
+        .wrapper-logo {
+            filter: drop-shadow(-4px 4px 0 #162A4A22);
+
+            .logo {
+                @apply bg-pink-500 h-32 md:h-20;
+                width: 300px;
+                -webkit-mask: url(/images/logo.svg) center/300px no-repeat;
+            }
+        }
+    }
+</style>

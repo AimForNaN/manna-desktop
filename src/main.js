@@ -1,22 +1,14 @@
-import Vue from 'vue';
+import { createApp } from 'vue';
+import { createPinia } from 'pinia';
+
 import App from './App.vue';
 import router from './router';
-import store from './store';
 
-import Buefy from 'buefy';
-import 'buefy/dist/buefy.css';
-import '@mdi/font/css/materialdesignicons.css';
+import './styles/base.css';
 
-import 'vue-context/dist/css/vue-context.css';
+const app = createApp(App);
 
-Vue.use(Buefy);
+app.use(createPinia());
+app.use(router);
 
-Vue.config.productionTip = false;
-
-new Vue({
-    router,
-    store,
-    render: function(h) {
-        return h(App);
-    },
-}).$mount('#app')
+app.mount('#app');
