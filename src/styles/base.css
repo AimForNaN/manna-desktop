@@ -5,5 +5,5 @@
 @tailwind utilities;
 
 body {
-    @apply font-poppins text-gray-600;
+    @apply font-poppins text-slate-600;
 }
