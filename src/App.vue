@@ -23,7 +23,7 @@
 
 <template>
     <RouterView class="view" v-slot="{ Component }">
-        <Transition @before-enter="onEnter" @leave="onLeave">
+        <Transition @enter="onEnter" @leave="onLeave">
             <component :is="Component"></component>
         </Transition>
     </RouterView>
