@@ -19,7 +19,7 @@
 
 <style lang="less">
     #index {
-        @apply bg-top bg-cover bg-no-repeat flex flex-col md:bg-center md:items-center md:justify-center;
+        @apply bg-center bg-cover bg-no-repeat flex flex-col md:bg-center md:items-center md:justify-center;
         background-image: url(/images/bg.avif);
 
         &::before {
@@ -35,7 +35,16 @@
             @apply flex flex-col justify-center p-6 self-stretch text-2xl md:flex-row md:h-80 md:items-start md:p-0;
 
             a {
-                @apply duration-300 px-6 py-3 text-center transition hover:bg-pink-500 hover:text-white;
+                @apply duration-300 px-6 py-3 relative text-center;
+
+                &::after {
+                    @apply absolute bottom-0 bg-pink-500 h-1 left-0 rounded scale-x-0 transition w-full;
+                    content: '';
+                }
+
+                &:hover::after {
+                    @apply scale-x-100;
+                }
             }
         }
 
