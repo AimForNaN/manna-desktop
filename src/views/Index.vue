@@ -1,19 +1,24 @@
 <script setup>
     import { RouterLink } from 'vue-router';
+    import { Motion } from 'motion/vue';
 </script>
 
 <template>
     <main id="index">
-        <article>
-            <div class="wrapper-logo">
-                <div class="logo"></div>
-            </div>
-            <nav>
-                <router-link :to="{ name: 'home' }">The Bread</router-link>
-                <router-link :to="{ name: 'home' }">The Crumbs</router-link>
-                <router-link :to="{ name: 'home' }">The Bakery</router-link>
-            </nav>
-        </article>
+        <Motion :animate="{ opacity: 1, transform: 'translateY(0) scale(1)' }" :initial="{ opacity: 0, transform: 'translateY(25px) scale(1.2)' }" :transition="{ duration: 3 }">
+            <article>
+                <div class="wrapper-logo">
+                    <div class="logo"></div>
+                </div>
+                <Motion :animate="{ opacity: 1, transform: 'translateY(0) scale(1)' }" :initial="{ opacity: 0, transform: 'translateY(25px) scale(1.2)' }" :transition="{ delay: 1.5, duration: 2 }">
+                    <nav>
+                        <router-link :to="{ name: 'bread' }">The Bread</router-link>
+                        <router-link :to="{ name: 'home' }">The Crumbs</router-link>
+                        <router-link :to="{ name: 'home' }">The Bakery</router-link>
+                    </nav>
+                </Motion>
+            </article>
+        </Motion>
     </main>
 </template>
 

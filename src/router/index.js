@@ -2,6 +2,8 @@ import {
 	createRouter,
 	createWebHashHistory,
 } from 'vue-router';
+
+import Bread from '../views/Bread.vue';
 import Index from '../views/Index.vue';
 
 const router = createRouter({
@@ -11,6 +13,11 @@ const router = createRouter({
 			path: '/',
 			name: 'home',
 			component: Index,
+		},
+        {
+			path: '/bread',
+			name: 'bread',
+			component: Bread,
 		},
 	],
 });
