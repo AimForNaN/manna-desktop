@@ -1,6 +1,10 @@
 <script setup>
+    import { onMounted } from 'vue';
     import { RouterView } from 'vue-router';
     import { animate } from 'motion';
+    import { useMannaStore } from './stores/manna.js';
+
+    const MannaStore = useMannaStore();
 
     function onEnter(el, done) {
         animate(el, {
@@ -19,6 +23,10 @@
             duration: 1,
         }).finished.then(done);
     }
+
+    onMounted(() => {
+        MannaStore.fetchRepository();
+    });
 </script>
 
 <template>
