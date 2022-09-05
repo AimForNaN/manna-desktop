@@ -9,7 +9,7 @@
     function onEnter(el, done) {
         animate(el, {
             opacity: [0,1],
-            transform: ['translateY(100px) scale(1.05)', 'translateY(0) scale(1)'],
+            transform: ['translateY(100px)', 'translateY(0)'],
         }, {
             duration: 1.5,
         }).finished.then(done);
