@@ -9,16 +9,16 @@
     function onEnter(el, done) {
         animate(el, {
             opacity: [0,1],
-            transform: ['translateY(200px)', 'translateY(0)'],
+            transform: ['translateY(100px) scale(1.05)', 'translateY(0) scale(1)'],
         }, {
-            duration: 1,
+            duration: 1.5,
         }).finished.then(done);
     }
 
     function onLeave(el, done) {
         animate(el, {
             opacity: 0,
-            transform: 'translateY(-100px) scale(0.95)',
+            transform: 'translateY(-10px) scale(0.95)',
         }, {
             duration: 1,
         }).finished.then(done);
