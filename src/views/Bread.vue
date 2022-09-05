@@ -29,10 +29,10 @@
         }
 
         .modules {
-            @apply cursor-pointer gap-5 grid grid-cols-1 lg:gap-8 lg:grid-cols-2 lg:-mx-3 xl:grid-cols-3;
+            @apply cursor-pointer gap-5 grid grid-cols-1 lg:gap-4 lg:grid-cols-2 lg:-mx-3 xl:grid-cols-3;
 
             .module {
-                @apply duration-300 flex flex-col rounded text-lg transition lg:p-3 lg:h-24;
+                @apply duration-300 flex flex-col rounded text-lg transition lg:p-3 lg:h-32;
 
                 &:hover {
                     @apply ring-1 ring-slate-300;
