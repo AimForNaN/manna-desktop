@@ -10,13 +10,14 @@
         <header>
             The Bread
         </header>
-        <Motion :animate="{ opacity: 1, transform: 'translateY(0)' }" :initial="{ opacity: 0, transform: 'translateY(25px)' }" :transition="{ delay: 0.75, duration: 2 }">
-            <article class="modules">
-                <a class="module" v-for="mod in MannaStore.Bibles">
-                    <span class="name">{{mod.Description}}</span>
+        <article class="modules">
+            <Motion :animate="{ opacity: 1, transform: 'translateY(0)' }" :initial="{ opacity: 0, transform: 'translateY(25px)' }" :transition="{ delay: 0.75, duration: 2 }" v-for="mod in MannaStore.Bibles">
+                <a class="module">
+                    <span class="name">{{mod.Module}}</span>
+                    <span class="desc">{{mod.Description}}</span>
                 </a>
-            </article>
-        </Motion>
+            </Motion>
+        </article>
     </main>
 </template>
 
@@ -29,17 +30,21 @@
         }
 
         .modules {
-            @apply cursor-pointer gap-5 grid grid-cols-1 lg:gap-4 lg:grid-cols-2 lg:-mx-3 xl:grid-cols-3;
+            @apply cursor-pointer gap-5 grid grid-cols-1 lg:grid-cols-2 lg:-mx-3 xl:grid-cols-3;
 
             .module {
-                @apply duration-300 flex flex-col rounded text-lg transition lg:p-3 lg:h-32;
+                @apply duration-300 flex flex-col rounded-sm text-lg transition lg:p-3 lg:h-32;
 
                 &:hover {
                     @apply ring-1 ring-slate-300;
                 }
 
+                .desc{
+                    @apply font-thin text-slate-400 truncate;
+                }
+
                 .name{
-                    @apply truncate;
+                    @apply font-medium;
                 }
             }
         }
