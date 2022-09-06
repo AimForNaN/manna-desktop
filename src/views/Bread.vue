@@ -1,8 +1,14 @@
 <script setup>
+    import { onMounted } from 'vue';
     import { Motion } from 'motion/vue';
     import { useMannaStore } from '../stores/manna.js';
 
     const MannaStore = useMannaStore();
+
+    onMounted(() => {
+        document.body.classList.add('border-t-4');
+        document.body.classList.add('border-slate-600');
+    });
 </script>
 
 <template>
@@ -30,10 +36,10 @@
         }
 
         .modules {
-            @apply cursor-pointer gap-5 grid grid-cols-1 lg:grid-cols-2 lg:-mx-3 xl:grid-cols-3;
+            @apply gap-5 grid grid-cols-1 lg:grid-cols-2 lg:-mx-3 xl:grid-cols-3;
 
             .module {
-                @apply duration-300 flex flex-col rounded-sm text-lg transition lg:p-3 lg:h-32;
+                @apply cursor-pointer duration-300 flex flex-col rounded-sm text-lg transition lg:p-3 lg:px-4 lg:h-32;
 
                 &:hover {
                     @apply ring-1 ring-slate-300;
