@@ -11,7 +11,7 @@
             The Bread
         </header>
         <article class="modules">
-            <Motion :animate="{ opacity: 1, transform: 'translateY(0)' }" :initial="{ opacity: 0, transform: 'translateY(25px)' }" :transition="{ delay: 0.75, duration: 2 }" v-for="mod in MannaStore.Bibles">
+            <Motion :animate="{ opacity: 1, transform: 'translateY(0)' }" :initial="{ opacity: 0, transform: 'translateY(25px)' }" :transition="{ delay: 0.75 + (idx * 0.1), duration: 2 }" v-for="(mod, idx) in MannaStore.Bibles">
                 <a class="module">
                     <span class="name">{{mod.Module}}</span>
                     <span class="desc">{{mod.Description}}</span>
@@ -23,7 +23,7 @@
 
 <style lang="less">
     #bread {
-        @apply p-8 space-y-8 md:m-auto md:px-0 md:py-24 md:w-3/4 lg:w-1/2 lg:space-y-12;
+        @apply p-8 py-16 space-y-8 md:m-auto md:px-0 md:py-24 md:w-3/4 lg:w-1/2 lg:space-y-12;
 
         header {
             @apply font-bold font-roboto-condensed text-5xl;
