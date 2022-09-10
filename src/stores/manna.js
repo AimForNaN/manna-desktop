@@ -28,9 +28,24 @@ export const useMannaStore = defineStore({
 				return mod.Type == 'Biblical Texts';
 			});
 			ret.sort((a,b) => {
-				if (a.Description > b.Description) {
+				if (a.Module > b.Module) {
 					return 1;
-				} else if (a.Description < b.Description) {
+				} else if (a.Module < b.Module) {
+					return -1;
+				}
+				return 0;
+			});
+			return ret;
+		},
+		GenericBooks(state) {
+			var {Modules} = this;
+			var ret = Modules.filter((mod) => {
+				return mod.Type == 'Generic Books';
+			});
+			ret.sort((a,b) => {
+				if (a.Module > b.Module) {
+					return 1;
+				} else if (a.Module < b.Module) {
 					return -1;
 				}
 				return 0;

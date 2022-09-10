@@ -1,9 +1,24 @@
 <script setup>
-    import { onMounted } from 'vue';
+    import { computed, onMounted } from 'vue';
+    import { RouterLink, useRouter, useRoute } from 'vue-router';
     import { Motion } from 'motion/vue';
     import { useMannaStore } from '../stores/manna.js';
 
+    const route = useRoute();
+    const router = useRouter();
+    const routes = router.getRoutes();
     const MannaStore = useMannaStore();
+
+    const modules = computed(() => {
+        var {meta} = route;
+        var {modules} = meta;
+        return MannaStore[modules];
+    });
+    const title = computed(() => {
+        var {meta} = route;
+        var {title} = meta;
+        return title;
+    });
 
     onMounted(() => {
         document.body.classList.add('border-t-4');
@@ -12,12 +27,12 @@
 </script>
 
 <template>
-    <main id="bread">
+    <main id="modules">
         <header>
-            The Bread
+            {{title}}
         </header>
         <article class="modules">
-            <Motion :animate="{ opacity: 1, transform: 'translateY(0)' }" :initial="{ opacity: 0, transform: 'translateY(25px)' }" :transition="{ delay: 0.75 + (idx * 0.1), duration: 2 }" v-for="(mod, idx) in MannaStore.Bibles">
+            <Motion :animate="{ opacity: 1, transform: 'translateY(0)' }" :initial="{ opacity: 0, transform: 'translateY(25px)' }" :transition="{ delay: 0.75 + (idx * 0.1), duration: 2 }" v-for="(mod, idx) in modules">
                 <a class="module">
                     <span class="name">{{mod.Module}}</span>
                     <span class="desc">{{mod.Description}}</span>
@@ -28,7 +43,7 @@
 </template>
 
 <style lang="less">
-    #bread {
+    #modules {
         @apply p-8 py-16 space-y-8 md:m-auto md:px-0 md:py-24 md:w-3/4 lg:w-1/2 lg:space-y-12;
 
         header {
@@ -36,10 +51,10 @@
         }
 
         .modules {
-            @apply gap-5 grid grid-cols-1 lg:grid-cols-2 lg:-mx-3 xl:grid-cols-3;
+            @apply gap-5 grid grid-cols-1 lg:gap-y-8 lg:grid-cols-2 lg:-mx-3 xl:grid-cols-3;
 
             .module {
-                @apply cursor-pointer duration-300 flex flex-col rounded-sm text-lg transition lg:p-3 lg:px-4 lg:h-32;
+                @apply cursor-pointer duration-500 flex flex-col rounded-sm text-lg transition lg:p-3 lg:px-4;
 
                 &:hover {
                     @apply ring-1 ring-slate-300;

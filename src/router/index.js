@@ -3,7 +3,7 @@ import {
 	createWebHashHistory,
 } from 'vue-router';
 
-import Bread from '../views/Bread.vue';
+import Modules from '../views/Modules.vue';
 import Index from '../views/Index.vue';
 
 const router = createRouter({
@@ -12,12 +12,28 @@ const router = createRouter({
         {
 			path: '/',
 			name: 'home',
+			meta: {
+				title: 'Manna',
+			},
 			component: Index,
 		},
         {
 			path: '/bread',
 			name: 'bread',
-			component: Bread,
+			meta: {
+				modules: 'Bibles',
+				title: 'The Bread',
+			},
+			component: Modules,
+		},
+        {
+			path: '/crumbs',
+			name: 'crumbs',
+			meta: {
+				modules: 'GenericBooks',
+				title: 'The Crumbs',
+			},
+			component: Modules,
 		},
 	],
 });
