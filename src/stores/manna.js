@@ -6,7 +6,7 @@ import restiful from 'restiful';
 export const useMannaStore = defineStore({
 	id: 'manna',
 	state: () => ({
-		Respository: 'default',
+		Respository: 'manna',
 		Respositories: new Map(),
 	}),
 	actions: {
