@@ -1,5 +1,5 @@
 # Manna (desktop)
-Desktop application designed for the Manna server.
+Desktop application designed for the [Manna server](https://github.com/truefusion/manna.py).
 
 ## Project Setup
 
