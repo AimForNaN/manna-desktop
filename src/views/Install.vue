@@ -58,7 +58,6 @@
         });
     });
 
-
     function installModule(Name, Source) {
         state.InstallErrors.delete(Name);
         state.InstallQueue.add(Name);
