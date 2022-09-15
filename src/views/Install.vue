@@ -87,7 +87,7 @@
             @apply space-y-3;
 
             .module {
-                @apply cursor-pointer duration-500 flex space-x-2;
+                @apply cursor-pointer flex space-x-2;
 
                 &.active {
                     @apply font-bold;
@@ -107,7 +107,7 @@
             @apply flex-shrink-0 space-y-3 w-56;
 
             .source {
-                @apply cursor-pointer duration-500 transition hover:translate-x-2;
+                @apply cursor-pointer duration-300 transition hover:translate-x-2;
 
                 &.active {
                     @apply font-bold hover:translate-x-0;
