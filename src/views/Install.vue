@@ -112,10 +112,10 @@
         }
 
         > header {
-            @apply flex flex-wrap items-center md:justify-end;
+            @apply flex flex-wrap items-center md:justify-end lg:space-x-2;
 
             > * {
-                @apply m-1;
+                @apply m-1 lg:m-0;
             }
         }
 
