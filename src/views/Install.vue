@@ -89,16 +89,12 @@
             .module {
                 @apply cursor-pointer flex space-x-2;
 
-                &.active {
-                    @apply font-bold;
-                }
-
                 .desc {
                     @apply text-gray-400 truncate;
                 }
 
                 .name {
-                    @apply font-bold;
+                    @apply font-medium;
                 }
             }
         }
