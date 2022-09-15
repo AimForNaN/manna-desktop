@@ -114,13 +114,19 @@
         }
 
         .modules {
-            @apply divide-y;
+            @apply divide-y divide-slate-200;
 
             .module {
-                @apply cursor-default flex e('py-1.5') space-x-2;
+                @apply cursor-default flex e('py-1.5') items-center space-x-2;
+
+                .module-actions {
+                    > * {
+                        @apply cursor-pointer;
+                    }
+                }
 
                 .desc {
-                    @apply text-slate-400 truncate;
+                    @apply flex-1 font-thin text-slate-400 truncate;
                 }
 
                 .name {
