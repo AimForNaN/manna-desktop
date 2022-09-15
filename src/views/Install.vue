@@ -70,6 +70,9 @@
 <template>
     <article id="install">
         <header>
+            <select v-model="state.Source" v-show="MannaStore.RemoteSources.length">
+                <option :value="src.Source" v-for="src in MannaStore.RemoteSources">{{src.Source}}</option>
+            </select>
             <button :class="{ disabled: !state.Source }" @click="refreshSource(state.Source)">Refresh Source</button>
             <span class="flex-1"></span>
             <select v-model="state.Type" v-show="types.length">
@@ -79,20 +82,16 @@
                 <option :value="lang" v-for="lang in languages">{{lang}}</option>
             </select>
         </header>
-        <article>
-            <ul class="sources">
-                <Motion :animate="{ opacity: 1, transform: 'scale(1)' }" :initial="{ opacity: 0, transform: 'scale(1.15)' }" :transition="{ delay: 0.65 + (idx * 0.05), duration: 2 }" v-for="(src,idx) in MannaStore.RemoteSources">
-                    <li class="source" :class="{ active: state.Source == src.Source}" @click="state.Source = src.Source">{{src.Source}}</li>
-                </Motion>
+        <article v-if="state.Source">
+            <ul class="modules">
+                <li class="module" v-for="mod in modules">
+                    <span class="name">{{mod.Module}}</span>
+                    <span class="desc">{{mod.Description}}</span>
+                    <div class="module-actions">
+                        <i class="mdi mdi-download"></i>
+                    </div>
+                </li>
             </ul>
-            <section v-if="state.Source">
-                <ul class="modules">
-                    <li class="module" v-for="mod in modules">
-                        <span class="name">{{mod.Module}}</span>
-                        <span class="desc">{{mod.Description}}</span>
-                    </li>
-                </ul>
-            </section>
         </article>
     </article>
 </template>
@@ -102,11 +101,7 @@
         @apply flex flex-col space-y-4;
 
         > article {
-            @apply flex space-x-14;
-
-            > section {
-                @apply flex-1 min-w-0;
-            }
+            @apply flex flex-col;
         }
 
         > header {
@@ -131,18 +126,6 @@
 
                 .name {
                     @apply font-medium;
-                }
-            }
-        }
-
-        .sources {
-            @apply flex-shrink-0 w-56;
-
-            .source {
-                @apply border-l-4 border-transparent cursor-pointer duration-300 pl-3 e('py-1.5') transition hover:border-slate-200;
-
-                &.active {
-                    @apply border-slate-700 font-bold;
                 }
             }
         }
