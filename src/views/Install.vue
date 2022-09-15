@@ -120,7 +120,7 @@
                 @apply cursor-default flex e('py-1.5') space-x-2;
 
                 .desc {
-                    @apply text-gray-400 truncate;
+                    @apply text-slate-400 truncate;
                 }
 
                 .name {
@@ -133,10 +133,10 @@
             @apply flex-shrink-0 w-56;
 
             .source {
-                @apply border-l-4 border-transparent cursor-pointer duration-300 pl-2 e('py-1.5') transition hover:border-gray-700;
+                @apply border-l-4 border-transparent cursor-pointer duration-300 pl-2 e('py-1.5') transition hover:border-slate-300;
 
                 &.active {
-                    @apply border-gray-700 font-bold;
+                    @apply border-slate-700 font-bold;
                 }
             }
         }
