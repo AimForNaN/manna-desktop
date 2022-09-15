@@ -21,7 +21,7 @@ button {
 }
 
 .disabled {
-    @apply pointer-events-none;
+    @apply opacity-50 pointer-events-none;
 }
 
 .page {
