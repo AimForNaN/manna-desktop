@@ -25,7 +25,7 @@ button {
 }
 
 .page {
-    @apply p-8 py-16 space-y-8 md:m-auto md:px-0 md:py-24 md:w-3/4 lg:w-1/2 lg:space-y-12;
+    @apply p-8 py-16 space-y-8 md:m-auto md:px-0 md:py-24 md:w-3/4 lg:w-3/4 lg:space-y-12 xl:w-1/2;
 
     > header {
         @apply font-bold font-roboto-condensed text-5xl;
