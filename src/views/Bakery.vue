@@ -38,10 +38,10 @@
                 @apply font-medium flex text-base;
 
                 > a {
-                    @apply border-b-4 border-transparent duration-500 px-4 py-2 transition hover:border-gray-700;
+                    @apply border-b-4 border-transparent duration-500 px-4 py-2 transition hover:border-slate-300;
 
                     &.router-link-exact-active {
-                        @apply border-gray-700;
+                        @apply border-slate-700;
                     }
                 }
             }
