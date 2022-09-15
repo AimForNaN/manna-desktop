@@ -7,14 +7,13 @@
     const state = reactive({
         InstallErrors: new Set(),
         InstallQueue: new Set(),
-        InstallSource: null,
         Language: 'en',
         Type: 'Biblical Texts',
     });
 
     const remoteSource = computed(() => {
         return MannaStore.InstallSources.find((src) => {
-            return src.Source == state.InstallSource;
+            return src.Source == MannaStore.InstallSource;
         }) || {
             Modules: [],
         };
@@ -71,20 +70,17 @@
             state.InstallQueue.delete(Name);
         });
     }
-    function refreshSource(src) {
-        MannaStore.refreshSource(src);
-    }
 </script>
 
 <template>
     <article id="install">
         <header>
-            <select v-model="state.InstallSource" v-show="MannaStore.InstallSources.length">
+            <select v-model="MannaStore.InstallSource" v-show="MannaStore.InstallSources.length">
                 <optgroup label="Remote Sources">
                     <option :value="src.Source" v-for="src in remoteSources">{{src.Source}}</option>
                 </optgroup>
             </select>
-            <i class="mdi mdi-refresh" :class="{ disabled: !state.InstallSource }" @click="refreshSource(state.InstallSource)" title="Refresh Source"></i>
+            <i class="mdi mdi-refresh" :class="{ disabled: !MannaStore.InstallSource }" @click="MannaStore.refreshInstallSource(MannaStore.InstallSource)" title="Refresh Source"></i>
             <span class="flex-1"></span>
             <select v-model="state.Type" v-show="types.length">
                 <option :value="type" v-for="type in types">{{type}}</option>
@@ -93,14 +89,14 @@
                 <option :value="lang" v-for="lang in languages">{{lang}}</option>
             </select>
         </header>
-        <article v-if="state.InstallSource">
+        <article v-if="MannaStore.InstallSource">
             <ul class="modules">
                 <li class="module" v-for="mod in modules">
                     <span class="name">{{mod.Module}}</span>
                     <span class="desc">{{mod.Description}}</span>
                     <div class="module-actions">
                         <i class="mdi mdi-alert-circle-outline" v-show="state.InstallErrors.has(mod.Module)"></i>
-                        <i class="mdi mdi-download" :class="{ disabled: state.InstallQueue.has(mod.Module) }" @click="installModule(mod.Module, state.InstallSource)" v-show="!state.InstallQueue.has(mod.Module)"></i>
+                        <i class="mdi mdi-download" :class="{ disabled: state.InstallQueue.has(mod.Module) }" @click="installModule(mod.Module, MannaStore.InstallSource)" v-show="!state.InstallQueue.has(mod.Module)"></i>
                         <i class="mdi mdi-loading mdi-spin" v-show="state.InstallQueue.has(mod.Module)"></i>
                     </div>
                 </li>

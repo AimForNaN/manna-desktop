@@ -6,6 +6,7 @@ import restiful from 'restiful';
 export const useMannaStore = defineStore({
 	id: 'manna',
 	state: () => ({
+		InstallSource: 'CrossWire',
 		InstallSources: [],
 		Respository: 'manna',
 		Respositories: new Map(),
@@ -24,7 +25,7 @@ export const useMannaStore = defineStore({
 		installModule(mod) {
 			return this.api('install').post(mod);
 		},
-		refreshSource(Source) {
+		refreshInstallSource(Source) {
 			this.api('install').patch({
 				Source,
 			}).then(() => {
