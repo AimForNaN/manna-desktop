@@ -6,14 +6,14 @@ import restiful from 'restiful';
 export const useMannaStore = defineStore({
 	id: 'manna',
 	state: () => ({
-		Install: [],
+		RemoteSources: [],
 		Respository: 'manna',
 		Respositories: new Map(),
 	}),
 	actions: {
 		fetchInstall() {
 			this.api('install').get().then((rsp) => {
-				this.Install = rsp;
+				this.RemoteSources = rsp;
 			});
 		},
 		fetchRepository() {
@@ -21,8 +21,7 @@ export const useMannaStore = defineStore({
 				this.Respositories.set(this.Respository, rsp);
 			});
 		},
-		refreshSource(src) {
-			var {Source} = src;
+		refreshSource(Source) {
 			this.api('install').patch({
 				Source,
 			}).then(() => {

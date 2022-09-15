@@ -8,6 +8,10 @@ body {
     @apply font-poppins text-slate-600;
 }
 
+select {
+    @apply border border-gray-400 cursor-pointer p-1 rounded;
+}
+
 .disabled {
     @apply pointer-events-none;
 }
