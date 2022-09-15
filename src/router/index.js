@@ -25,6 +25,7 @@ const router = createRouter({
 			name: 'bread',
 			meta: {
 				modules: 'Bibles',
+				nav: 'main',
 				title: 'The Bread',
 			},
 			component: Modules,
@@ -34,6 +35,7 @@ const router = createRouter({
 			name: 'crumbs',
 			meta: {
 				modules: 'GenericBooks',
+				nav: 'main',
 				title: 'The Crumbs',
 			},
 			component: Modules,
@@ -41,6 +43,7 @@ const router = createRouter({
         {
 			path: '/bakery',
 			meta: {
+				nav: 'main',
 				title: 'The Bakery',
 			},
 			component: Bakery,
