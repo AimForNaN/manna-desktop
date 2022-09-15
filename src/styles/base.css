@@ -8,6 +8,10 @@ body {
     @apply font-poppins text-slate-600;
 }
 
+button, input, select, textarea {
+    @apply focus:outline-none;
+}
+
 button, select {
     @apply border border-slate-400 cursor-pointer px-1 py-1 ring-slate-100 rounded transition hover:ring-4;
 }
