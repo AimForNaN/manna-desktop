@@ -66,6 +66,7 @@
             Source,
         }).then(() => {
             state.InstallQueue.delete(Name);
+            MannaStore.fetchRepository();
         }).catch(() => {
             state.InstallQueue.delete(Name);
         });
@@ -98,6 +99,7 @@
                     <span class="name">{{mod.Module}}</span>
                     <span class="desc">{{mod.Description}}</span>
                     <div class="module-actions">
+                        <i class="mdi mdi-alert-circle-outline" v-show="state.InstallErrors.has(mod.Module)"></i>
                         <i class="mdi mdi-download" :class="{ disabled: state.InstallQueue.has(mod.Module) }" @click="installModule(mod.Module, state.InstallSource)"></i>
                     </div>
                 </li>
@@ -122,6 +124,10 @@
             }
         }
 
+        .mdi-alert-circle-outline {
+            @apply text-rose-300;
+        }
+
         .mdi-refresh {
             @apply cursor-pointer;
         }
@@ -133,6 +139,8 @@
                 @apply cursor-default flex e('py-1.5') items-center space-x-2;
 
                 .module-actions {
+                    @apply flex items-center space-x-1;
+
                     > * {
                         @apply cursor-pointer;
                     }
