@@ -43,10 +43,11 @@
 <template>
     <article id="install">
         <header>
+            <button :class="{ disabled: !source }" @click="refreshSource(source)">Refresh Source</button>
+            <span class="flex-1"></span>
             <select v-model="language">
                 <option :value="lang" v-for="lang in languages">{{lang}}</option>
             </select>
-            <button :class="{ disabled: !source }" @click="refreshSource(source)">Refresh Source</button>
         </header>
         <article>
             <ul class="sources">
