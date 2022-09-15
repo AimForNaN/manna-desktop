@@ -100,7 +100,8 @@
                     <span class="desc">{{mod.Description}}</span>
                     <div class="module-actions">
                         <i class="mdi mdi-alert-circle-outline" v-show="state.InstallErrors.has(mod.Module)"></i>
-                        <i class="mdi mdi-download" :class="{ disabled: state.InstallQueue.has(mod.Module) }" @click="installModule(mod.Module, state.InstallSource)"></i>
+                        <i class="mdi mdi-download" :class="{ disabled: state.InstallQueue.has(mod.Module) }" @click="installModule(mod.Module, state.InstallSource)" v-show="!state.InstallQueue.has(mod.Module)"></i>
+                        <i class="mdi mdi-loading mdi-spin" v-show="state.InstallQueue.has(mod.Module)"></i>
                     </div>
                 </li>
             </ul>
