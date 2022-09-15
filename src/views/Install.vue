@@ -12,8 +12,8 @@
     });
 
     const remoteSource = computed(() => {
-        return MannaStore.RemoteSources.find((src) => {
-            return src.Source == state.Source;
+        return MannaStore.InstallSources.find((src) => {
+            return src.Source == state.InstallSource;
         }) || {
             Modules: [],
         };
@@ -37,6 +37,11 @@
             return state.Language == mod.Language;
         }).filter((mod) => {
             return state.Type == mod.Type;
+        });
+    });
+    const remoteSources = computed(() => {
+        return MannaStore.InstallSources.filter((src) => {
+            return src.Type == 'FTP';
         });
     });
     const types = computed(() => {
@@ -70,10 +75,12 @@
 <template>
     <article id="install">
         <header>
-            <select v-model="state.Source" v-show="MannaStore.RemoteSources.length">
-                <option :value="src.Source" v-for="src in MannaStore.RemoteSources">{{src.Source}}</option>
+            <select v-model="state.InstallSource" v-show="MannaStore.InstallSources.length">
+                <optgroup label="Remote Sources">
+                    <option :value="src.Source" v-for="src in remoteSources">{{src.Source}}</option>
+                </optgroup>
             </select>
-            <button :class="{ disabled: !state.Source }" @click="refreshSource(state.Source)">Refresh Source</button>
+            <button :class="{ disabled: !state.InstallSource }" @click="refreshSource(state.InstallSource)">Refresh Source</button>
             <span class="flex-1"></span>
             <select v-model="state.Type" v-show="types.length">
                 <option :value="type" v-for="type in types">{{type}}</option>
@@ -82,7 +89,7 @@
                 <option :value="lang" v-for="lang in languages">{{lang}}</option>
             </select>
         </header>
-        <article v-if="state.Source">
+        <article v-if="state.InstallSource">
             <ul class="modules">
                 <li class="module" v-for="mod in modules">
                     <span class="name">{{mod.Module}}</span>
