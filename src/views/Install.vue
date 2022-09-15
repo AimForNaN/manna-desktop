@@ -5,9 +5,10 @@
 
     const MannaStore = useMannaStore();
     const state = reactive({
+        InstallErrors: new Set(),
+        InstallQueue: new Set(),
+        InstallSource: null,
         Language: 'en',
-        Queue: new Set(),
-        Source: null,
         Type: 'Biblical Texts',
     });
 
@@ -59,12 +60,15 @@
 
 
     function installModule(Name, Source) {
-        state.Queue.add(Name);
+        state.InstallErrors.delete(Name);
+        state.InstallQueue.add(Name);
         MannaStore.installModule({
             Name,
             Source,
         }).then(() => {
-            state.Queue.delete(Name);
+            state.InstallQueue.delete(Name);
+        }).catch(() => {
+            state.InstallQueue.delete(Name);
         });
     }
     function refreshSource(src) {
@@ -95,7 +99,7 @@
                     <span class="name">{{mod.Module}}</span>
                     <span class="desc">{{mod.Description}}</span>
                     <div class="module-actions">
-                        <i class="mdi mdi-download" :class="{ disabled: state.Queue.has(mod.Module) }" @click="installModule(mod.Module, state.InstallSource)"></i>
+                        <i class="mdi mdi-download" :class="{ disabled: state.InstallQueue.has(mod.Module) }" @click="installModule(mod.Module, state.InstallSource)"></i>
                     </div>
                 </li>
             </ul>
