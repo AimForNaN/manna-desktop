@@ -5,29 +5,58 @@
 
     const MannaStore = useMannaStore();
     const source = ref(null);
+
+    function refreshSource(src) {
+        MannaStore.refreshSource(src);
+    }
 </script>
 
 <template>
     <article id="install">
-        <ul class="sources">
-            <Motion :animate="{ opacity: 1, transform: 'scale(1)' }" :initial="{ opacity: 0, transform: 'scale(1.15)' }" :transition="{ delay: 0.65 + (idx * 0.05), duration: 2 }" v-for="(src,idx) in MannaStore.Install">
-                <li class="source" :class="{ active: source == src}" @click="source = src">{{src.Source}}</li>
-            </Motion>
-        </ul>
-        <section>
-            <ul v-if="source">
-                <li v-for="mod in source.modules">{{mod.Description}}</li>
+        <header class="flex justify-end">
+            <button :class="{ disabled: Boolean(source) }" @click="refreshSource(source)">Refresh Source</button>
+        </header>
+        <article>
+            <ul class="sources">
+                <Motion :animate="{ opacity: 1, transform: 'scale(1)' }" :initial="{ opacity: 0, transform: 'scale(1.15)' }" :transition="{ delay: 0.65 + (idx * 0.05), duration: 2 }" v-for="(src,idx) in MannaStore.Install">
+                    <li class="source" :class="{ active: source == src}" @click="source = src">{{src.Source}}</li>
+                </Motion>
             </ul>
-        </section>
+            <section v-if="source">
+                <ul class="modules">
+                    <li class="module" v-for="mod in source.Modules">{{mod.Description}}</li>
+                </ul>
+            </section>
+        </article>
     </article>
 </template>
 
 <style lang="less">
     #install {
-        @apply flex;
+        @apply flex flex-col space-y-4;
+
+        > article {
+            @apply flex space-x-14;
+
+            > section {
+                @apply flex-1 min-w-0;
+            }
+        }
+
+        .modules {
+            @apply space-y-3;
+
+            .module {
+                @apply cursor-pointer duration-500 truncate;
+
+                &.active {
+                    @apply font-bold;
+                }
+            }
+        }
 
         .sources {
-            @apply space-y-3;
+            @apply flex-shrink-0 space-y-3 w-56;
 
             .source {
                 @apply cursor-pointer duration-500 transition hover:translate-x-2;

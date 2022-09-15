@@ -8,6 +8,10 @@ body {
     @apply font-poppins text-slate-600;
 }
 
+.disabled {
+    @apply pointer-events-none;
+}
+
 .page {
     @apply p-8 py-16 space-y-8 md:m-auto md:px-0 md:py-24 md:w-3/4 lg:w-1/2 lg:space-y-12;
 

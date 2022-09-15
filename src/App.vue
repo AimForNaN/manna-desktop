@@ -40,10 +40,6 @@
 
 <style lang="less">
     #app {
-        @apply fixed inset-0 overflow-hidden;
-
-        .view {
-            @apply fixed inset-0;
-        }
+        @apply fixed inset-0 overflow-auto;
     }
 </style>

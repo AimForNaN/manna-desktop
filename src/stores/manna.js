@@ -21,6 +21,14 @@ export const useMannaStore = defineStore({
 				this.Respositories.set(this.Respository, rsp);
 			});
 		},
+		refreshSource(src) {
+			var {Source} = src;
+			this.api('install').patch({
+				Source,
+			}).then(() => {
+				this.fetchInstall();
+			});
+		},
 	},
 	getters: {
 		api(state) {

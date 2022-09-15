@@ -20,25 +20,29 @@
 <template>
     <main class="page" id="bakery">
         <header>
-            The Bakery
+            <span>The Bakery</span>
+            <nav>
+                <router-link :to="item" v-for="item in children">{{item.meta.title}}</router-link>
+            </nav>
         </header>
-        <nav>
-            <router-link :to="item" v-for="item in children">{{item.meta.title}}</router-link>
-        </nav>
         <RouterView></RouterView>
     </main>
 </template>
 
 <style lang="less">
     #bakery {
-        > nav {
-            @apply flex;
+        > header {
+            @apply flex flex-col space-y-8;
 
-            > a {
-                @apply border-b-4 border-transparent duration-500 px-4 py-2 transition hover:border-gray-700;
+            > nav {
+                @apply font-medium flex text-base;
 
-                &.router-link-exact-active {
-                    @apply border-gray-700;
+                > a {
+                    @apply border-b-4 border-transparent duration-500 px-4 py-2 transition hover:border-gray-700;
+
+                    &.router-link-exact-active {
+                        @apply border-gray-700;
+                    }
                 }
             }
         }
