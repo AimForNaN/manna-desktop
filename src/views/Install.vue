@@ -1,26 +1,22 @@
 <script setup>
-    import { computed, ref, unref } from 'vue';
+    import { computed, reactive, unref } from 'vue';
     import { Motion } from 'motion/vue';
     import { useMannaStore } from './../stores/manna.js';
 
     const MannaStore = useMannaStore();
-    const language = ref('en');
-    const source = ref(null);
+    const state = reactive({
+        Language: 'en',
+        Queue: new Set(),
+        Source: null,
+        Type: 'Biblical Texts',
+    });
 
     const remoteSource = computed(() => {
         return MannaStore.RemoteSources.find((src) => {
-            return src.Source == source.value;
+            return src.Source == state.Source;
         }) || {
             Modules: [],
         };
-    });
-    const modules = computed(() => {
-        var src = unref(remoteSource);
-        var {Modules} = src;
-        var l = unref(language);
-        return Modules.filter((mod) => {
-            return l == mod.Language;
-        });
     });
     const languages = computed(() => {
         var src = unref(remoteSource);
@@ -34,7 +30,38 @@
             return a.localeCompare(b);
         });
     });
+    const modules = computed(() => {
+        var src = unref(remoteSource);
+        var {Modules} = src;
+        return Modules.filter((mod) => {
+            return state.Language == mod.Language;
+        }).filter((mod) => {
+            return state.Type == mod.Type;
+        });
+    });
+    const types = computed(() => {
+        var src = unref(remoteSource);
+        var {Modules} = src;
+        return Array.from(Modules.reduce((ret, mod) => {
+            ret.add(mod.Type);
+            return ret;
+        }, new Set())).sort((a,b) => {
+            a = String(a);
+            b = String(b);
+            return a.localeCompare(b);
+        });
+    });
 
+
+    function installModule(Name, Source) {
+        state.Queue.add(Name);
+        MannaStore.installModule({
+            Name,
+            Source,
+        }).then(() => {
+            state.Queue.delete(Name);
+        });
+    }
     function refreshSource(src) {
         MannaStore.refreshSource(src);
     }
@@ -43,19 +70,22 @@
 <template>
     <article id="install">
         <header>
-            <button :class="{ disabled: !source }" @click="refreshSource(source)">Refresh Source</button>
+            <button :class="{ disabled: !state.Source }" @click="refreshSource(state.Source)">Refresh Source</button>
             <span class="flex-1"></span>
-            <select v-model="language">
+            <select v-model="state.Type" v-show="types.length">
+                <option :value="type" v-for="type in types">{{type}}</option>
+            </select>
+            <select v-model="state.Language" v-show="languages.length">
                 <option :value="lang" v-for="lang in languages">{{lang}}</option>
             </select>
         </header>
         <article>
             <ul class="sources">
                 <Motion :animate="{ opacity: 1, transform: 'scale(1)' }" :initial="{ opacity: 0, transform: 'scale(1.15)' }" :transition="{ delay: 0.65 + (idx * 0.05), duration: 2 }" v-for="(src,idx) in MannaStore.RemoteSources">
-                    <li class="source" :class="{ active: source == src.Source}" @click="source = src.Source">{{src.Source}}</li>
+                    <li class="source" :class="{ active: state.Source == src.Source}" @click="state.Source = src.Source">{{src.Source}}</li>
                 </Motion>
             </ul>
-            <section v-if="source">
+            <section v-if="state.Source">
                 <ul class="modules">
                     <li class="module" v-for="mod in modules">
                         <span class="name">{{mod.Module}}</span>
@@ -87,7 +117,7 @@
             @apply space-y-3;
 
             .module {
-                @apply cursor-pointer flex space-x-2;
+                @apply cursor-default flex space-x-2;
 
                 .desc {
                     @apply text-gray-400 truncate;

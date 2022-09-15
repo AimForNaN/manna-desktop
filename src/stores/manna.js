@@ -21,6 +21,9 @@ export const useMannaStore = defineStore({
 				this.Respositories.set(this.Respository, rsp);
 			});
 		},
+		installModule(mod) {
+			return this.api('install').post(mod);
+		},
 		refreshSource(Source) {
 			this.api('install').patch({
 				Source,
