@@ -32,7 +32,7 @@
             {{title}}
         </header>
         <article class="modules">
-            <Motion :animate="{ opacity: 1, transform: 'scale(1) translateY(0)' }" :initial="{ opacity: 0, transform: 'scale(1.2) translateY(25px)' }" :transition="{ delay: 0.65 + (idx * 0.15), duration: 2 }" v-for="(mod, idx) in modules">
+            <Motion :animate="{ opacity: 1, transform: 'scale(1) translateY(0)' }" :initial="{ opacity: 0, transform: 'scale(1.2) translateY(25px)' }" :transition="{ delay: 0.65 + (idx * 0.05), duration: 2 }" v-for="(mod, idx) in modules">
                 <a class="module">
                     <span class="name">{{mod.Module}}</span>
                     <span class="desc">{{mod.Description}}</span>
