@@ -7,9 +7,19 @@ export function useRoutes() {
     const routes = router.getRoutes();
 
     return computed(() => {
-        return routes.filter((r) => {
-            return r.name != 'home';
-        }).filter((r) => {
+        return routes.reduce((ret, r) => {
+            if (r.name != 'home') {
+                let parent = routes.find((p) => {
+                    return p.children.find((c) => {
+                        return r.name == c.name;
+                    });
+                });
+                if (!parent) {
+                    ret.push(r);
+                }
+            }
+            return ret;
+        }, []).filter((r) => {
             return r != route;
         });
     });

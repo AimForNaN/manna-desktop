@@ -18,7 +18,7 @@
     function onLeave(el, done) {
         animate(el, {
             opacity: 0,
-            transform: 'translateY(-10px) scale(0.95)',
+            transform: 'scale(0.95)',
         }, {
             duration: 1,
         }).finished.then(done);
@@ -26,6 +26,7 @@
 
     onMounted(() => {
         MannaStore.fetchRepository();
+        MannaStore.fetchInstall();
     });
 </script>
 

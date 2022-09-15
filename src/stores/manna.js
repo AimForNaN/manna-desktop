@@ -6,19 +6,28 @@ import restiful from 'restiful';
 export const useMannaStore = defineStore({
 	id: 'manna',
 	state: () => ({
+		Install: [],
 		Respository: 'manna',
 		Respositories: new Map(),
 	}),
 	actions: {
+		fetchInstall() {
+			this.api('install').get().then((rsp) => {
+				this.Install = rsp;
+			});
+		},
 		fetchRepository() {
-			var {location} = window;
-			var {hostname} = location;
-			restiful(`//${hostname}:4815/${this.Respository}/`).get().then((rsp) => {
+			this.api.get().then((rsp) => {
 				this.Respositories.set(this.Respository, rsp);
 			});
 		},
 	},
 	getters: {
+		api(state) {
+			var {location} = window;
+			var {hostname} = location;
+			return restiful(`//${hostname}:4815/${state.Respository}/`);
+		},
 		isMannaDesktop() {
 			return window.navigator.userAgent.includes('MannaDesktop');
 		},

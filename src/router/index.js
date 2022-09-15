@@ -4,7 +4,9 @@ import {
 } from 'vue-router';
 
 import Bakery from '../views/Bakery.vue';
+import Editor from '../views/Editor.vue';
 import Modules from '../views/Modules.vue';
+import Install from '../views/Install.vue';
 import Index from '../views/Index.vue';
 
 const router = createRouter({
@@ -38,11 +40,28 @@ const router = createRouter({
 		},
         {
 			path: '/bakery',
-			name: 'bakery',
 			meta: {
 				title: 'The Bakery',
 			},
 			component: Bakery,
+			children: [
+				{
+					path: '',
+					name: 'install',
+					component: Install,
+					meta: {
+						title: 'Install',
+					},
+				},
+				{
+					path: 'editor',
+					name: 'editor',
+					component: Editor,
+					meta: {
+						title: 'Editor',
+					},
+				},
+			],
 		},
 	],
 });
