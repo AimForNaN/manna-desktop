@@ -14,7 +14,7 @@
 <template>
     <article id="install">
         <header class="flex justify-end">
-            <button :class="{ disabled: Boolean(source) }" @click="refreshSource(source)">Refresh Source</button>
+            <button :class="{ disabled: !source }" @click="refreshSource(source)">Refresh Source</button>
         </header>
         <article>
             <ul class="sources">
