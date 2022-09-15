@@ -137,7 +137,7 @@
             @apply divide-y divide-slate-200;
 
             .module {
-                @apply cursor-default flex e('py-1.5') items-center space-x-2;
+                @apply cursor-default flex px-2 e('py-1.5') items-center space-x-2 transition hover:bg-slate-50;
 
                 .module-actions {
                     @apply flex items-center space-x-1;
