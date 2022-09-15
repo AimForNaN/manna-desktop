@@ -114,10 +114,10 @@
         }
 
         .modules {
-            @apply space-y-3;
+            @apply divide-y;
 
             .module {
-                @apply cursor-default flex space-x-2;
+                @apply cursor-default flex e('py-1.5') space-x-2;
 
                 .desc {
                     @apply text-gray-400 truncate;
@@ -130,13 +130,13 @@
         }
 
         .sources {
-            @apply flex-shrink-0 space-y-3 w-56;
+            @apply flex-shrink-0 w-56;
 
             .source {
-                @apply cursor-pointer duration-300 transition hover:translate-x-2;
+                @apply border-l-4 border-transparent cursor-pointer duration-300 pl-2 e('py-1.5') transition hover:border-gray-700;
 
                 &.active {
-                    @apply font-bold hover:translate-x-0;
+                    @apply border-gray-700 font-bold;
                 }
             }
         }

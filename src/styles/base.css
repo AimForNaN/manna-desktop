@@ -13,7 +13,7 @@ button, select {
 }
 
 button {
-    @apply px-3;
+    @apply px-2;
 }
 
 .disabled {
