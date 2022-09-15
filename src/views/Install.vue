@@ -133,7 +133,7 @@
             @apply flex-shrink-0 w-56;
 
             .source {
-                @apply border-l-4 border-transparent cursor-pointer duration-300 pl-3 e('py-1.5') transition hover:border-slate-300;
+                @apply border-l-4 border-transparent cursor-pointer duration-300 pl-3 e('py-1.5') transition hover:border-slate-200;
 
                 &.active {
                     @apply border-slate-700 font-bold;
