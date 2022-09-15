@@ -95,7 +95,7 @@
                     <span class="name">{{mod.Module}}</span>
                     <span class="desc">{{mod.Description}}</span>
                     <div class="module-actions">
-                        <i class="mdi mdi-download"></i>
+                        <i class="mdi mdi-download" :class="{ disabled: state.Queue.has(mod.Module) }" @click="installModule(mod.Module, state.InstallSource)"></i>
                     </div>
                 </li>
             </ul>
