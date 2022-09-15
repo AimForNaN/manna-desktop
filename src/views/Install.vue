@@ -80,7 +80,7 @@
                     <option :value="src.Source" v-for="src in remoteSources">{{src.Source}}</option>
                 </optgroup>
             </select>
-            <button :class="{ disabled: !state.InstallSource }" @click="refreshSource(state.InstallSource)">Refresh Source</button>
+            <i class="mdi mdi-refresh" :class="{ disabled: !state.InstallSource }" @click="refreshSource(state.InstallSource)" title="Refresh Source"></i>
             <span class="flex-1"></span>
             <select v-model="state.Type" v-show="types.length">
                 <option :value="type" v-for="type in types">{{type}}</option>
@@ -112,7 +112,15 @@
         }
 
         > header {
-            @apply flex justify-end space-x-2;
+            @apply flex flex-wrap items-center md:justify-end;
+
+            > * {
+                @apply m-1;
+            }
+        }
+
+        .mdi-refresh {
+            @apply cursor-pointer;
         }
 
         .modules {
