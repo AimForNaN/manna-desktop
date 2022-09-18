@@ -5,6 +5,7 @@ import {
 
 import Bakery from '../views/Bakery.vue';
 import Editor from '../views/Editor.vue';
+import Module from '../views/Module.vue';
 import Modules from '../views/Modules.vue';
 import Install from '../views/Install.vue';
 import Index from '../views/Index.vue';
@@ -65,6 +66,12 @@ const router = createRouter({
 					},
 				},
 			],
+		},
+		{
+			path: '/:module',
+			name: 'module',
+			meta: {},
+			component: Module,
 		},
 	],
 });

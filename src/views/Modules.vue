@@ -32,11 +32,11 @@
             {{title}}
         </header>
         <article class="modules">
-            <Motion :animate="{ opacity: 1, transform: 'scale(1) translateY(0)' }" :initial="{ opacity: 0, transform: 'scale(1.2) translateY(25px)' }" :transition="{ delay: 0.65 + (idx * 0.05), duration: 2 }" v-for="(mod, idx) in modules">
-                <a class="module">
+            <Motion :animate="{ opacity: 1, transform: 'scale(1) translateY(0)' }" :initial="{ opacity: 0, transform: 'scale(1.2) translateY(25px)' }" :transition="{ delay: 0.65 + (idx * 0.035), duration: 2 }" v-for="(mod, idx) in modules">
+                <router-link class="module" :to="{ name: 'module', params: { module: mod.Module } }">
                     <span class="name">{{mod.Module}}</span>
                     <span class="desc">{{mod.Description}}</span>
-                </a>
+                </router-link>
             </Motion>
         </article>
     </main>

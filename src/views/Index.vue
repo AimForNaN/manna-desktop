@@ -9,17 +9,22 @@
 <template>
     <main id="index">
         <Motion :animate="{ opacity: 1, transform: 'translateY(0) scale(1)' }" :initial="{ opacity: 0, transform: 'translateY(25px) scale(1.2)' }" :transition="{ duration: 3 }">
-            <article>
+            <article class="main">
                 <div class="wrapper-logo">
                     <div class="logo"></div>
                 </div>
                 <Motion :animate="{ opacity: 1, transform: 'translateY(0) scale(1)' }" :initial="{ opacity: 0, transform: 'translateY(25px) scale(1.2)' }" :transition="{ delay: 1.5, duration: 2 }">
-                    <nav>
+                    <nav class="main">
                         <router-link :to="route" v-for="route in routes">{{route.meta.title}}</router-link>
                     </nav>
                 </Motion>
             </article>
         </Motion>
+        <nav class="secondary">
+            <a href="https://github.com/stars/truefusion/lists/manna">
+                <i class="mdi mdi-github"></i>
+            </a>
+        </nav>
     </main>
 </template>
 
@@ -33,11 +38,11 @@
             content: '';
         }
 
-        article {
+        article.main {
             @apply flex flex-1 flex-col items-center z-10 md:flex-none;
         }
 
-        nav {
+        nav.main {
             @apply flex flex-col justify-center p-6 self-stretch text-2xl md:flex-row md:h-80 md:items-start md:p-0;
 
             a {
@@ -52,6 +57,10 @@
                     @apply scale-x-100;
                 }
             }
+        }
+
+        nav.secondary {
+            @apply bottom-0 fixed flex items-center justify-center p-4 w-screen lg:bottom-auto lg:top-0 lg:justify-end lg:px-6;
         }
 
         .wrapper-logo {

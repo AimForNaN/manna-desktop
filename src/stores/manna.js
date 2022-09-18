@@ -22,6 +22,13 @@ export const useMannaStore = defineStore({
 				this.Respositories.set(this.Respository, rsp);
 			});
 		},
+		fetchStructure(mod) {
+			return this.api(mod)('structure').get();
+		},
+		fetchText(mod, key) {
+			console.log(String(this.api(mod)('text')));
+			return this.api(mod)('text').get({ key });
+		},
 		installModule(mod) {
 			return this.api('install').post(mod);
 		},
@@ -36,8 +43,8 @@ export const useMannaStore = defineStore({
 	getters: {
 		api(state) {
 			var {location} = window;
-			var {hostname} = location;
-			return restiful(`//${hostname}:4815/${state.Respository}/`);
+			var {hostname, protocol} = location;
+			return restiful(new URL(`/${state.Respository}`, `${protocol}//${hostname}:4815/`));
 		},
 		isMannaDesktop() {
 			return window.navigator.userAgent.includes('MannaDesktop');
@@ -75,6 +82,13 @@ export const useMannaStore = defineStore({
 		Modules(state) {
 			var repo = state.Respositories.get(state.Respository);
 			return repo ? repo.Modules : [];
+		},
+		ModulesMapped(state) {
+			var {Modules} = this;
+			return Modules.reduce((ret, mod) => {
+				ret[mod.Module] = mod;
+				return ret;
+			}, {});
 		},
 	},
 })
