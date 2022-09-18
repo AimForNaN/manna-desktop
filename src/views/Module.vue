@@ -1,5 +1,5 @@
 <script setup>
-    import { computed, onMounted, reactive, unref } from 'vue';
+    import { computed, onMounted, reactive, unref, watch } from 'vue';
     import { RouterLink, useRoute } from 'vue-router';
     import { Motion } from 'motion/vue';
     import { useMannaStore } from './../stores/manna.js';
@@ -59,6 +59,15 @@
         return String(Key ?? 'Untitled').replace('.', ' ');
     });
 
+    watch(() => state.Key, (nv, ov) => {
+        let {Module} = unref(module);
+        MannaStore.fetchText(Module, nv).then((data) => {
+            setTimeout(() => {
+                state.Text = data;
+            }, 1500);
+        });
+    });
+
     onMounted(() => {
         document.body.classList.add('border-t-4');
         document.body.classList.add('border-slate-600');
@@ -76,9 +85,6 @@
                     }
                 }
                 state.Key = first;
-                MannaStore.fetchText(Module, first).then((data) => {
-                    state.Text = data;
-                });
             });
         }
     });
@@ -91,9 +97,11 @@
             <span class="subtitle">{{subtitle}}</span>
         </header>
         <article>
-            <div v-for="row in state.Text">
-                {{row.Text}}
-            </div>
+            <Motion :animate="{ opacity: 1 }" :initial="{ opacity: 0 }" :transition="{ duration: 2 }" v-if="state.Text.length">
+                <div v-for="(row, idx) in state.Text">
+                    {{row.Text}}
+                </div>
+            </Motion>
         </article>
     </main>
 </template>

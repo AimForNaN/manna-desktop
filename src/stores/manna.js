@@ -44,7 +44,7 @@ export const useMannaStore = defineStore({
 		api(state) {
 			var {location} = window;
 			var {hostname, protocol} = location;
-			return restiful(new URL(`/${state.Respository}`, `${protocol}//${hostname}:4815/`));
+			return restiful(new URL(`/${state.Respository}/`, `${protocol}//${hostname}:4815/`));
 		},
 		isMannaDesktop() {
 			return window.navigator.userAgent.includes('MannaDesktop');
