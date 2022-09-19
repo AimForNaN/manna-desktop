@@ -93,8 +93,10 @@
 <template>
     <main class="page" id="module">
         <header>
-            <span class="title">{{title}}</span>
-            <span class="subtitle">{{subtitle}}</span>
+            <div class="title">
+                <span>{{title}}</span>
+            </div>
+            <div class="subtitle">{{subtitle}}</div>
         </header>
         <article>
             <Motion :animate="{ opacity: 1 }" :initial="{ opacity: 0 }" :transition="{ duration: 2 }" v-if="state.Text.length">
@@ -114,6 +116,17 @@
             .subtitle {
                 @apply font-normal text-base text-slate-400;
             }
+
+            .title {
+                @apply flex items-center;
+            }
+        }
+    }
+
+    @screen xl {
+        #module {
+            padding-left: 32%;
+            padding-right: 32%;
         }
     }
 </style>

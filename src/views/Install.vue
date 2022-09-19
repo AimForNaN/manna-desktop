@@ -70,6 +70,9 @@
             state.InstallQueue.delete(Name);
         });
     }
+    function isNew(mod) {
+        return mod.Status == 'new';
+    }
 </script>
 
 <template>
@@ -96,7 +99,8 @@
                     <span class="desc">{{mod.Description}}</span>
                     <div class="module-actions">
                         <i class="mdi mdi-alert-circle-outline" v-show="state.InstallErrors.has(mod.Module)"></i>
-                        <i class="mdi mdi-download" :class="{ disabled: state.InstallQueue.has(mod.Module) }" @click="installModule(mod.Module, MannaStore.InstallSource)" v-show="!state.InstallQueue.has(mod.Module)"></i>
+                        <i class="mdi mdi-download" :class="{ disabled: state.InstallQueue.has(mod.Module) }" @click="installModule(mod.Module, MannaStore.InstallSource)" v-show="!state.InstallQueue.has(mod.Module)" v-if="isNew(mod)"></i>
+                        <i class="mdi mdi-check" v-else></i>
                         <i class="mdi mdi-loading mdi-spin" v-show="state.InstallQueue.has(mod.Module)"></i>
                     </div>
                 </li>
