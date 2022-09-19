@@ -107,6 +107,10 @@
 
 <style lang="less">
     #module {
+        > article {
+            @apply leading-loose;
+        }
+
         > header {
             @apply flex flex-col;
 
@@ -120,7 +124,7 @@
         }
     }
 
-    @screen xl {
+    @screen 2xl {
         #module {
             padding-left: 32%;
             padding-right: 32%;
