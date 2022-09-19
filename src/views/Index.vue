@@ -30,7 +30,7 @@
 
 <style lang="less">
     #index {
-        @apply bg-center bg-cover bg-no-repeat fixed flex flex-col inset-0 md:bg-center md:items-center md:justify-center;
+        @apply bg-center bg-cover bg-no-repeat fixed flex flex-col inset-0 z-20 md:bg-center md:items-center md:justify-center;
         background-image: url(/images/bg.avif);
 
         &::before {
