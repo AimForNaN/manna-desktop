@@ -64,8 +64,10 @@
             Name,
             Source,
         }).then(() => {
-            state.InstallQueue.delete(Name);
             MannaStore.fetchRepository();
+            MannaStore.fetchInstall().then(() => {
+                state.InstallQueue.delete(Name);
+            });
         }).catch(() => {
             state.InstallQueue.delete(Name);
         });

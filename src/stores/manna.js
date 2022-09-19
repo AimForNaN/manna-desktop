@@ -13,30 +13,38 @@ export const useMannaStore = defineStore({
 	}),
 	actions: {
 		fetchInstall() {
-			this.api('install').get().then((rsp) => {
-				this.InstallSources = rsp;
+			return new Promise((resolve, reject) => {
+				this.api('install').get().then((rsp) => {
+					this.InstallSources = rsp;
+					resolve(rsp);
+				}).catch(reject);
 			});
 		},
 		fetchRepository() {
-			this.api.get().then((rsp) => {
-				this.Respositories.set(this.Respository, rsp);
+			return new Promise((resolve, reject) => {
+				this.api.get().then((rsp) => {
+					this.Respositories.set(this.Respository, rsp);
+					resolve(rsp);
+				}).catch(reject);
 			});
 		},
 		fetchStructure(mod) {
 			return this.api(mod)('structure').get();
 		},
 		fetchText(mod, key) {
-			console.log(String(this.api(mod)('text')));
 			return this.api(mod)('text').get({ key });
 		},
 		installModule(mod) {
 			return this.api('install').post(mod);
 		},
 		refreshInstallSource(Source) {
-			this.api('install').patch({
-				Source,
-			}).then(() => {
-				this.fetchInstall();
+			return new Promise((resolve, reject) => {
+				this.api('install').patch({
+					Source,
+				}).then((rsp) => {
+					this.fetchInstall();
+					resolve(rsp);
+				}).catch(reject);
 			});
 		},
 	},
