@@ -14,7 +14,6 @@
             duration: 1.5,
         }).finished.then(done);
     }
-
     function onLeave(el, done) {
         animate(el, {
             opacity: 0,
@@ -32,14 +31,14 @@
 
 <template>
     <RouterView class="view" v-slot="{ Component }">
-        <Transition @enter="onEnter" @leave="onLeave">
+        <Transition :css="false" @enter="onEnter" @leave="onLeave">
             <component :is="Component"></component>
         </Transition>
     </RouterView>
 </template>
 
 <style lang="less">
-    #app {
-        @apply fixed inset-0 overflow-auto;
+    #app, .view {
+        @apply fixed inset-0;
     }
 </style>

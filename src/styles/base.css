@@ -25,9 +25,23 @@ button {
 }
 
 .page {
-    @apply p-8 py-16 space-y-8 md:m-auto md:px-0 md:py-24 md:w-3/4 lg:w-3/4 lg:space-y-12 xl:w-1/2;
+    @apply overflow-auto p-10 py-16 space-y-8 md:py-24 lg:space-y-12;
 
     > header {
         @apply font-bold font-roboto-condensed text-5xl;
+    }
+}
+
+@screen md {
+    .page {
+        padding-left: 12.5%;
+        padding-right: 12.5%;
+    }
+}
+
+@screen xl {
+    .page {
+        padding-left: 25%;
+        padding-right: 25%;
     }
 }
