@@ -72,6 +72,9 @@
             state.InstallQueue.delete(Name);
         });
     }
+    function isInstalled(mod) {
+        return mod.Status == 'installed';
+    }
     function isNew(mod) {
         return mod.Status == 'new';
     }
@@ -101,9 +104,10 @@
                     <span class="desc">{{mod.Description}}</span>
                     <div class="module-actions">
                         <i class="mdi mdi-alert-circle-outline" v-show="state.InstallErrors.has(mod.Module)"></i>
+                        <i class="mdi mdi-loading mdi-spin" v-show="state.InstallQueue.has(mod.Module)"></i>
                         <i class="mdi mdi-download" :class="{ disabled: state.InstallQueue.has(mod.Module) }" @click="installModule(mod.Module, MannaStore.InstallSource)" v-show="!state.InstallQueue.has(mod.Module)" v-if="isNew(mod)"></i>
                         <i class="mdi mdi-check" v-else></i>
-                        <i class="mdi mdi-loading mdi-spin" v-show="state.InstallQueue.has(mod.Module)"></i>
+                        <i class="mdi mdi-delete" v-if="isInstalled(mod)"></i>
                     </div>
                 </li>
             </ul>
@@ -141,6 +145,10 @@
             .module {
                 @apply cursor-default flex px-2 e('py-1.5') items-center space-x-2 transition hover:bg-slate-50;
 
+                .mdi-delete {
+                    @apply hidden;
+                }
+
                 .module-actions {
                     @apply flex items-center space-x-1;
 
@@ -155,6 +163,16 @@
 
                 .name {
                     @apply font-medium;
+                }
+
+                &:hover {
+                    .mdi-check {
+                        @apply hidden;
+                    }
+
+                    .mdi-delete {
+                        @apply block;
+                    }
                 }
             }
         }
