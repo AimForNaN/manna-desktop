@@ -29,7 +29,7 @@ button {
 }
 
 #progress {
-    @apply border-0 fixed h-1 left-0 rounded-none top-0 w-screen;
+    @apply border-0 fixed h-1 left-0 rounded-none top-0 w-screen z-10;
 }
 
 .disabled {
