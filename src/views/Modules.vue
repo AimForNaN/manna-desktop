@@ -1,5 +1,5 @@
 <script setup>
-    import { computed, onMounted } from 'vue';
+    import { computed } from 'vue';
     import { RouterLink, useRouter, useRoute } from 'vue-router';
     import { Motion } from 'motion/vue';
     import { useMannaStore } from './../stores/manna.js';
@@ -18,11 +18,6 @@
         var {meta} = route;
         var {title} = meta;
         return title;
-    });
-
-    onMounted(() => {
-        document.body.classList.add('border-t-4');
-        document.body.classList.add('border-slate-600');
     });
 </script>
 

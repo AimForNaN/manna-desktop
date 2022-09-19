@@ -69,9 +69,6 @@
     });
 
     onMounted(() => {
-        document.body.classList.add('border-t-4');
-        document.body.classList.add('border-slate-600');
-
         if (module.value) {
             let {Module} = unref(module);
             MannaStore.fetchStructure(Module).then((data) => {

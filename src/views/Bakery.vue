@@ -1,5 +1,5 @@
 <script setup>
-    import { computed, onMounted } from 'vue';
+    import { computed } from 'vue';
     import { RouterLink, RouterView, useRoute } from 'vue-router';
 
     const route = useRoute();
@@ -9,11 +9,6 @@
         var [current] = matched;
         var {children} = current;
         return children;
-    });
-
-    onMounted(() => {
-        document.body.classList.add('border-t-4');
-        document.body.classList.add('border-slate-600');
     });
 </script>
 

@@ -20,6 +20,18 @@ button {
     @apply px-2;
 }
 
+::-webkit-progress-bar {
+    @apply bg-slate-300;
+}
+
+::-webkit-progress-value {
+    @apply bg-slate-600;
+}
+
+#progress {
+    @apply border-0 fixed h-1 left-0 rounded-none top-0 w-screen;
+}
+
 .disabled {
     @apply opacity-50 pointer-events-none;
 }

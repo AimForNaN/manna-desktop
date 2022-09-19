@@ -30,6 +30,7 @@
 </script>
 
 <template>
+    <progress id="progress" value="100"></progress>
     <RouterView class="view" v-slot="{ Component }">
         <Transition :css="false" @enter="onEnter" @leave="onLeave">
             <component :is="Component"></component>
