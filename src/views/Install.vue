@@ -83,13 +83,14 @@
 <template>
     <article id="install">
         <header>
-            <select v-model="MannaStore.InstallSource" v-show="MannaStore.InstallSources.length">
-                <optgroup label="Remote Sources">
-                    <option :value="src.Source" v-for="src in remoteSources">{{src.Source}}</option>
-                </optgroup>
-            </select>
-            <i class="mdi mdi-refresh" :class="{ disabled: !MannaStore.InstallSource }" @click="MannaStore.refreshInstallSource(MannaStore.InstallSource)" title="Refresh Source"></i>
-            <span class="flex-1"></span>
+            <div class="remote-sources-wrapper">
+                <select class="remote-sources" v-model="MannaStore.InstallSource" v-show="MannaStore.InstallSources.length">
+                    <optgroup label="Remote Sources">
+                        <option :value="src.Source" v-for="src in remoteSources">{{src.Source}}</option>
+                    </optgroup>
+                </select>
+                <i class="mdi mdi-refresh" :class="{ disabled: !MannaStore.InstallSource }" @click="MannaStore.refreshInstallSource(MannaStore.InstallSource)" title="Refresh Source"></i>
+            </div>
             <select v-model="state.Type" v-show="types.length">
                 <option :value="type" v-for="type in types">{{type}}</option>
             </select>
@@ -124,10 +125,10 @@
         }
 
         > header {
-            @apply flex flex-wrap items-center md:justify-end lg:space-x-2;
+            @apply flex flex-col items-center md:flex-row md:flex-wrap md:justify-end lg:space-x-2;
 
             > * {
-                @apply m-1 lg:m-0;
+                @apply m-1 self-stretch lg:m-0;
             }
         }
 
@@ -174,6 +175,14 @@
                         @apply block;
                     }
                 }
+            }
+        }
+
+        .remote-sources-wrapper {
+            @apply flex flex-1 items-center space-x-2;
+
+            .remote-sources {
+                @apply w-full md:w-auto;
             }
         }
     }

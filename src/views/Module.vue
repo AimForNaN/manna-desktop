@@ -52,11 +52,11 @@
     });
     const subtitle = computed(() => {
         var {Description} = unref(module) ?? {};
-        return Description ?? 'Untitled';
+        return Description;
     });
     const title = computed(() => {
         var {Key} = state;
-        return String(Key ?? 'Untitled').replace('.', ' ');
+        return String(Key ?? '').replace(/[\.\/]+/, ' ');
     });
 
     watch(() => state.Key, (nv, ov) => {
