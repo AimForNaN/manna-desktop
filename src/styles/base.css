@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 body {
-    @apply font-poppins text-slate-600;
+    @apply font-poppins leading-8 text-lg text-slate-600;
 }
 
 button, input, select, textarea {

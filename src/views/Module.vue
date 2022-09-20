@@ -108,7 +108,6 @@
 <style lang="less">
     #module {
         > article {
-            @apply leading-loose;
         }
 
         > header {
