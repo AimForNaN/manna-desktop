@@ -5,6 +5,8 @@
     import { useMannaStore } from './../stores/manna.js';
     import { useRoutes } from './../router/routes.js';
 
+    import Icon from './../components/Icon.vue';
+
     const state = reactive({
         Key: null,
         Structure: [],
@@ -76,8 +78,8 @@
                 var [first] = data;
                 switch (module.value.Type) {
                     case 'Biblical Texts': {
-                        let {Book} = first;
-                        first = `${Book}.1`;
+                        let {Name} = first;
+                        first = `${Name}.1`;
                         break;
                     }
                 }
@@ -103,6 +105,20 @@
             </Motion>
         </article>
     </main>
+    <Motion :animate="{ opacity: 1 }" :initial="{ opacity: 0 }" v-if="state.Structure.length">
+        <aside class="structure">
+            <nav>
+                <ul class="structure-list">
+                    <li class="structure-list-item" v-for="k in state.Structure">
+                        <div class="structure-list-item-label">
+                            <span class="flex-1">{{k.Name}}</span>
+                            <Icon icon="chevron-down"></Icon>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+    </Motion>
 </template>
 
 <style lang="less">
@@ -119,6 +135,22 @@
 
             .title {
                 @apply flex items-center;
+            }
+        }
+    }
+
+    .structure {
+        @apply bg-gray-50 fixed inset-y-0 left-0 m-0 overflow-y-auto p-8 text-base w-80 z-10;
+
+        .structure-list {
+            @apply divide-y;
+
+            .structure-list-item {
+                @apply cursor-pointer py-1;
+
+                .structure-list-item-label {
+                    @apply flex;
+                }
             }
         }
     }

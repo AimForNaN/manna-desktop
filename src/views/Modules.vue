@@ -40,13 +40,13 @@
 <style lang="less">
     #modules {
         .modules {
-            @apply gap-5 grid grid-cols-1 lg:gap-y-8 lg:grid-cols-2 lg:-mx-3 2xl:grid-cols-3;
+            @apply divide-y flex flex-col lg:-mx-3;
 
             .module {
-                @apply cursor-pointer duration-500 flex flex-col rounded-sm text-lg transition lg:p-3 lg:px-4;
+                @apply cursor-pointer duration-500 flex -mx-4 py-3 px-4 rounded-sm space-x-2 text-lg transition lg:mx-0;
 
                 &:hover {
-                    @apply ring-1 ring-slate-300;
+                    @apply bg-gray-50;
                 }
 
                 .desc{
