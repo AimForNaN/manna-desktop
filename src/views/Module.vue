@@ -147,7 +147,7 @@
 
             .structure-list-item {
                 .structure-list-item-label {
-                    @apply cursor-pointer flex py-1;
+                    @apply cursor-pointer flex e('py-1.5');
                 }
             }
         }
