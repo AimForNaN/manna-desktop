@@ -146,10 +146,8 @@
             @apply divide-y;
 
             .structure-list-item {
-                @apply cursor-pointer py-1;
-
                 .structure-list-item-label {
-                    @apply flex;
+                    @apply cursor-pointer flex py-1;
                 }
             }
         }
