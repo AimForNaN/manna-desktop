@@ -23,13 +23,13 @@
 
 <template>
     <main class="page" id="modules">
-        <article>
-            <header>
+        <article class="page-article">
+            <header class="page-header">
                 <div class="title">
                     {{title}}
                 </div>
             </header>
-            <div class="modules">
+            <div class="page-content modules">
                 <Motion :animate="{ opacity: 1, transform: 'scale(1) translateY(0)' }" :initial="{ opacity: 0, transform: 'scale(1.2) translateY(25px)' }" :transition="{ delay: 0.65 + (idx * 0.035), duration: 2 }" v-for="(mod, idx) in modules">
                     <router-link class="module" :to="{ name: 'module', params: { module: mod.Module } }">
                         <span class="name">{{mod.Module}}</span>
@@ -44,10 +44,10 @@
 <style lang="less">
     #modules {
         .modules {
-            @apply divide-y flex flex-col lg:-mx-3;
+            @apply divide-y flex flex-col;
 
             .module {
-                @apply cursor-pointer duration-500 flex py-3 px-4 rounded-sm space-x-2 text-lg transition lg:mx-0;
+                @apply cursor-pointer duration-500 flex py-3 rounded-sm space-x-2 text-lg transition lg:mx-0;
 
                 &:hover {
                     @apply bg-gray-50;
