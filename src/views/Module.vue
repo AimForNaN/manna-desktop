@@ -86,10 +86,11 @@
         MannaStore.fetchStructure(module).then((data) => {
             state.Structure = data;
             var [first] = data;
+            [first] = first.Children;
             switch (first.Type) {
                 case 'Biblical Texts': {
-                    let {Name} = first;
-                    first = `${Name}.1`;
+                    let {Key} = first;
+                    first = Key;
                     break;
                 }
             }
