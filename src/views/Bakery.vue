@@ -14,30 +14,33 @@
 
 <template>
     <main class="page" id="bakery">
-        <header>
-            <span>The Bakery</span>
-            <nav>
-                <router-link :to="item" v-for="item in children">{{item.meta.title}}</router-link>
-            </nav>
-        </header>
-        <RouterView></RouterView>
+        <article>
+            <header class="bakery-top">
+                <div class="title">The Bakery</div>
+                <nav class="tabs">
+                    <router-link :to="item" v-for="item in children">{{item.meta.title}}</router-link>
+                </nav>
+            </header>
+            <RouterView></RouterView>
+        </article>
     </main>
 </template>
 
 <style lang="less">
     #bakery {
-        > header {
+        .bakery-top {
             @apply flex flex-col space-y-8;
 
-            > nav {
-                @apply font-medium flex text-base;
+        }
 
-                > a {
-                    @apply border-b-4 border-transparent duration-500 px-4 py-2 transition hover:border-slate-200;
+        .tabs {
+            @apply font-medium flex text-base;
 
-                    &.router-link-exact-active {
-                        @apply border-slate-700;
-                    }
+            > a {
+                @apply border-b-4 border-transparent duration-500 px-4 py-2 transition hover:border-slate-200;
+
+                &.router-link-exact-active {
+                    @apply border-slate-700;
                 }
             }
         }

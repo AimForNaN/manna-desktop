@@ -98,21 +98,19 @@
                 <option :value="lang" v-for="lang in languages">{{lang}}</option>
             </select>
         </header>
-        <article v-if="MannaStore.InstallSource">
-            <ul class="modules">
-                <li class="module" v-for="mod in modules">
-                    <span class="name">{{mod.Module}}</span>
-                    <span class="desc">{{mod.Description}}</span>
-                    <div class="module-actions">
-                        <i class="mdi mdi-alert-circle-outline" v-show="state.InstallErrors.has(mod.Module)"></i>
-                        <i class="mdi mdi-loading mdi-spin" v-show="state.InstallQueue.has(mod.Module)"></i>
-                        <i class="mdi mdi-download" :class="{ disabled: state.InstallQueue.has(mod.Module) }" @click="installModule(mod.Module, MannaStore.InstallSource)" v-show="!state.InstallQueue.has(mod.Module)" v-if="isNew(mod)"></i>
-                        <i class="mdi mdi-check" v-else></i>
-                        <i class="mdi mdi-delete" v-if="isInstalled(mod)"></i>
-                    </div>
-                </li>
-            </ul>
-        </article>
+        <ul class="modules" v-if="MannaStore.InstallSource">
+            <li class="module" v-for="mod in modules">
+                <span class="name">{{mod.Module}}</span>
+                <span class="desc">{{mod.Description}}</span>
+                <div class="module-actions">
+                    <i class="mdi mdi-alert-circle-outline" v-show="state.InstallErrors.has(mod.Module)"></i>
+                    <i class="mdi mdi-loading mdi-spin" v-show="state.InstallQueue.has(mod.Module)"></i>
+                    <i class="mdi mdi-download" :class="{ disabled: state.InstallQueue.has(mod.Module) }" @click="installModule(mod.Module, MannaStore.InstallSource)" v-show="!state.InstallQueue.has(mod.Module)" v-if="isNew(mod)"></i>
+                    <i class="mdi mdi-check" v-else></i>
+                    <i class="mdi mdi-delete" v-if="isInstalled(mod)"></i>
+                </div>
+            </li>
+        </ul>
     </article>
 </template>
 

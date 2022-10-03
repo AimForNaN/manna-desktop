@@ -37,23 +37,37 @@ button {
 }
 
 .page {
-    @apply min-h-0 p-10 py-16 space-y-8 md:py-24 lg:space-y-12;
+    > article {
+        @apply flex-1 min-h-0 overflow-auto p-10 py-16 space-y-8 md:py-24 lg:space-y-12;
 
-    > header {
-        @apply font-bold font-roboto-condensed text-5xl;
+        > header {
+            @apply flex flex-col space-y-1;
+
+            .subtitle {
+                @apply font-normal text-base text-slate-400;
+            }
+
+            .title {
+                @apply flex items-center font-bold font-roboto-condensed text-5xl;
+            }
+        }
     }
 }
 
 @screen md {
     .page {
-        padding-left: 12.5%;
-        padding-right: 12.5%;
+        > article {
+            padding-left: 12.5%;
+            padding-right: 12.5%;
+        }
     }
 }
 
 @screen xl {
     .page {
-        padding-left: 25%;
-        padding-right: 25%;
+        > article {
+            padding-left: 25%;
+            padding-right: 25%;
+        }
     }
 }

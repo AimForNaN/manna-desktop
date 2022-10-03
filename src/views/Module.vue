@@ -5,7 +5,7 @@
     import { useMannaStore } from './../stores/manna.js';
     import { useRoutes } from './../router/routes.js';
 
-    import Icon from './../components/Icon.vue';
+    import StructureListItem from './../components/StructureListItem.vue';
 
     const state = reactive({
         Key: null,
@@ -61,6 +61,16 @@
         return String(Key ?? '').replace(/[\.\/]+/, ' ');
     });
 
+    function getText(text) {
+        var div = document.createElement('div');
+        div.innerHTML = text;
+        return div.innerText;
+    }
+    function setKey(key) {
+        state.Text = [];
+        state.Key = key;
+    }
+
     watch(() => state.Key, (nv, ov) => {
         let {Module} = unref(module);
         MannaStore.fetchText(Module, nv).then((data) => {
@@ -91,79 +101,45 @@
 
 <template>
     <main class="page" id="module">
-        <header>
-            <div class="title">
-                <span>{{title}}</span>
-            </div>
-            <div class="subtitle">{{subtitle}}</div>
-        </header>
+        <aside class="structure">
+            <Motion :animate="{ opacity: 1 }" :initial="{ opacity: 0 }" v-if="state.Structure.length">
+                <nav>
+                    <ul class="structure-list">
+                        <StructureListItem :key="item.Name" :item="item" @click="setKey" v-for="item in state.Structure"></StructureListItem>
+                    </ul>
+                </nav>
+            </Motion>
+        </aside>
         <article>
+            <header>
+                <div class="title">
+                    <span>{{title}}</span>
+                </div>
+                <div class="subtitle">{{subtitle}}</div>
+            </header>
             <Motion :animate="{ opacity: 1 }" :initial="{ opacity: 0 }" :transition="{ duration: 2 }" v-if="state.Text.length">
                 <div v-for="(row, idx) in state.Text">
-                    {{row.Text}}
+                    {{getText(row.Text)}}
                 </div>
             </Motion>
         </article>
     </main>
-    <Motion :animate="{ opacity: 1 }" :initial="{ opacity: 0 }" v-if="state.Structure.length">
-        <aside class="structure">
-            <nav>
-                <ul class="structure-list">
-                    <li class="structure-list-item" v-for="k in state.Structure">
-                        <div class="structure-list-item-label">
-                            <span class="flex-1">{{k.Name}}</span>
-                            <Icon icon="chevron-down"></Icon>
-                        </div>
-                        <ul class="chapters" v-if="k.Children.length">
-                            <li v-for="kc in k.Children" @click="state.Key = kc.Key">{{kc.Name}}</li>
-                        </ul>
-                    </li>
-                </ul>
-            </nav>
-        </aside>
-    </Motion>
 </template>
 
 <style lang="less">
     #module {
+        @apply flex;
+
         > article {
-        }
-
-        > header {
             @apply flex flex-col;
-
-            .subtitle {
-                @apply font-normal text-base text-slate-400;
-            }
-
-            .title {
-                @apply flex items-center;
-            }
         }
     }
 
     .structure {
-        @apply bg-gray-50 fixed inset-y-0 left-0 m-0 overflow-y-auto p-8 text-base w-80 z-10;
+        @apply bg-gray-50 flex flex-col flex-shrink-0 overflow-y-auto text-base w-screen md:w-80;
 
         .structure-list {
             @apply divide-y;
-
-            .structure-list-item {
-                .structure-list-item-label {
-                    @apply cursor-pointer flex e('py-1.5');
-                }
-
-                .chapters {
-                    @apply gap-2 grid grid-cols-5 p-2 text-center;
-                }
-            }
-        }
-    }
-
-    @screen 2xl {
-        #module {
-            padding-left: 32%;
-            padding-right: 32%;
         }
     }
 </style>
