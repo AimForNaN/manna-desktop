@@ -114,6 +114,9 @@
                             <span class="flex-1">{{k.Name}}</span>
                             <Icon icon="chevron-down"></Icon>
                         </div>
+                        <ul class="chapters" v-if="k.Children.length">
+                            <li v-for="kc in k.Children" @click="state.Key = kc.Key">{{kc.Name}}</li>
+                        </ul>
                     </li>
                 </ul>
             </nav>
@@ -148,6 +151,10 @@
             .structure-list-item {
                 .structure-list-item-label {
                     @apply cursor-pointer flex e('py-1.5');
+                }
+
+                .chapters {
+                    @apply gap-2 grid grid-cols-5 p-2 text-center;
                 }
             }
         }
