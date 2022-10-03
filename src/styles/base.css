@@ -45,11 +45,11 @@ button {
 }
 
 .page {
-    > article {
-        @apply flex-1 min-h-0 overflow-auto p-10 py-16 space-y-8 md:py-24 lg:space-y-12;
+    .page-article {
+        @apply flex-1 min-h-0 overflow-auto py-16 space-y-8 md:py-24 lg:space-y-12;
 
-        > header {
-            @apply flex flex-col space-y-1;
+        .page-header {
+            @apply container flex flex-col mx-auto space-y-1;
 
             .subtitle {
                 @apply font-normal text-base text-slate-400;
@@ -59,23 +59,29 @@ button {
                 @apply flex items-center font-bold font-roboto-condensed text-5xl;
             }
         }
+
+        .page-content {
+            @apply container mx-auto;
+        }
     }
 }
 
 @screen md {
     .page {
-        > article {
-            padding-left: 12.5%;
-            padding-right: 12.5%;
+        .page-article {
+            .page-content, .page-header {
+                max-width: 640px;
+            }
         }
     }
 }
 
 @screen xl {
     .page {
-        > article {
-            padding-left: 25%;
-            padding-right: 25%;
+        .page-article {
+            .page-content, .page-header {
+                max-width: 768px;
+            }
         }
     }
 }

@@ -109,18 +109,22 @@
                 </nav>
             </Motion>
         </aside>
-        <article>
-            <header>
+        <article class="page-article">
+            <header class="page-header">
                 <div class="title">
                     <span>{{title}}</span>
                 </div>
                 <div class="subtitle">{{subtitle}}</div>
             </header>
-            <Motion :animate="{ opacity: 1 }" :initial="{ opacity: 0 }" :transition="{ duration: 2 }" v-if="state.Text.length">
-                <div v-for="(row, idx) in state.Text">
-                    {{getText(row.Text)}}
-                </div>
-            </Motion>
+            <section class="page-content">
+                <Motion :animate="{ opacity: 1 }" :initial="{ opacity: 0 }" :transition="{ duration: 2 }" v-if="state.Text.length">
+                    <ol>
+                        <li v-for="(row, idx) in state.Text">
+                            {{getText(row.Text)}}
+                        </li>
+                    </ol>
+                </Motion>
+            </section>
         </article>
     </main>
 </template>
