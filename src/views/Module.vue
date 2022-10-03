@@ -81,21 +81,20 @@
     });
 
     onMounted(() => {
-        if (module.value) {
-            let {Module} = unref(module);
-            MannaStore.fetchStructure(Module).then((data) => {
-                state.Structure = data;
-                var [first] = data;
-                switch (module.value.Type) {
-                    case 'Biblical Texts': {
-                        let {Name} = first;
-                        first = `${Name}.1`;
-                        break;
-                    }
+        var {params} = route;
+        var {module} = params;
+        MannaStore.fetchStructure(module).then((data) => {
+            state.Structure = data;
+            var [first] = data;
+            switch (first.Type) {
+                case 'Biblical Texts': {
+                    let {Name} = first;
+                    first = `${Name}.1`;
+                    break;
                 }
-                state.Key = first;
-            });
-        }
+            }
+            state.Key = first;
+        });
     });
 </script>
 
