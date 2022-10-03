@@ -14,21 +14,21 @@
 
 <template>
     <main class="page" id="bakery">
-        <article>
-            <header class="bakery-top">
+        <article class="page-article">
+            <header class="page-header">
                 <div class="title">The Bakery</div>
                 <nav class="tabs">
                     <router-link :to="item" v-for="item in children">{{item.meta.title}}</router-link>
                 </nav>
             </header>
-            <RouterView></RouterView>
+            <RouterView class="page-content"></RouterView>
         </article>
     </main>
 </template>
 
 <style lang="less">
     #bakery {
-        .bakery-top {
+        .page-header {
             @apply flex flex-col space-y-8;
 
         }

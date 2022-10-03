@@ -2,6 +2,7 @@
     import { computed, reactive, unref } from 'vue';
     import { Motion } from 'motion/vue';
     import { useMannaStore } from './../stores/manna.js';
+    import Modules from './../components/Modules.vue';
 
     const MannaStore = useMannaStore();
     const state = reactive({
@@ -57,9 +58,10 @@
         });
     });
 
-    function installModule(Name, Source) {
+    function installModule(Name) {
         state.InstallErrors.delete(Name);
         state.InstallQueue.add(Name);
+        var Source = MannaStore.InstallSource;
         MannaStore.installModule({
             Name,
             Source,
@@ -71,12 +73,6 @@
         }).catch(() => {
             state.InstallQueue.delete(Name);
         });
-    }
-    function isInstalled(mod) {
-        return mod.Status == 'installed';
-    }
-    function isNew(mod) {
-        return mod.Status == 'new';
     }
 </script>
 
@@ -98,19 +94,7 @@
                 <option :value="lang" v-for="lang in languages">{{lang}}</option>
             </select>
         </header>
-        <ul class="modules" v-if="MannaStore.InstallSource">
-            <li class="module" v-for="mod in modules">
-                <span class="name">{{mod.Module}}</span>
-                <span class="desc">{{mod.Description}}</span>
-                <div class="module-actions">
-                    <i class="mdi mdi-alert-circle-outline" v-show="state.InstallErrors.has(mod.Module)"></i>
-                    <i class="mdi mdi-loading mdi-spin" v-show="state.InstallQueue.has(mod.Module)"></i>
-                    <i class="mdi mdi-download" :class="{ disabled: state.InstallQueue.has(mod.Module) }" @click="installModule(mod.Module, MannaStore.InstallSource)" v-show="!state.InstallQueue.has(mod.Module)" v-if="isNew(mod)"></i>
-                    <i class="mdi mdi-check" v-else></i>
-                    <i class="mdi mdi-delete" v-if="isInstalled(mod)"></i>
-                </div>
-            </li>
-        </ul>
+        <Modules :items="modules" @install="installModule" v-if="MannaStore.InstallSource"></Modules>
     </article>
 </template>
 
@@ -136,44 +120,6 @@
 
         .mdi-refresh {
             @apply cursor-pointer;
-        }
-
-        .modules {
-            @apply divide-y divide-slate-200;
-
-            .module {
-                @apply cursor-default flex px-2 e('py-1.5') items-center space-x-2 transition hover:bg-slate-50;
-
-                .mdi-delete {
-                    @apply hidden;
-                }
-
-                .module-actions {
-                    @apply flex items-center space-x-1;
-
-                    > * {
-                        @apply cursor-pointer;
-                    }
-                }
-
-                .desc {
-                    @apply flex-1 font-thin text-slate-400 truncate;
-                }
-
-                .name {
-                    @apply font-medium;
-                }
-
-                &:hover {
-                    .mdi-check {
-                        @apply hidden;
-                    }
-
-                    .mdi-delete {
-                        @apply block;
-                    }
-                }
-            }
         }
 
         .remote-sources-wrapper {
