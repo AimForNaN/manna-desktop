@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 body {
-    @apply font-poppins leading-8 text-lg text-slate-600;
+    @apply font-poppins leading-9 text-lg text-slate-600;
 }
 
 button, input, select, textarea {
@@ -46,7 +46,7 @@ button, input[type="number"], input[type="text"] {
 
 .page {
     .page-article {
-        @apply flex-1 min-h-0 overflow-scroll py-16 space-y-8 md:py-24 lg:space-y-14;
+        @apply flex-1 min-h-0 overflow-scroll py-16 space-y-8 md:py-24 lg:space-y-12;
 
         .page-header {
             @apply container flex flex-col mx-auto space-y-1;

@@ -132,7 +132,7 @@
         @apply bg-gray-50 flex flex-col flex-shrink-0 overflow-y-auto text-base w-screen md:w-80;
 
         .structure-header {
-            @apply bg-gray-50 border-b flex p-3 sticky top-0;
+            @apply bg-gray-100 border-b flex p-3 sticky top-0;
 
             input {
                 @apply w-full;
