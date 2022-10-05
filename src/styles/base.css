@@ -16,7 +16,7 @@ button, input[type="text"], select {
     @apply border border-slate-400 cursor-pointer px-1 py-1 ring-slate-100 rounded transition hover:ring-4;
 }
 
-button {
+button, input[type="number"], input[type="text"] {
     @apply px-2;
 }
 
