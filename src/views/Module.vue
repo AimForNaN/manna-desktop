@@ -58,27 +58,29 @@
     watch(() => state.Key, (nv, ov) => {
         let {Module} = unref(module);
         MannaStore.fetchText(Module, nv).then((data) => {
-            setTimeout(() => {
-                state.Text = data;
-            }, 1500);
+            state.Text = data;
         });
     });
 
     onMounted(() => {
-        var {params} = route;
+        var {query, params} = route;
         var {module} = params;
         MannaStore.fetchStructure(module).then((data) => {
             state.Structure = data;
-            var [first] = data;
-            [first] = first.Children;
-            switch (first.Type) {
-                case 'Biblical Texts': {
-                    let {Key} = first;
-                    first = Key;
-                    break;
+            if (!query.key) {
+                var [first] = data;
+                [first] = first.Children;
+                switch (first.Type) {
+                    case 'Biblical Texts': {
+                        let {Key} = first;
+                        first = Key;
+                        break;
+                    }
                 }
+                setKey(first);
+            } else {
+                setKey(query.key);
             }
-            state.Key = first;
         });
     });
 </script>
