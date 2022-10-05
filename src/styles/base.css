@@ -12,7 +12,7 @@ button, input, select, textarea {
     @apply focus:outline-none;
 }
 
-button, select {
+button, input[type="text"], select {
     @apply border border-slate-400 cursor-pointer px-1 py-1 ring-slate-100 rounded transition hover:ring-4;
 }
 
@@ -46,7 +46,7 @@ button {
 
 .page {
     .page-article {
-        @apply flex-1 min-h-0 overflow-auto py-16 space-y-9 md:py-24 lg:space-y-12;
+        @apply flex-1 min-h-0 overflow-scroll py-16 space-y-8 md:py-24 lg:space-y-14;
 
         .page-header {
             @apply container flex flex-col mx-auto space-y-1;

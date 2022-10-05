@@ -24,7 +24,7 @@
 <template>
     <li class="structure-list-item">
         <div class="structure-list-item-label" @click="toggle()">
-            <span class="flex-1">{{item.Name}}</span>
+            <span class="flex-1" :class="{ 'font-bold': toggled }">{{item.Name}}</span>
             <Icon icon="chevron-down" v-if="!toggled"></Icon>
             <Icon icon="chevron-up" v-else></Icon>
         </div>

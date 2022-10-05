@@ -8,6 +8,7 @@
     import StructureListItem from './../components/StructureListItem.vue';
 
     const state = reactive({
+        Filter: '',
         Key: null,
         Structure: [],
         Text: [],
@@ -25,32 +26,15 @@
     });
     const structure = computed(() => {
         var moduleref = unref(module);
-        var {Structure} = state;
-        return Structure.reduce((ret, item) => {
-            if (moduleref) {
-                switch (moduleref.Type) {
-                    case 'Biblical Texts': {
-                        let {
-                            Book,
-                            Chapters,
-                        } = item;
-                        if (typeof ret[Book] == 'undefined') {
-                            ret[Book] = {};
-                        }
-                        for (var i = 0; i < Chapters; i++) {
-                            let Chapter = i+1;
-                            ret[Book][Chapter] = `${Book}.${Chapter}`;
-                        }
-                        break;
-                    }
-                    case 'Generic Books': {
-                        // ret[];
-                        break;
-                    }
-                }
+        var {Filter, Structure} = state;
+        return Structure.filter((item) => {
+            if (Filter) {
+                let {Key,Name} = item;
+                let items = [Key,Name].filter(x => x).map(x => String(x).toLowerCase());
+                return items.find(x => String(x).toLowerCase().includes(Filter));
             }
-            return ret;
-        }, {});
+            return true;
+        });
     });
     const subtitle = computed(() => {
         var {Description} = unref(module) ?? {};
@@ -102,10 +86,13 @@
 <template>
     <main class="page" id="module">
         <aside class="structure">
+            <header class="structure-header">
+                <input placeholder="Filter" type="text" v-model="state.Filter">
+            </header>
             <Motion :animate="{ opacity: 1 }" :initial="{ opacity: 0 }" v-if="state.Structure.length">
                 <nav>
                     <ul class="structure-list">
-                        <StructureListItem :key="item.Name" :item="item" @click="setKey" v-for="item in state.Structure"></StructureListItem>
+                        <StructureListItem :key="item.Name" :item="item" @click="setKey" v-for="item in structure"></StructureListItem>
                     </ul>
                 </nav>
             </Motion>
@@ -141,6 +128,14 @@
 
     .structure {
         @apply bg-gray-50 flex flex-col flex-shrink-0 overflow-y-auto text-base w-screen md:w-80;
+
+        .structure-header {
+            @apply bg-gray-50 border-b flex p-3 sticky top-0;
+
+            input {
+                @apply w-full;
+            }
+        }
 
         .structure-list {
             @apply divide-y;
