@@ -46,7 +46,7 @@ button {
 
 .page {
     .page-article {
-        @apply flex-1 min-h-0 overflow-auto py-16 space-y-8 md:py-24 lg:space-y-12;
+        @apply flex-1 min-h-0 overflow-auto py-16 space-y-9 md:py-24 lg:space-y-12;
 
         .page-header {
             @apply container flex flex-col mx-auto space-y-1;
